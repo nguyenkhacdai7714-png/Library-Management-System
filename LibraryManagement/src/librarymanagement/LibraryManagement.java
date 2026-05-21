@@ -14,14 +14,14 @@ public class LibraryManagement {
     
     static void Menu()
     {
-        System.out.println("======== LIBRARY MANAGEMENT SYSTEM ========");
-        System.out.println("[1] Book Management");
-        System.out.println("[2] Member Management");
-        System.out.println("[3] Borrowing Management");
-        System.out.println("[4] Reporting Management");
-        System.out.println("===========================================");
-        System.out.println("[0] Save and Quit");
-        System.out.println("===========================================");
+        Functions.MenuGenerator(
+                "LIBRARY MANAGEMENT SYSTEM", // title
+                "Save and Quit", // end
+                
+                "Book Management", // functions...
+                "Member Management", 
+                "Borrowing Management", 
+                "Reporting Management");
     }
     
     public static void main(String[] args) {
