@@ -35,7 +35,7 @@ public class LibraryManagement {
             Functions.Clear();
             
             Menu();
-            choice = input.nextLine();
+            choice = Functions.InputString("Enter your choice: ");
             
             switch(choice){
                 case "1":

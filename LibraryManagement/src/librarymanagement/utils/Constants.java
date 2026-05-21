@@ -8,4 +8,7 @@ public class Constants {
     // tien phat voi moi ngay tre han tra sach
     public static final float OVERDUE_FINE = 5000;
     
+    // tra ve neu ham bi loi
+    public static final int ERROR_VALUE = -999;
+    
 }

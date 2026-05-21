@@ -3,13 +3,16 @@ package librarymanagement.utils;
 import java.util.Scanner;
 
 public class Functions {
+    
+    static Scanner input = new Scanner(System.in);
+    
     public static void Clear(){
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }
     public static void Pause(){
         System.out.println("Press Enter to continue...");
-        new Scanner(System.in).nextLine();
+        input.nextLine();
     }
     public static void Alert(String text){
         System.out.println(text.toUpperCase());
@@ -48,5 +51,33 @@ public class Functions {
        System.out.println(wall);
        System.out.println("[0] " + end);
        System.out.println(wall);
+    }
+    
+    public static void Print(String text)
+    {
+        System.out.print(text);
+    }
+    
+    public static String InputString(String content){
+        Print(content);
+        return input.nextLine();
+    }
+    public static int InputInt(String content){
+        Print(content);
+        try{
+            return Integer.parseInt(input.nextLine());
+        }
+        catch(NumberFormatException e){
+            return Constants.ERROR_VALUE;
+        }
+    }
+    public static float InputFloat(String content){
+        Print(content);
+        try{
+            return Float.parseFloat(input.nextLine());
+        }
+        catch(NumberFormatException e){
+            return (float)Constants.ERROR_VALUE;
+        }
     }
 }
