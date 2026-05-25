@@ -38,7 +38,7 @@ public class ReportingManagement {
         do{
             Functions.Clear();
             Menu();
-            choice = Functions.InputString("Enter your choice: ");
+            choice = Functions.InputMenuChoice();
             
             switch(choice)
             {      

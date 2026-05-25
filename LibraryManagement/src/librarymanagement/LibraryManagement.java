@@ -18,7 +18,7 @@ public class LibraryManagement {
                 "LIBRARY MANAGEMENT SYSTEM", // title
                 "Save and Quit", // end
                 
-                "Book Management", // functions...
+                "Book Management", // functions... or WALL
                 "Member Management", 
                 "Borrowing Management", 
                 "Reporting Management");
@@ -35,7 +35,7 @@ public class LibraryManagement {
             Functions.Clear();
             
             Menu();
-            choice = Functions.InputString("Enter your choice: ");
+            choice = Functions.InputMenuChoice();
             
             switch(choice){
                 case "1":

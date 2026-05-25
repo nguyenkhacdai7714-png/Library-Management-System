@@ -45,7 +45,14 @@ public class Functions {
        System.out.println(sideWall +" " +  title.toUpperCase() + " " + sideWall);
        for(int i=0; i<functions.length; i++)
        {
-           System.out.println(String.format("[%d] %s", i+1, functions[i]));
+           if(functions[i].equals("WALL"))
+           {
+               System.out.println(wall);
+           }
+           else
+           {
+                System.out.println(String.format("[%d] %s", i+1, functions[i]));
+           }
            
        }
        System.out.println(wall);
@@ -79,5 +86,9 @@ public class Functions {
         catch(NumberFormatException e){
             return (float)Constants.ERROR_VALUE;
         }
+    }
+    
+    public static String InputMenuChoice(){
+        return InputString("Enter your choice: ");
     }
 }
