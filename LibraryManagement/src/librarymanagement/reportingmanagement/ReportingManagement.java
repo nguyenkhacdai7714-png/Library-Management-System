@@ -7,11 +7,6 @@ import librarymanagement.bookmanagement.Book;
 import librarymanagement.membermanagement.Member;
 
 public class ReportingManagement {
-    
-    static ArrayList<Book> borrowedBookList = new ArrayList<Book>();
-    static ArrayList<Book> overdueBookList = new ArrayList<Book>();
-    static ArrayList<Member> mostBorrowingMemberList = new ArrayList<Member>();
-    static ArrayList<Book> mostPopularBookList = new ArrayList<Book>();
 
     
     public static void Menu(){
@@ -28,10 +23,10 @@ public class ReportingManagement {
     public static void Run()
     {
         Functions.Print("Generating reports...");
-        GenerateBorrowedBookList();
-        GenerateMostBorrowingMemberList();
-        GenerateMostPopularBookList();
-        GenerateOverdueBookList();
+        ReportingManager.GenerateOverdueBookList();
+        ReportingManager.GenerateOverdueBookList();
+        ReportingManager.GenerateOverdueBookList();
+        ReportingManager.GenerateOverdueBookList();
         Functions.Print("Successfully!");
         
         String choice;
