@@ -5,9 +5,17 @@ import librarymanagement.utils.*;
 
 public class MemberManagement {
     
-    public static HashMap<String, Member> memberList = new HashMap<String, Member>();
+    // singleton
+    private static final MemberManagement instance = new MemberManagement();
+    private MemberManagement(){}
+    public static MemberManagement getInstance(){
+        return instance;
+    }
+    // end singleton
     
-    public static void Run()
+    public HashMap<String, Member> memberList = new HashMap<String, Member>();
+    
+    public void Run()
     {
         
     }

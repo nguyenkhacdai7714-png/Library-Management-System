@@ -1,27 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package librarymanagement.borrowingmanagement;
 
 import java.util.HashMap;
 import librarymanagement.bookmanagement.Book;
 import librarymanagement.membermanagement.Member;
 
-/**
- *
- * @author Study
- */
 public class BorrowingManager {
-    public static HashMap<String, Borrowing> borrowingList = new HashMap<String, Borrowing>();
     
-    public static void Add(Borrowing borrowing){
-        
+    // singleton
+    private static final BorrowingManager instance = new BorrowingManager();
+    private BorrowingManager(){}
+    public static BorrowingManager getInstance(){
+        return instance;
     }
-    public static void Remove(String borrowingID){
-        
-    }
-    public static void PrintList(){
-        
-    }
+    // end singleton
+    
+    public HashMap<String, BorrowingTransaction> borrowingList = new HashMap<String, BorrowingTransaction>();
+
 }

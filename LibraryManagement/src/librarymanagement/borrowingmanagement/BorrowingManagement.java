@@ -5,9 +5,17 @@ import librarymanagement.utils.*;
 
 public class BorrowingManagement {
     
-    public static ArrayList<Borrowing> borrowingList = new ArrayList<Borrowing>();
+    // singleton
+    private static final BorrowingManagement instance = new BorrowingManagement();
+    private BorrowingManagement(){}
+    public static BorrowingManagement getInstance(){
+        return instance;
+    }
+    // end singleton
     
-    public static void Run()
+    public ArrayList<BorrowingTransaction> borrowingList = new ArrayList<BorrowingTransaction>();
+    
+    public void Run()
     {
         
     }

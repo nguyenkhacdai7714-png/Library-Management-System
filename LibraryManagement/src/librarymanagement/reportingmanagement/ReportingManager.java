@@ -3,21 +3,26 @@ package librarymanagement.reportingmanagement;
 import java.util.ArrayList;
 import librarymanagement.bookmanagement.Book;
 import librarymanagement.membermanagement.Member;
-import static librarymanagement.reportingmanagement.ReportingManagement.GenerateBorrowedBookList;
-import static librarymanagement.reportingmanagement.ReportingManagement.GenerateMostBorrowingMemberList;
-import static librarymanagement.reportingmanagement.ReportingManagement.GenerateMostPopularBookList;
-import static librarymanagement.reportingmanagement.ReportingManagement.GenerateOverdueBookList;
 
 public class ReportingManager {
+    
+    // singleton
+    private static final ReportingManager instance = new ReportingManager();
+    private ReportingManager(){}
+    public static ReportingManager getInstance(){
+        return instance;
+    }
+    // end singleton
+    
     static ArrayList<Book> borrowedBookList = new ArrayList<Book>();
     static ArrayList<Book> overdueBookList = new ArrayList<Book>();
-    static ArrayList<Member> mostBorrowingMemberList = new ArrayList<Member>();
+    static ArrayList<Member> mostActiveMemberList = new ArrayList<Member>();
     static ArrayList<Book> mostPopularBookList = new ArrayList<Book>();
     
     public static void GenerateBorrowedBookList(){
     
     }
-    public static void GenerateMostBorrowingMemberList(){
+    public static void GenerateMostActiveMemberList(){
     
     }
     public static void GenerateMostPopularBookList(){
@@ -25,5 +30,12 @@ public class ReportingManager {
     }
     public static void GenerateOverdueBookList(){
     
+    }
+    
+    public static void PrintBookList(ArrayList<Book> list){
+        
+    }
+    public static void PrintMemberList(ArrayList<Member> list){
+        
     }
 }

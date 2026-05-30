@@ -7,9 +7,16 @@ import librarymanagement.bookmanagement.Book;
 import librarymanagement.membermanagement.Member;
 
 public class ReportingManagement {
-
     
-    public static void Menu(){
+    // singleton
+    private static final ReportingManagement instance = new ReportingManagement();
+    private ReportingManagement(){}
+    public static ReportingManagement getInstance(){
+        return instance;
+    }
+    // end singleton
+    
+    public void Menu(){
         Functions.MenuGenerator(
                 "REPORTING MANAGEMENT", // title
                 "Back", // end
@@ -20,14 +27,14 @@ public class ReportingManagement {
                 "Show Most Borrowings Members");
     }
     
-    public static void Run()
+    public void Run()
     {
-        Functions.Print("Generating reports...");
+        Functions.Print("Generating reports");
         ReportingManager.GenerateOverdueBookList();
-        ReportingManager.GenerateOverdueBookList();
-        ReportingManager.GenerateOverdueBookList();
-        ReportingManager.GenerateOverdueBookList();
-        Functions.Print("Successfully!");
+        ReportingManager.GenerateBorrowedBookList();
+        ReportingManager.GenerateMostActiveMemberList();
+        ReportingManager.GenerateMostPopularBookList();
+        Functions.Print("-> Successfully!");
         
         String choice;
         do{
@@ -68,31 +75,17 @@ public class ReportingManagement {
         
         }while(!choice.equals("0"));
     }
-    
-    
-    static void GenerateBorrowedBookList(){
-        
-    }
-    static void GenerateOverdueBookList(){
-    
-    }
-    static void GenerateMostPopularBookList(){
-    
-    }
-    static void GenerateMostBorrowingMemberList(){
-    
-    }
 
-    static void PrintBorrowedBookList(){
+    void PrintBorrowedBookList(){
     
     }
-    static void PrintOverdueBookList(){
+    void PrintOverdueBookList(){
     
     }
-    static void PrintMostPopularBookList(){
+    void PrintMostPopularBookList(){
     
     }
-    static void PrintMostBorrowingMemberList(){
+    void PrintMostBorrowingMemberList(){
     
     }
 

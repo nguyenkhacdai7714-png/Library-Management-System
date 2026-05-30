@@ -3,15 +3,14 @@ package librarymanagement.bookmanagement;
 import java.util.HashMap;
 public class BookManager {
     
-    public static HashMap<String, Book> bookList = new HashMap<String, Book>();
+    // singleton
+    private static final BookManager instance = new BookManager();
+    private BookManager(){}
+    public static BookManager getInstance(){
+        return instance;
+    }
+    // end singleton
     
-    public static void Add(Book book){
-        
-    }
-    public static void Remove(String bookId){
-        
-    }
-    public static void PrintList(){
-        
-    }
+    public HashMap<String, Book> bookList = new HashMap<String, Book>();
+    
 }

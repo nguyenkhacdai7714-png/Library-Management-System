@@ -39,16 +39,16 @@ public class LibraryManagement {
             
             switch(choice){
                 case "1":
-                    BookManagement.Run();
+                    BookManagement.getInstance().Run();
                     break;
                 case "2":
-                    MemberManagement.Run();
+                    MemberManagement.getInstance().Run();
                     break;
                 case "3":
-                    BorrowingManagement.Run();
+                    BorrowingManagement.getInstance().Run();
                     break;
                 case "4":
-                    ReportingManagement.Run();
+                    ReportingManagement.getInstance().Run();
                     
                     break;
                 case "0":

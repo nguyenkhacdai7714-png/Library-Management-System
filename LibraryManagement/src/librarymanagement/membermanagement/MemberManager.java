@@ -4,15 +4,14 @@ import java.util.HashMap;
 import librarymanagement.membermanagement.Member;
 
 public class MemberManager {
-    public static HashMap<String, Member> memberList = new HashMap<String, Member>();
     
-    public static void Add(Member member){
-        
+    // singleton
+    private static final MemberManager instance = new MemberManager();
+    private MemberManager(){}
+    public static MemberManager getInstance(){
+        return instance;
     }
-    public static void Remove(String memberId){
-        
-    }
-    public static void PrintList(){
-        
-    }
+    // end singleton
+    
+    public HashMap<String, Member> memberList = new HashMap<String, Member>();
 }
