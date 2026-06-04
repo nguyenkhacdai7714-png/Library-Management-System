@@ -5,13 +5,11 @@ import librarymanagement.utils.*;
 
 public class MemberManagement extends ObjectManagement {
     
-    // singleton
     private static final MemberManagement instance = new MemberManagement();
     private MemberManagement(){}
     public static MemberManagement getInstance(){
         return instance;
     }
-    // end singleton
     
     public void Run() {
         Menu();
@@ -29,23 +27,23 @@ public class MemberManagement extends ObjectManagement {
             int choice = Functions.InputMenuChoice(0, 5);
             switch (choice) {
                 case 0 -> { return; }
-                case 1 -> AddingMember();
-                case 2 -> RemovingMember();
-                case 3 -> UpdatingMember();
+                case 1 -> AddMember();
+                case 2 -> RemoveMember();
+                case 3 -> UpdateMember();
                 case 4 -> ViewMemberList();
-                case 5 -> SearchingMember();
+                case 5 -> SearchMember();
             }
         }
     }
 
-    public void AddingMember() {
+    public void AddMember() {
         Functions.Clear();
         System.out.println("========================================");
         System.out.println("--------------- ADD MEMBER -------------");
         System.out.println("========================================");
         
-        System.out.print("Enter Member ID: ");
-        String id = Functions.InputString();
+        // ĐÃ SỬA: Truyền trực tiếp chuỗi hiển thị vào hàm theo đúng thiết kế của Functions
+        String id = Functions.InputString("Enter Member ID: ");
 
         if (!Functions.IsStringValid(id)) {
             Functions.Alert("Invalid ID string input format.");
@@ -59,12 +57,9 @@ public class MemberManagement extends ObjectManagement {
             return;
         }
 
-        System.out.print("Enter Name: ");
-        String name = Functions.InputString();
-        System.out.print("Enter Email: ");
-        String email = Functions.InputString();
-        System.out.print("Enter Phone: ");
-        String phone = Functions.InputString();
+        String name = Functions.InputString("Enter Name: ");
+        String email = Functions.InputString("Enter Email: ");
+        String phone = Functions.InputString("Enter Phone: ");
 
         if (Functions.IsStringValid(name) && Functions.IsStringValid(email) && Functions.IsStringValid(phone)) {
             if (MemberManager.getInstance().IsDuplicateEmailOrPhone(email, phone)) {
@@ -74,24 +69,25 @@ public class MemberManagement extends ObjectManagement {
             }
             
             Member newMember = new Member();
-            newMember.SetID(id);
-            newMember.SetName(name);
-            newMember.SetEmail(email);
-            newMember.SetPhone(phone);
+            // ĐÃ SỬA: Gọi đúng getter/setter viết thường chữ đầu của đối tượng Member
+            newMember.setId(id);
+            newMember.setName(name);
+            newMember.setEmail(email);
+            newMember.setPhone(phone);
             MemberManager.getInstance().AddMember(newMember);
+            Functions.Alert("Member registered successfully.");
         } else {
             Functions.Alert("Invalid text detected across entry fields. Registration canceled.");
         }
         Functions.Pause();
     }
 
-    public void RemovingMember() {
+    public void RemoveMember() {
         Functions.Clear();
         System.out.println("========================================");
         System.out.println("------------- REMOVE MEMBER ------------");
         System.out.println("========================================");
-        System.out.print("Enter Member ID to delete: ");
-        String id = Functions.InputString();
+        String id = Functions.InputString("Enter Member ID to delete: ");
 
         if (Functions.IsStringValid(id) && MemberManager.getInstance().IsMemberIDValid(id)) {
             MemberManager.getInstance().RemoveMember(id);
@@ -107,14 +103,15 @@ public class MemberManagement extends ObjectManagement {
         System.out.println("------- Updating Member Info Menu ------");
         System.out.println("----------------------------------------");
         
-        String nameLine = "1. Member Name : " + oldMember.GetName();
-        if (!oldMember.GetName().equals(nName)) nameLine += " -> " + nName;
+        // ĐÃ SỬA: Gọi đúng getter viết thường chữ đầu (getName, getEmail, getPhone)
+        String nameLine = "1. Member Name : " + oldMember.getName();
+        if (!oldMember.getName().equals(nName)) nameLine += " -> " + nName;
         
-        String emailLine = "2. Member Email: " + oldMember.GetEmail();
-        if (!oldMember.GetEmail().equals(nEmail)) emailLine += " -> " + nEmail;
+        String emailLine = "2. Member Email: " + oldMember.getEmail();
+        if (!oldMember.getEmail().equals(nEmail)) emailLine += " -> " + nEmail;
         
-        String phoneLine = "3. Member Phone: " + oldMember.GetPhone();
-        if (!oldMember.GetPhone().equals(nPhone)) phoneLine += " -> " + nPhone;
+        String phoneLine = "3. Member Phone: " + oldMember.getPhone();
+        if (!oldMember.getPhone().equals(nPhone)) phoneLine += " -> " + nPhone;
 
         System.out.println(nameLine);
         System.out.println(emailLine);
@@ -123,13 +120,12 @@ public class MemberManagement extends ObjectManagement {
         System.out.println("0. Back");
     }
 
-    public void UpdatingMember() {
+    public void UpdateMember() {
         Functions.Clear();
         System.out.println("========================================");
         System.out.println("------------- UPDATE MEMBER ------------");
         System.out.println("========================================");
-        System.out.print("Enter Member ID to modify: ");
-        String id = Functions.InputString();
+        String id = Functions.InputString("Enter Member ID to modify: ");
 
         if (!Functions.IsStringValid(id) || !MemberManager.getInstance().IsMemberIDValid(id)) {
             Functions.Alert("Error: Member ID not found or invalid reference!");
@@ -139,9 +135,9 @@ public class MemberManagement extends ObjectManagement {
 
         Member target = MemberManager.getInstance().SearchMember(id);
         
-        String newName = target.GetName();
-        String newEmail = target.GetEmail();
-        String newPhone = target.GetPhone();
+        String newName = target.getName();
+        String newEmail = target.getEmail();
+        String newPhone = target.getPhone();
 
         while (true) {
             Functions.Clear();
@@ -154,8 +150,7 @@ public class MemberManagement extends ObjectManagement {
             
             switch (choice) {
                 case 1 -> {
-                    System.out.print("Enter New Name: ");
-                    String tempName = Functions.InputString();
+                    String tempName = Functions.InputString("Enter New Name: ");
                     if (Functions.IsStringValid(tempName)) {
                         newName = tempName;
                     } else {
@@ -164,8 +159,7 @@ public class MemberManagement extends ObjectManagement {
                     }
                 }
                 case 2 -> {
-                    System.out.print("Enter New Email: ");
-                    String tempEmail = Functions.InputString();
+                    String tempEmail = Functions.InputString("Enter New Email: ");
                     if (Functions.IsStringValid(tempEmail)) {
                         newEmail = tempEmail;
                     } else {
@@ -174,8 +168,7 @@ public class MemberManagement extends ObjectManagement {
                     }
                 }
                 case 3 -> {
-                    System.out.print("Enter New Phone: ");
-                    String tempPhone = Functions.InputString();
+                    String tempPhone = Functions.InputString("Enter New Phone: ");
                     if (Functions.IsStringValid(tempPhone)) {
                         newPhone = tempPhone;
                     } else {
@@ -202,7 +195,8 @@ public class MemberManagement extends ObjectManagement {
         System.out.println("========================================");
         System.out.println("-------------- MEMBER LIST -------------");
         System.out.println("========================================");
-        HashMap<String, Member> list = MemberManager.getInstance().GetMemberList();
+        // ĐÃ SỬA: Gọi đúng getter viết thường của cấu trúc lõi (getMemberList)
+        HashMap<String, Member> list = MemberManager.getInstance().getMemberList();
         if (list.isEmpty()) {
             System.out.println("No members found in the system.");
         } else {
@@ -210,19 +204,18 @@ public class MemberManagement extends ObjectManagement {
             System.out.println("----------------------------------------------------------------------------");
             for (Member member : list.values()) {
                 System.out.printf("%-10s | %-20s | %-25s | %-15s\n", 
-                        member.GetID(), member.GetName(), member.GetEmail(), member.GetPhone());
+                        member.getId(), member.getName(), member.getEmail(), member.getPhone());
             }
         }
         Functions.Pause();
     }
 
-    public void SearchingMember() {
+    public void SearchMember() {
         Functions.Clear();
         System.out.println("========================================");
         System.out.println("------------- SEARCH MEMBER ------------");
         System.out.println("========================================");
-        System.out.print("Enter Target Search ID: ");
-        String id = Functions.InputString();
+        String id = Functions.InputString("Enter Target Search ID: ");
 
         if (Functions.IsStringValid(id)) {
             Member match = MemberManager.getInstance().SearchMember(id);
