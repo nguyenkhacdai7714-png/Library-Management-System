@@ -1,8 +1,9 @@
 package librarymanagement.membermanagement;
 
 import java.util.HashMap;
+import librarymanagement.membermanagement.Member;
 
-public class MemberManager {
+public class MemberManager extends ObjectManager {
     
     private static final MemberManager instance = new MemberManager();
     private MemberManager(){}
@@ -10,17 +11,14 @@ public class MemberManager {
         return instance;
     }
     
-    private HashMap<String, Member> memberList = new HashMap<String, Member>();
+    public HashMap<String, Member> memberList = new HashMap<String, Member>();
     private int idCounter = 1;
 
     public String GenerateMemberID() {
-        return "M" + String.format("%03d", idCounter++);
+        return String.format("M%03d", idCounter++);
     }
 
     public boolean IsMemberIDValid(String memberID) {
-        if (memberID == null || memberID.trim().isEmpty()) {
-            return false;
-        }
         return memberList.containsKey(memberID);
     }
 
