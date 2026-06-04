@@ -11,7 +11,7 @@ public class MemberManager {
 
     private MemberManager() {}
     
-    public static MemberManager GetInstance() {
+    public static MemberManager getInstance() {
         return instance;
     }
 
