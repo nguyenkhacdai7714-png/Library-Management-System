@@ -42,7 +42,6 @@ public class MemberManagement extends ObjectManagement {
         System.out.println("--------------- ADD MEMBER -------------");
         System.out.println("========================================");
         
-        // ĐÃ SỬA: Truyền trực tiếp chuỗi hiển thị vào hàm theo đúng thiết kế của Functions
         String id = Functions.InputString("Enter Member ID: ");
 
         if (!Functions.IsStringValid(id)) {
@@ -69,7 +68,6 @@ public class MemberManagement extends ObjectManagement {
             }
             
             Member newMember = new Member();
-            // ĐÃ SỬA: Gọi đúng getter/setter viết thường chữ đầu của đối tượng Member
             newMember.setId(id);
             newMember.setName(name);
             newMember.setEmail(email);
@@ -103,7 +101,6 @@ public class MemberManagement extends ObjectManagement {
         System.out.println("------- Updating Member Info Menu ------");
         System.out.println("----------------------------------------");
         
-        // ĐÃ SỬA: Gọi đúng getter viết thường chữ đầu (getName, getEmail, getPhone)
         String nameLine = "1. Member Name : " + oldMember.getName();
         if (!oldMember.getName().equals(nName)) nameLine += " -> " + nName;
         
@@ -195,7 +192,6 @@ public class MemberManagement extends ObjectManagement {
         System.out.println("========================================");
         System.out.println("-------------- MEMBER LIST -------------");
         System.out.println("========================================");
-        // ĐÃ SỬA: Gọi đúng getter viết thường của cấu trúc lõi (getMemberList)
         HashMap<String, Member> list = MemberManager.getInstance().getMemberList();
         if (list.isEmpty()) {
             System.out.println("No members found in the system.");
