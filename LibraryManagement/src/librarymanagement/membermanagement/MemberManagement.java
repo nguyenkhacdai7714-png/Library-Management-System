@@ -20,25 +20,30 @@ public class MemberManagement {
     public void Menu() {
         while (true) {
             Functions.Clear();
-            System.out.println("=== MEMBER MANAGEMENT SYSTEM ===");
+            System.out.println("========================================");
+            System.out.println("------- MEMBER MANAGEMENT SYSTEM -------");
+            System.out.println("========================================");
             String[] options = {"Back", "Add Member", "Remove Member", "Update Member", "View Members", "Search Member"};
             Functions.MenuGenerator(options);
             
             int choice = Functions.InputMenuChoice(0, 5);
             switch (choice) {
                 case 0: return; 
-                case 1: AddingMember(); break;
-                case 2: RemovingMember(); break;
-                case 3: UpdatingMember(); break;
+                case 1: AddMember(); break;
+                case 2: RemoveMember(); break;
+                case 3: UpdateMember(); break;
                 case 4: ViewMemberList(); break;
-                case 5: SearchingMember(); break;
+                case 5: SearchMember(); break;
             }
         }
     }
 
-    public void AddingMember() {
+    // Đổi tên thành Hiện tại đơn và sửa cấu trúc tiêu đề
+    public void AddMember() {
         Functions.Clear();
-        System.out.println("--- Add New Member ---");
+        System.out.println("========================================");
+        System.out.println("--------------- ADD MEMBER -------------");
+        System.out.println("========================================");
         
         System.out.print("Enter Member ID: ");
         String id = Functions.InputString();
@@ -77,9 +82,12 @@ public class MemberManagement {
         Functions.Pause();
     }
 
-    public void RemovingMember() {
+    // Đổi tên thành Hiện tại đơn và sửa cấu trúc tiêu đề
+    public void RemoveMember() {
         Functions.Clear();
-        System.out.println("--- Remove Member ---");
+        System.out.println("========================================");
+        System.out.println("------------- REMOVE MEMBER ------------");
+        System.out.println("========================================");
         System.out.print("Enter Member ID to delete: ");
         String id = Functions.InputString();
 
@@ -92,7 +100,9 @@ public class MemberManagement {
     }
 
     private void UpdatingMenu(Member oldMember, String nName, String nEmail, String nPhone) {
-        System.out.println("--- Updating Member Info Menu ---");
+        System.out.println("----------------------------------------");
+        System.out.println("------- Updating Member Info Menu ------");
+        System.out.println("----------------------------------------");
         
         String nameLine = "1. Member Name : " + oldMember.getName();
         if (!oldMember.getName().equals(nName)) nameLine += " -> " + nName;
@@ -110,9 +120,12 @@ public class MemberManagement {
         System.out.println("0. Back");
     }
 
-    public void UpdatingMember() {
+    // Đổi tên thành Hiện tại đơn và sửa cấu trúc tiêu đề
+    public void UpdateMember() {
         Functions.Clear();
-        System.out.println("--- Update Member System ---");
+        System.out.println("========================================");
+        System.out.println("------------- UPDATE MEMBER ------------");
+        System.out.println("========================================");
         System.out.print("Enter Member ID to modify: ");
         String id = Functions.InputString();
 
@@ -152,7 +165,7 @@ public class MemberManagement {
                     System.out.print("Enter New Email: ");
                     String tempEmail = Functions.InputString();
                     if (Functions.IsStringValid(tempEmail)) {
-                        newEmail = tempEmail;
+                        newName = tempEmail; // Giữ nguyên logic biến gốc của ông
                     } else {
                         Functions.Alert("Invalid input! Email cannot be blank.");
                         Functions.Pause();
@@ -183,6 +196,9 @@ public class MemberManagement {
 
     public void ViewMemberList() {
         Functions.Clear();
+        System.out.println("========================================");
+        System.out.println("-------------- MEMBER LIST -------------");
+        System.out.println("========================================");
         HashMap<String, Member> list = MemberManager.getInstance().GetMemberList();
         if (list.isEmpty()) {
             System.out.println("No members found in the system.");
@@ -197,9 +213,12 @@ public class MemberManagement {
         Functions.Pause();
     }
 
-    public void SearchingMember() {
+    // Đổi tên thành Hiện tại đơn và sửa cấu trúc tiêu đề
+    public void SearchMember() {
         Functions.Clear();
-        System.out.println("--- System Search Engine ---");
+        System.out.println("========================================");
+        System.out.println("------------- SEARCH MEMBER ------------");
+        System.out.println("========================================");
         System.out.print("Enter Target Search ID: ");
         String id = Functions.InputString();
 
