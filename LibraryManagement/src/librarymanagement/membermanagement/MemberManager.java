@@ -1,7 +1,6 @@
 package librarymanagement.membermanagement;
 
 import java.util.HashMap;
-import librarymanagement.membermanagement.Member;
 
 public class MemberManager extends ObjectManager {
     
@@ -32,31 +31,38 @@ public class MemberManager extends ObjectManager {
     }
 
     public void AddMember(Member member) {
-        memberList.put(member.getId(), member);
+        if (!IsMemberIDValid(member.getId())) {
+            memberList.put(member.getId(), member);
+        }
     }
 
     public void RemoveMember(String memberID) {
-        memberList.remove(memberID);
+        if (IsMemberIDValid(memberID)) {
+            memberList.remove(memberID);
+        }
     }
 
     public Member SearchMember(String memberID) {
-        return memberList.get(memberID);
+        if (IsMemberIDValid(memberID)) {
+            return memberList.get(memberID);
+        }
+        return null;
     }
 
     public void UpdateMember(String memberID, String name, String email, String phone) {
-        Member member = memberList.get(memberID);
-        if (member != null) {
+        if (IsMemberIDValid(memberID)) {
+            Member member = memberList.get(memberID);
             member.setName(name);
             member.setEmail(email);
             member.setPhone(phone);
         }
     }
 
-    public void SetMemberList(HashMap<String, Member> memberList) {
+    public void setMemberList(HashMap<String, Member> memberList) {
         this.memberList = memberList;
     }
 
-    public HashMap<String, Member> GetMemberList() {
+    public HashMap<String, Member> getMemberList() {
         return this.memberList;
     }
 }
