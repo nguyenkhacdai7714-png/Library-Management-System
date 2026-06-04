@@ -3,18 +3,15 @@ package librarymanagement.membermanagement;
 import java.util.HashMap;
 
 public class MemberManager {
-    private static MemberManager instance;
-    private HashMap<String, Member> memberList;
+    
+    private static final MemberManager instance = new MemberManager();
+    
+    private HashMap<String, Member> memberList = new HashMap<String, Member>();
     private int idCounter = 1;
 
-    private MemberManager() {
-        memberList = new HashMap<String, Member>();
-    }
-
-    public static MemberManager getInstance() {
-        if (instance == null) {
-            instance = new MemberManager();
-        }
+    private MemberManager() {}
+    
+    public static MemberManager GetInstance() {
         return instance;
     }
 
