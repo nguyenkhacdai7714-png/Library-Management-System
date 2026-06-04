@@ -1,9 +1,8 @@
 package librarymanagement.membermanagement;
 
 import java.util.HashMap;
-import librarymanagement.membermanagement.Member;
 
-public class MemberManager extends ObjectManager {
+public class MemberManager {
     private static MemberManager instance;
     private HashMap<String, Member> memberList;
     private int idCounter = 1;
@@ -45,7 +44,7 @@ public class MemberManager extends ObjectManager {
             return;
         }
         if (IsMemberIDValid(member.getId())) {
-            System.out.println("Error: Member ID already exists (Overlap).");
+            System.out.println("Error: Member ID already exists!");
             return;
         }
         memberList.put(member.getId(), member);
