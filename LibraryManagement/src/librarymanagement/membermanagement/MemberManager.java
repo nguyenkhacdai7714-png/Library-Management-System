@@ -1,10 +1,12 @@
 package librarymanagement.membermanagement;
 
 import java.util.HashMap;
+import librarymanagement.membermanagement.Member;
 
-public class MemberManager {
+public class MemberManager extends ObjectManager {
     private static MemberManager instance;
-    private static HashMap<String, Member>memberList;
+    private HashMap<String, Member> memberList;
+    private int idCounter = 1;
 
     private MemberManager() {
         memberList = new HashMap<String, Member>();
@@ -17,48 +19,61 @@ public class MemberManager {
         return instance;
     }
 
-    public boolean IsIDValid(String memberId) {
-        if (memberId == null || memberId.trim().isEmpty()) {
-            return false;
-        }
-        return memberList.containsKey(memberId);
+    public String GenerateMemberID() {
+        return "M" + String.format("%03d", idCounter++);
     }
 
-    public void Add(Member member) {
+    public boolean IsMemberIDValid(String memberID) {
+        if (memberID == null || memberID.trim().isEmpty()) {
+            return false;
+        }
+        return memberList.containsKey(memberID);
+    }
+
+    public boolean IsDuplicateEmailOrPhone(String email, String phone) {
+        for (Member m : memberList.values()) {
+            if (m.getEmail().equalsIgnoreCase(email) || m.getPhone().equals(phone)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void AddMember(Member member) {
         if (member == null || member.getId() == null) {
-            System.out.println("Error: Member data is null.");
+            System.out.println("Error: Member data is invalid.");
             return;
         }
-        if (IsIDValid(member.getId())) {
+        if (IsMemberIDValid(member.getId())) {
             System.out.println("Error: Member ID already exists (Overlap).");
             return;
         }
         memberList.put(member.getId(), member);
-        System.out.println("Member added successfully to database.");
+        System.out.println("Member added successfully.");
     }
 
-    public void Remove(String memberId) {
-        if (!IsIDValid(memberId)) {
+    public void RemoveMember(String memberID) {
+        if (!IsMemberIDValid(memberID)) {
             System.out.println("Error: Member ID does not exist.");
             return;
         }
-        memberList.remove(memberId);
-        System.out.println("Member removed successfully from database.");
+        memberList.remove(memberID);
+        System.out.println("Member removed successfully.");
     }
 
-    public Member Search(String memberId) {
-        if (!IsIDValid(memberId)) {
+    public Member SearchMember(String memberID) {
+        if (!IsMemberIDValid(memberID)) {
             return null;
         }
-        return memberList.get(memberId);
+        return memberList.get(memberID);
     }
 
-    public void Update(String memberId, String name, String email, String phone) {
-        if (!IsIDValid(memberId)) {
+    public void UpdateMember(String memberID, String name, String email, String phone) {
+        if (!IsMemberIDValid(memberID)) {
             System.out.println("Error: Member ID does not exist for update.");
             return;
         }
-        Member member = memberList.get(memberId);
+        Member member = memberList.get(memberID);
         if (member != null) {
             member.setName(name);
             member.setEmail(email);
@@ -66,16 +81,11 @@ public class MemberManager {
         }
     }
 
-    public void View() {
-        if (memberList.isEmpty()) {
-            System.out.println("No members found in the system.");
-            return;
-        }
-        System.out.printf("%-10s | %-20s | %-25s | %-15s\n", "ID", "Name", "Email", "Phone");
-        System.out.println("----------------------------------------------------------------------------");
-        for (Member member : memberList.values()) {
-            System.out.printf("%-10s | %-20s | %-25s | %-15s\n", 
-                    member.getId(), member.getName(), member.getEmail(), member.getPhone());
-        }
+    public void SetMemberList(HashMap<String, Member> memberList) {
+        this.memberList = memberList;
+    }
+
+    public HashMap<String, Member> GetMemberList() {
+        return this.memberList;
     }
 }
