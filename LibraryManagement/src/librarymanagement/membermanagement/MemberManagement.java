@@ -15,32 +15,38 @@ public class MemberManagement extends ObjectManagement {
         Menu();
     }
 
-    public void Menu() {
+public void Menu() {
         while (true) {
             Functions.Clear();
-            System.out.println("========================================");
-            System.out.println("------- MEMBER MANAGEMENT SYSTEM -------");
-            System.out.println("========================================");
-            String[] options = {"Back", "Add Member", "Remove Member", "Update Member", "View Members", "Search Member"};
-            Functions.MenuGenerator(options);
+            System.out.println("----------------------------------------");
+            System.out.println("---------- MEMBER MANAGEMENT -----------");
+            System.out.println("----------------------------------------");
+            System.out.println("[1]. Add new member with details.");
+            System.out.println("[2]. Update member information.");
+            System.out.println("[3]. Remove a member.");
+            System.out.println("[4]. View all members.");
+            System.out.println("[5]. Search members.");
+            System.out.println("[0]. Quit.");
+            System.out.println("----------------------------------------");
+            System.out.print("Enter your choice: ");
             
             int choice = Functions.InputMenuChoice(0, 5);
             switch (choice) {
                 case 0 -> { return; }
                 case 1 -> AddMember();
-                case 2 -> RemoveMember();
-                case 3 -> UpdateMember();
+                case 2 -> UpdateMember();
+                case 3 -> RemoveMember();
                 case 4 -> ViewMemberList();
                 case 5 -> SearchMember();
             }
         }
     }
 
-    public void AddMember() {
+        public void AddMember() {
         Functions.Clear();
-        System.out.println("========================================");
-        System.out.println("--------------- ADD MEMBER -------------");
-        System.out.println("========================================");
+        System.out.println("----------------------------------------");
+        System.out.println("------------ ADD NEW MEMBER ------------");
+        System.out.println("----------------------------------------");
         
         String id = Functions.InputString("Enter Member ID: ");
 
@@ -80,11 +86,11 @@ public class MemberManagement extends ObjectManagement {
         Functions.Pause();
     }
 
-    public void RemoveMember() {
+        public void RemoveMember() {
         Functions.Clear();
-        System.out.println("========================================");
-        System.out.println("------------- REMOVE MEMBER ------------");
-        System.out.println("========================================");
+        System.out.println("----------------------------------------");
+        System.out.println("------------ REMOVE MEMBER -------------");
+        System.out.println("----------------------------------------");
         String id = Functions.InputString("Enter Member ID to delete: ");
 
         if (Functions.IsStringValid(id) && MemberManager.getInstance().IsMemberIDValid(id)) {
@@ -117,11 +123,11 @@ public class MemberManagement extends ObjectManagement {
         System.out.println("0. Back");
     }
 
-    public void UpdateMember() {
+        public void UpdateMember() {
         Functions.Clear();
-        System.out.println("========================================");
-        System.out.println("------------- UPDATE MEMBER ------------");
-        System.out.println("========================================");
+        System.out.println("----------------------------------------");
+        System.out.println("------------ UPDATE MEMBER -------------");
+        System.out.println("----------------------------------------");
         String id = Functions.InputString("Enter Member ID to modify: ");
 
         if (!Functions.IsStringValid(id) || !MemberManager.getInstance().IsMemberIDValid(id)) {
@@ -187,11 +193,11 @@ public class MemberManagement extends ObjectManagement {
         }
     }
 
-    public void ViewMemberList() {
+        public void ViewMemberList() {
         Functions.Clear();
-        System.out.println("========================================");
-        System.out.println("-------------- MEMBER LIST -------------");
-        System.out.println("========================================");
+        System.out.println("----------------------------------------");
+        System.out.println("------------- MEMBER LIST --------------");
+        System.out.println("----------------------------------------");
         HashMap<String, Member> list = MemberManager.getInstance().getMemberList();
         if (list.isEmpty()) {
             System.out.println("No members found in the system.");
@@ -206,11 +212,11 @@ public class MemberManagement extends ObjectManagement {
         Functions.Pause();
     }
 
-    public void SearchMember() {
+        public void SearchMember() {
         Functions.Clear();
-        System.out.println("========================================");
-        System.out.println("------------- SEARCH MEMBER ------------");
-        System.out.println("========================================");
+        System.out.println("----------------------------------------");
+        System.out.println("------------ SEARCH MEMBER -------------");
+        System.out.println("----------------------------------------");
         String id = Functions.InputString("Enter Target Search ID: ");
 
         if (Functions.IsStringValid(id)) {
