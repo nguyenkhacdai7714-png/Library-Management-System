@@ -15,7 +15,7 @@ public class MemberManagement extends ObjectManagement {
         Menu();
     }
 
-public void Menu() {
+    public void Menu() {
         while (true) {
             Functions.Clear();
             System.out.println("----------------------------------------");
@@ -33,16 +33,16 @@ public void Menu() {
             int choice = Functions.InputMenuChoice(0, 5);
             switch (choice) {
                 case 0 -> { return; }
-                case 1 -> AddMember();
-                case 2 -> UpdateMember();
-                case 3 -> RemoveMember();
+                case 1 -> AddingMember();
+                case 2 -> UpdatingMember();
+                case 3 -> RemovingMember();
                 case 4 -> ViewMemberList();
-                case 5 -> SearchMember();
+                case 5 -> SearchingMember();
             }
         }
     }
 
-        public void AddMember() {
+    public void AddingMember() {
         Functions.Clear();
         System.out.println("----------------------------------------");
         System.out.println("------------ ADD NEW MEMBER ------------");
@@ -57,7 +57,7 @@ public void Menu() {
         }
 
         if (MemberManager.getInstance().IsMemberIDValid(id)) {
-            Functions.Alert("Error: This Member ID already exists! Overlap blocked.");
+            Functions.Alert("Error: This Member ID already exists!");
             Functions.Pause();
             return;
         }
@@ -81,12 +81,12 @@ public void Menu() {
             MemberManager.getInstance().AddMember(newMember);
             Functions.Alert("Member registered successfully.");
         } else {
-            Functions.Alert("Invalid text detected across entry fields. Registration canceled.");
+            Functions.Alert("Invalid text detected across entry fields.");
         }
         Functions.Pause();
     }
 
-        public void RemoveMember() {
+    public void RemovingMember() {
         Functions.Clear();
         System.out.println("----------------------------------------");
         System.out.println("------------ REMOVE MEMBER -------------");
@@ -97,26 +97,19 @@ public void Menu() {
             MemberManager.getInstance().RemoveMember(id);
             Functions.Alert("Member removed successfully.");
         } else {
-            Functions.Alert("Error: Member ID not found or invalid input pattern!");
+            Functions.Alert("Error: Member ID not found or invalid input!");
         }
         Functions.Pause();
     }
 
-        private void UpdatingMenu(Member oldMember, String nName, String nEmail, String nPhone) {
+    private void UpdatingMenu(Member oldMember, String nName, String nEmail, String nPhone) {
         System.out.println("----------------------------------------");
         System.out.println("------- UPDATING MEMBER INFO MENU ------");
         System.out.println("----------------------------------------");
         
-        // Hiển thị thông tin: Nếu giá trị mới khác cũ thì mới in mũi tên
-        System.out.println("[1]. Name : " + oldMember.getName() 
-            + (oldMember.getName().equals(nName) ? "" : " -> " + nName));
-            
-        System.out.println("[2]. Email: " + oldMember.getEmail() 
-            + (oldMember.getEmail().equals(nEmail) ? "" : " -> " + nEmail));
-            
-        System.out.println("[3]. Phone: " + oldMember.getPhone() 
-            + (oldMember.getPhone().equals(nPhone) ? "" : " -> " + nPhone));
-            
+        System.out.println("[1]. Name : " + oldMember.getName() + (oldMember.getName().equals(nName) ? "" : " -> " + nName));
+        System.out.println("[2]. Email: " + oldMember.getEmail() + (oldMember.getEmail().equals(nEmail) ? "" : " -> " + nEmail));
+        System.out.println("[3]. Phone: " + oldMember.getPhone() + (oldMember.getPhone().equals(nPhone) ? "" : " -> " + nPhone));
         System.out.println("[4]. Update Changed Data");
         System.out.println("[0]. Back");
         
@@ -124,7 +117,7 @@ public void Menu() {
         System.out.print("Enter your choice: ");
     }
 
-        public void UpdateMember() {
+    public void UpdatingMember() {
         Functions.Clear();
         System.out.println("----------------------------------------");
         System.out.println("------------ UPDATE MEMBER -------------");
@@ -138,7 +131,6 @@ public void Menu() {
         }
 
         Member target = MemberManager.getInstance().SearchMember(id);
-        
         String newName = target.getName();
         String newEmail = target.getEmail();
         String newPhone = target.getPhone();
@@ -147,73 +139,49 @@ public void Menu() {
             Functions.Clear();
             UpdatingMenu(target, newName, newEmail, newPhone);
             int choice = Functions.InputMenuChoice(0, 4);
-
-            if (choice == 0) {
-                return; 
-            }
+            if (choice == 0) return;
             
             switch (choice) {
                 case 1 -> {
-                    String tempName = Functions.InputString("Enter New Name: ");
-                    if (Functions.IsStringValid(tempName)) {
-                        newName = tempName;
-                    } else {
-                        Functions.Alert("Invalid input! Name cannot be blank.");
-                        Functions.Pause();
-                    }
+                    String temp = Functions.InputString("Enter New Name: ");
+                    if (Functions.IsStringValid(temp)) newName = temp;
                 }
                 case 2 -> {
-                    String tempEmail = Functions.InputString("Enter New Email: ");
-                    if (Functions.IsStringValid(tempEmail)) {
-                        newEmail = tempEmail;
-                    } else {
-                        Functions.Alert("Invalid input! Email cannot be blank.");
-                        Functions.Pause();
-                    }
+                    String temp = Functions.InputString("Enter New Email: ");
+                    if (Functions.IsStringValid(temp)) newEmail = temp;
                 }
                 case 3 -> {
-                    String tempPhone = Functions.InputString("Enter New Phone: ");
-                    if (Functions.IsStringValid(tempPhone)) {
-                        newPhone = tempPhone;
-                    } else {
-                        Functions.Alert("Invalid input! Phone cannot be blank.");
-                        Functions.Pause();
-                    }
+                    String temp = Functions.InputString("Enter New Phone: ");
+                    if (Functions.IsStringValid(temp)) newPhone = temp;
                 }
                 case 4 -> {
-                    if (Functions.IsStringValid(newName) && Functions.IsStringValid(newEmail) && Functions.IsStringValid(newPhone)) {
-                        MemberManager.getInstance().UpdateMember(id, newName, newEmail, newPhone);
-                        System.out.println("Database values updated completely.");
-                    } else {
-                        Functions.Alert("Cannot save data: Invalid fields detected.");
-                    }
-                    Functions.Pause();
+                    MemberManager.getInstance().UpdateMember(id, newName, newEmail, newPhone);
+                    Functions.Alert("Database updated successfully.");
                     return;
                 }
             }
         }
     }
 
-        public void ViewMemberList() {
+    public void ViewMemberList() {
         Functions.Clear();
         System.out.println("----------------------------------------");
         System.out.println("------------- MEMBER LIST --------------");
         System.out.println("----------------------------------------");
         HashMap<String, Member> list = MemberManager.getInstance().getMemberList();
         if (list.isEmpty()) {
-            System.out.println("No members found in the system.");
+            System.out.println("No members found.");
         } else {
             System.out.printf("%-10s | %-20s | %-25s | %-15s\n", "ID", "Name", "Email", "Phone");
             System.out.println("----------------------------------------------------------------------------");
-            for (Member member : list.values()) {
-                System.out.printf("%-10s | %-20s | %-25s | %-15s\n", 
-                        member.getId(), member.getName(), member.getEmail(), member.getPhone());
+            for (Member m : list.values()) {
+                System.out.printf("%-10s | %-20s | %-25s | %-15s\n", m.getId(), m.getName(), m.getEmail(), m.getPhone());
             }
         }
         Functions.Pause();
     }
 
-        public void SearchMember() {
+    public void SearchingMember() {
         Functions.Clear();
         System.out.println("----------------------------------------");
         System.out.println("------------ SEARCH MEMBER -------------");
@@ -226,10 +194,8 @@ public void Menu() {
                 System.out.println("\nMatching Profile Found:");
                 match.PrintInfo(); 
             } else {
-                Functions.Alert("No member entry exists mapping to that ID.");
+                Functions.Alert("No member entry exists.");
             }
-        } else {
-            Functions.Alert("Invalid parameters supplied.");
         }
         Functions.Pause();
     }
