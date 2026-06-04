@@ -102,25 +102,26 @@ public void Menu() {
         Functions.Pause();
     }
 
-    private void UpdatingMenu(Member oldMember, String nName, String nEmail, String nPhone) {
+        private void UpdatingMenu(Member oldMember, String nName, String nEmail, String nPhone) {
         System.out.println("----------------------------------------");
-        System.out.println("------- Updating Member Info Menu ------");
+        System.out.println("------- UPDATING MEMBER INFO MENU ------");
         System.out.println("----------------------------------------");
         
-        String nameLine = "1. Member Name : " + oldMember.getName();
-        if (!oldMember.getName().equals(nName)) nameLine += " -> " + nName;
+        // Hiển thị thông tin: Nếu giá trị mới khác cũ thì mới in mũi tên
+        System.out.println("[1]. Name : " + oldMember.getName() 
+            + (oldMember.getName().equals(nName) ? "" : " -> " + nName));
+            
+        System.out.println("[2]. Email: " + oldMember.getEmail() 
+            + (oldMember.getEmail().equals(nEmail) ? "" : " -> " + nEmail));
+            
+        System.out.println("[3]. Phone: " + oldMember.getPhone() 
+            + (oldMember.getPhone().equals(nPhone) ? "" : " -> " + nPhone));
+            
+        System.out.println("[4]. Update Changed Data");
+        System.out.println("[0]. Back");
         
-        String emailLine = "2. Member Email: " + oldMember.getEmail();
-        if (!oldMember.getEmail().equals(nEmail)) emailLine += " -> " + nEmail;
-        
-        String phoneLine = "3. Member Phone: " + oldMember.getPhone();
-        if (!oldMember.getPhone().equals(nPhone)) phoneLine += " -> " + nPhone;
-
-        System.out.println(nameLine);
-        System.out.println(emailLine);
-        System.out.println(phoneLine);
-        System.out.println("4. [Update Changed Data]");
-        System.out.println("0. Back");
+        System.out.println("----------------------------------------");
+        System.out.print("Enter your choice: ");
     }
 
         public void UpdateMember() {
