@@ -49,7 +49,7 @@ public class MemberManagement {
             return;
         }
 
-        if (MemberManager.GetInstance().IsMemberIDValid(id)) {
+        if (MemberManager.getInstance().IsMemberIDValid(id)) {
             Functions.Alert("Error: This Member ID already exists! Overlap blocked.");
             Functions.Pause();
             return;
@@ -63,14 +63,14 @@ public class MemberManagement {
         String phone = Functions.InputString();
 
         if (Functions.IsStringValid(name) && Functions.IsStringValid(email) && Functions.IsStringValid(phone)) {
-            if (MemberManager.GetInstance().IsDuplicateEmailOrPhone(email, phone)) {
+            if (MemberManager.getInstance().IsDuplicateEmailOrPhone(email, phone)) {
                 Functions.Alert("Error: Email or Phone number already registered!");
                 Functions.Pause();
                 return;
             }
             
             Member newMember = new Member(id, name, phone, email);
-            MemberManager.GetInstance().AddMember(newMember);
+            MemberManager.getInstance().AddMember(newMember);
         } else {
             Functions.Alert("Invalid text detected across entry fields. Registration canceled.");
         }
@@ -83,8 +83,8 @@ public class MemberManagement {
         System.out.print("Enter Member ID to delete: ");
         String id = Functions.InputString();
 
-        if (Functions.IsStringValid(id) && MemberManager.GetInstance().IsMemberIDValid(id)) {
-            MemberManager.GetInstance().RemoveMember(id);
+        if (Functions.IsStringValid(id) && MemberManager.getInstance().IsMemberIDValid(id)) {
+            MemberManager.getInstance().RemoveMember(id);
         } else {
             Functions.Alert("Error: Member ID not found or invalid input pattern!");
         }
@@ -116,13 +116,13 @@ public class MemberManagement {
         System.out.print("Enter Member ID to modify: ");
         String id = Functions.InputString();
 
-        if (!Functions.IsStringValid(id) || !MemberManager.GetInstance().IsMemberIDValid(id)) {
+        if (!Functions.IsStringValid(id) || !MemberManager.getInstance().IsMemberIDValid(id)) {
             Functions.Alert("Error: Member ID not found or invalid reference!");
             Functions.Pause();
             return;
         }
 
-        Member target = MemberManager.GetInstance().SearchMember(id);
+        Member target = MemberManager.getInstance().SearchMember(id);
         
         String newName = target.getName();
         String newEmail = target.getEmail();
@@ -170,7 +170,7 @@ public class MemberManagement {
                     break;
                 case 4:
                     if (Functions.IsStringValid(newName) && Functions.IsStringValid(newEmail) && Functions.IsStringValid(newPhone)) {
-                        MemberManager.GetInstance().UpdateMember(id, newName, newEmail, newPhone);
+                        MemberManager.getInstance().UpdateMember(id, newName, newEmail, newPhone);
                         System.out.println("Database values updated completely.");
                     } else {
                         Functions.Alert("Cannot save data: Invalid fields detected.");
@@ -183,7 +183,7 @@ public class MemberManagement {
 
     public void ViewMemberList() {
         Functions.Clear();
-        HashMap<String, Member> list = MemberManager.GetInstance().GetMemberList();
+        HashMap<String, Member> list = MemberManager.getInstance().GetMemberList();
         if (list.isEmpty()) {
             System.out.println("No members found in the system.");
         } else {
@@ -204,7 +204,7 @@ public class MemberManagement {
         String id = Functions.InputString();
 
         if (Functions.IsStringValid(id)) {
-            Member match = MemberManager.GetInstance().SearchMember(id);
+            Member match = MemberManager.getInstance().SearchMember(id);
             if (match != null) {
                 System.out.println("\nMatching Profile Found:");
                 match.PrintInfo(); 
