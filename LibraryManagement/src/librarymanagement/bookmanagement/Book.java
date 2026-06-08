@@ -35,10 +35,10 @@ public class Book {
         
     // 2. Getter / Setter (Dung de truy xuat va cap nhat du lieu tu ben ngoai)
         // id
-        public String getid() { 
+        public String getId() { 
             return id; 
         }
-        public void setid(String id) { 
+        public void setId(String id) { 
             this.id = id; 
         }
         
@@ -80,5 +80,14 @@ public class Book {
         }
         public void setQuantity(int quantity) { 
             this.quantity = quantity; 
+        }
+        
+        
+        public void View(){
+            System.out.println("Book's title               : " + title);
+            System.out.println("Book's author              : " + author);
+            System.out.println("Book's genre               : " + genre);
+            System.out.println("Book's publication year    : " + publicationYear);
+            System.out.println("Book's quantity            : " + quantity);
         }
 }

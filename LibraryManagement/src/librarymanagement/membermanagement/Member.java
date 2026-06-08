@@ -66,4 +66,11 @@ public class Member {
     public void setReadingHistory(List<String> readingHistory) {
         this.readingHistory = readingHistory;
     }
+    
+    public void View(){
+        System.out.printf("ID           : %s\n", getId());
+        System.out.printf("Full name    : %s\n", getName());
+        System.out.printf("Phone number : %s\n", getPhone());
+        System.out.printf("Email        : %s \n", getEmail());
+    }
 }

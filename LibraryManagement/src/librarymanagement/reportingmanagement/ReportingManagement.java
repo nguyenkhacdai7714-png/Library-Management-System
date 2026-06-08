@@ -29,12 +29,12 @@ public class ReportingManagement {
     
     public void Run()
     {
-        Functions.Print("Generating reports");
+        Functions.Print("Generating reports\n");
         ReportingManager.GenerateOverdueBookList();
         ReportingManager.GenerateBorrowedBookList();
         ReportingManager.GenerateMostActiveMemberList();
         ReportingManager.GenerateMostPopularBookList();
-        Functions.Print("-> Successfully!");
+        Functions.Print("-> Successfully!\n");
         
         String choice;
         do{

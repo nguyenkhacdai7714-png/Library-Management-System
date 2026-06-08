@@ -5,6 +5,12 @@ import java.util.Scanner;
 public class Functions {
     
     static Scanner input = new Scanner(System.in);
+    static int menuWidth = Constants.MENU_WIDTH;
+    static String menuWall = "";
+    
+    public static void StartFunctions(){
+        menuWall = String.format("%" + (menuWidth) + "s", "").replace(' ', '=');
+    }
     
     public static void Clear(){
         System.out.print("\033[H\033[2J");  
@@ -37,9 +43,8 @@ public class Functions {
     }
     public static void MenuGenerator(String title, String end, String... functions){
         
-       int sideWallSize = 8;
+       int sideWallSize = (menuWidth - title.length() - 2)/2;
         
-       String wall = String.format("%" + (title.length()+(sideWallSize*2)+2) + "s", "").replace(' ', '=');
        String sideWall = String.format("%" + (sideWallSize) + "s", "").replace(' ', '=');
         
        System.out.println(sideWall +" " +  title.toUpperCase() + " " + sideWall);
@@ -47,7 +52,7 @@ public class Functions {
        {
            if(functions[i].equals("WALL"))
            {
-               System.out.println(wall);
+               System.out.println(menuWall);
            }
            else
            {
@@ -55,9 +60,9 @@ public class Functions {
            }
            
        }
-       System.out.println(wall);
+       System.out.println(menuWall);
        System.out.println("[0] " + end);
-       System.out.println(wall);
+       System.out.println(menuWall);
     }
     
     public static void Print(String text)
@@ -90,5 +95,10 @@ public class Functions {
     
     public static String InputMenuChoice(){
         return InputString("Enter your choice: ");
+    }
+    
+    
+    public static boolean IsStringValid(String s){
+        return s!=null && !s.trim().isEmpty();
     }
 }
