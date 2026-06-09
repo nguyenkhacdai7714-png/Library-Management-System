@@ -1,5 +1,8 @@
 package librarymanagement.utils;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import java.util.Scanner;
 
 public class Functions {
@@ -101,4 +104,9 @@ public class Functions {
     public static boolean IsStringValid(String s){
         return s!=null && !s.trim().isEmpty();
     }
+    
+    public static long DayBetween(LocalDate startDate, LocalDate endDate){
+        return ChronoUnit.DAYS.between(startDate, endDate);
+    }
+    
 }

@@ -1,5 +1,6 @@
 package abstractions;
 
 public interface MembershipType {
-    public void MembershipTypeName();
+    public String MembershipTypeName();
+    public float getOverdueFine(long overdueDays);
 }

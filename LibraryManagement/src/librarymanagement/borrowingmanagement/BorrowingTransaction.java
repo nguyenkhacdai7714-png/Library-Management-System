@@ -1,13 +1,14 @@
 package librarymanagement.borrowingmanagement;
 
+import java.time.LocalDate;
 
 public class BorrowingTransaction {
     // 1. Khai bao cac bien private de an toan
     private String transactionID;
     private String memberID;
     private String bookID;
-    private String borrowDate;
-    private String dueDate;
+    private LocalDate borrowDate;
+    private LocalDate dueDate;
     private boolean isReturned;
 
     // 2. Constructor mac din
@@ -15,19 +16,19 @@ public class BorrowingTransaction {
         this.transactionID = "";
         this.memberID = "";
         this.bookID = "";
-        this.borrowDate = "";
-        this.dueDate = "";
+        this.borrowDate = null;
+        this.dueDate = null;
         this.isReturned = false;
     }
 
     // 3. Constructor co tham so 
-    public BorrowingTransaction(String transactionID, String memberID, String bookID, String borrowDate, String dueDate, boolean isReturned) {
+    public BorrowingTransaction(String transactionID, String memberID, String bookID, LocalDate borrowDate, LocalDate dueDate) {
         this.transactionID = transactionID;
         this.memberID = memberID;
         this.bookID = bookID;
         this.borrowDate = borrowDate;
         this.dueDate = dueDate;
-        this.isReturned = isReturned;
+        this.isReturned = false;
     }
 // 4.Getter/Setter
     public String getTransactionID() {
@@ -54,19 +55,19 @@ public class BorrowingTransaction {
         this.bookID = bookID;
     }
 
-    public String getBorrowDate() {
+    public LocalDate getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(String borrowDate) {
+    public void setBorrowDate(LocalDate borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public String getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(String dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 

@@ -11,12 +11,13 @@ public abstract class ObjectManager<T> {
     public HashMap<String, T> getList(){
         return list;
     }
-    public void View(){
-        
-    }
+    abstract public void View();
     
     public boolean IsIdExist(String id){
         return list.containsKey(id);
+    }
+    public boolean IsListEmpty(){
+        return list.isEmpty(); 
     }
     
     public void Add(String id, T object){
@@ -31,7 +32,7 @@ public abstract class ObjectManager<T> {
         }
     }
     
-    public T Search(String id){
+    public T SearchById(String id){
         if(IsIdExist(id))
         {
             return list.get(id);

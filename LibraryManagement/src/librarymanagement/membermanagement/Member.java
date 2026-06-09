@@ -1,7 +1,8 @@
 package librarymanagement.membermanagement;
 
 import java.util.ArrayList;
-import java.util.List;
+import abstractions.MembershipType;
+import librarymanagement.bookmanagement.Book;
 
 public class Member {
 
@@ -9,14 +10,18 @@ public class Member {
     private String name;
     private String phone;
     private String email;
-    private List<String> readingHistory;
+    private ArrayList<Book> readingHistory;
+    
+    private MembershipType membershipType;
 
     public Member() {
         this.id = "";
         this.name = "";
         this.phone = "";
         this.email = "";
-        this.readingHistory = new ArrayList<>();
+        this.readingHistory = new ArrayList<Book>();
+        
+        membershipType = new RegularMembership();
     }
 
     public Member(String id, String name, String phone, String email) {
@@ -25,6 +30,8 @@ public class Member {
         this.phone = phone;
         this.email = email;
         this.readingHistory = new ArrayList<>();
+        
+        membershipType = new RegularMembership();
     }
 
     public String getId() {
@@ -59,18 +66,26 @@ public class Member {
         this.email = email;
     }
 
-    public List<String> getReadingHistory() {
+    public ArrayList<Book> getReadingHistory() {
         return readingHistory;
     }
 
-    public void setReadingHistory(List<String> readingHistory) {
+    public void setReadingHistory(ArrayList<Book> readingHistory) {
         this.readingHistory = readingHistory;
     }
     
+    public void setMembership(MembershipType newMembership){
+        membershipType = newMembership;
+    }
+    public MembershipType getMembership(){
+        return membershipType;
+    }
+    
     public void View(){
-        System.out.printf("ID           : %s\n", getId());
-        System.out.printf("Full name    : %s\n", getName());
-        System.out.printf("Phone number : %s\n", getPhone());
-        System.out.printf("Email        : %s \n", getEmail());
+        System.out.printf("ID               : %s\n", getId());
+        System.out.printf("Full name        : %s\n", getName());
+        System.out.printf("Phone number     : %s\n", getPhone());
+        System.out.printf("Email            : %s\n", getEmail());
+        System.out.printf("Membership type  : %s\n", getMembership().MembershipTypeName());
     }
 }

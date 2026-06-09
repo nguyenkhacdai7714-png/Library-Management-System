@@ -13,7 +13,7 @@ public class BorrowingManagement {
     }
     // end singleton
     
-    public ArrayList<BorrowingTransaction> borrowingList = new ArrayList<BorrowingTransaction>();
+    public HashMap<String, BorrowingTransaction> borrowingList = new HashMap<String, BorrowingTransaction>();
     
     public void Run()
     {
