@@ -1,10 +1,13 @@
 
 package librarymanagement.bookmanagement;
 
-public class Book {
+// Kế thừa lớp cha LibraryObject từ package abstractions theo cấu trúc mới
+import abstractions.LibraryObject;
+
+public class Book extends LibraryObject {
     
     // Khai bao bien dung de luu tru du lieu thong tin cua moi cuoc sach
-    private String id;                   // Chu + so ---> dung String
+    // private String id;                   // Chu + so ---> dung String
     private String title;                // Chu + so ---> dung String 
     private String author;               // Chu + so ---> dung String
     private String genre;                // Chu + so ---> dung String
@@ -15,7 +18,9 @@ public class Book {
     // 1. Constructor ( phuong thuc thiet lap)
         // 1.1 Phuong thuc thiet lap mac dinh 
         public Book(){
-            this.id = "";             
+            // Gọi constructor mặc định của lớp cha abstractions.LibraryObject
+            super("");
+            // this.id = "";             
             this.title = "";            
             this.author = "";           
             this.genre = "";             
@@ -25,7 +30,9 @@ public class Book {
         }
         // 1.2 Phuong thuc thiet lap co tham so 
         public Book(String id, String title, String author, String genre, int publicationYear, int quantity) {
-            this.id = id;
+            // Đẩy tham số id lên cho constructor của lớp cha xử lý nạp vùng nhớ
+            super(id);
+            //this.id = id;
             this.title = title;
             this.author = author;
             this.genre = genre;
@@ -35,12 +42,12 @@ public class Book {
         
     // 2. Getter / Setter (Dung de truy xuat va cap nhat du lieu tu ben ngoai)
         // id
-        public String getId() { 
-            return id; 
-        }
-        public void setId(String id) { 
-            this.id = id; 
-        }
+//      public String getId() { 
+//          return id; 
+//      }
+//      public void setId(String id) { 
+//          this.id = id; 
+//      }
         
         // title
         public String getTitle() { 
@@ -80,5 +87,16 @@ public class Book {
         }
         public void setQuantity(int quantity) { 
             this.quantity = quantity; 
+        }
+    
+    // 3. output    
+        // Thực hiện @Override hàm View() trừu tượng bắt buộc từ lớp cha LibraryObject
+        @Override
+        public void View(){
+            System.out.println("Book's title               : " + title);
+            System.out.println("Book's author              : " + author);
+            System.out.println("Book's genre               : " + genre);
+            System.out.println("Book's publication year    : " + publicationYear);
+            System.out.println("Book's quantity            : " + quantity);
         }
 }

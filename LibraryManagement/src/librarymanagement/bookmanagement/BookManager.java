@@ -3,7 +3,8 @@ package librarymanagement.bookmanagement;
 import java.util.HashMap;
 import librarymanagement.utils.Functions;
 
-public class BookManager {
+// Kế thừa ObjectManager<Book> từ package abstractions theo đúng code lớp cha bạn gửi
+public class BookManager extends abstractions.ObjectManager<Book> {
     
     // singleton
     private static final BookManager instance = new BookManager();
@@ -13,57 +14,8 @@ public class BookManager {
     }
     // end singleton
     
-    private HashMap<String, Book> bookList = new HashMap<String, Book>();
-    
-    // getter/ setter dung trong viec dong goi book
-        public void setBookList(HashMap<String, Book> bookList) {
-            this.bookList = bookList;
-        }
-
-        public HashMap<String, Book> getBookList() {
-            return this.bookList;
-        }
-    
-    // 1. Kiểm tra kho trống
-    public boolean isStorageEmpty() {
-        return bookList.isEmpty();
-    }
-    
-    // 2. Kiểm tra mã ID tồn tại hay không
-    public boolean isIdExists(String id) {
-        return bookList.containsKey(id);
-    }
-    
-    // 3. Lấy đối tượng Book từ kho ra bằng ID
-    public Book getBookById(String id) {
-        return bookList.get(id);
-    }
-    
-    // 4. Add, Remove, Update, View, Search
-        // 1. ham cho addbook
-        public void Add(Book book) {
-            bookList.put(book.getId(), book);
-        }
-        
-        // 2. ham cho updatebook
-        // trong ham updatebook da co vi tri cho bien "current" 
-        // bien do truc tiep thuc hien thay doi thong tin khong can thong qua bookmanager
-        // tu dong thay doi khi nhap xong va an enter 
-        
-        
-        // 3. ham cho removebook
-        public void Remove(String id) {    // truc tiep loai bo "id" va du lieu cua id do ra khoi hashmap
-            bookList.remove(id);
-        }
-        
-        // 4. ham cho viewbook
-            // ( lenh cho management )
-            // Lấy ra toàn bộ danh sách cuốn sách dưới dạng một Collection (Tập hợp)
-            // @return Tập hợp tất cả các đối tượng Book trong kho
-            public java.util.Collection<Book> getAllBooks() {
-                return bookList.values();
-            }
-        // 5. ham hien thi     
+    // 5. ham hien thi 
+    @Override    
     public void View() {
       
         BookManager manager = BookManager.getInstance();
@@ -77,7 +29,8 @@ public class BookManager {
         // neu trong in ra vi tri tren bang la "NULL"
         // su dung bo dem "count" de de dang quan ly so thu tu cac book co trong danh sach
         int count = 1;
-        if (manager.isStorageEmpty()) {
+        // Gọi hàm IsListEmpty() đã được kế thừa từ lớp cha để bẫy lỗi kho trống
+        if (this.IsListEmpty()) {
             System.out.printf("%-5s | %-10s | %-25s | %-20s | %-15s | %-12s | %-10s \n", 
                     "STT", 
                         "Book ID", 
@@ -105,7 +58,8 @@ public class BookManager {
             System.out.println("-----------------------------------------------------------------------------------------------------------------");
             
             // 2. vong lap de in ra cac book va thong tin du lieu theo tung book
-            for (Book book : manager.getAllBooks()) {
+            // Duyệt trực tiếp qua các value nằm trong biến 'list' (được kế thừa từ lớp cha dưới dạng protected)
+            for (Book book : this.getList().values()) {
                 System.out.printf("%-5d | %-10s | %-25s | %-20s | %-15s | %-12d | %-8d \n", 
                         count,
                             book.getId(),
@@ -122,7 +76,18 @@ public class BookManager {
             System.out.println("=> Total: " + (count - 1) + " book(s) found in the storage.");
         }
         
-        Functions.Pause();
+    }
+    
+    public void Update(String bookId, String newTitle, String newAuthor, String newGenre, int newYear, int newQuantity){
+        // Sử dụng hàm IsIdExist(bookId) kế thừa từ lớp cha để kiểm tra tính hợp lệ
+        if(this.IsIdExist(bookId)){
+            Book currentBook = this.getList().get(bookId);
+            currentBook.setTitle(newTitle);
+            currentBook.setAuthor(newAuthor);
+            currentBook.setGenre(newGenre);
+            currentBook.setPublicationYear(newYear);
+            currentBook.setQuantity(newQuantity);
+        }
     }
     
 }
