@@ -1,0 +1,4 @@
+B000,Toan 12,NXB Kim Dong,SGK,2000,5
+B001,Ngu Van 12,NXB Kim Dong,SGK,2000,2
+B002,English B2,NXB Ha Noi,SGK,2005,8
+B003,Truyen Kieu,Nguyen Du,Truyen,1801,1

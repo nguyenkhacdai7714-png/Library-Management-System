@@ -1,6 +1,17 @@
 package abstractions;
 import java.util.HashMap;
 
+// thêm 3 cái import 
+    // import cau arraylist 
+import java.util.ArrayList;
+import java.util.Collection;
+// them vi tri cua ham function de co the su dung 
+import librarymanagement.utils.Functions;
+// bao loi systemcode nen them import cua no 
+import librarymanagement.utils.SystemCode;
+import librarymanagement.utils.Constants;
+import librarymanagement.utils.BoardDrawer;
+
 public abstract class ObjectManager<T> {
     
     protected HashMap<String, T> list = new HashMap<String, T>();
@@ -11,7 +22,11 @@ public abstract class ObjectManager<T> {
     public HashMap<String, T> getList(){
         return list;
     }
-    abstract public void View();
+    
+    // abstract public void View();
+    // thay doi cách su dung view nen bo 
+    
+    // 1 hàm trừu tượng duy nhất: stt = 0 là in Header va báo NULL, stt > 0 là in dữ liệu
     
     public boolean IsIdExist(String id){
         return list.containsKey(id);
@@ -19,9 +34,12 @@ public abstract class ObjectManager<T> {
     public boolean IsListEmpty(){
         return list.isEmpty(); 
     }
+    public boolean IsListFull(){
+        return list.size() >= Constants.MAX_IDS;
+    }
     
     public void Add(String id, T object){
-        if(IsIdExist(id)){
+        if(!IsIdExist(id)){
             list.put(id, object);
         }
     }
@@ -39,4 +57,16 @@ public abstract class ObjectManager<T> {
         }
         return null;
     }
+   
+    
+    // EDITED
+    public abstract void View();
+    public abstract void ViewList(Collection<T> itemList, String title, String emptyAlert);
+    /* NOTES
+    
+    + Chi giu lai 3 ham nay.
+    + Xoa het PrintData/PrintTitle
+    + Ben tren co import BoardDrawer
+    
+    */
 }

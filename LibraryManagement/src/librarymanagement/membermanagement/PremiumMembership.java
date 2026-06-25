@@ -7,11 +7,16 @@ public class PremiumMembership implements MembershipType{
     
     @Override
     public String MembershipTypeName(){
-        return "Premium Membership";
+        return "Premium";
     }
     
     @Override
     public float getOverdueFine(long overdueDays){
         return overdueDays*Constants.PREMIUM_MEMBERSHIP_OVERDUE_FINE;
+    }
+    
+    @Override
+    public String getMembershipTag(){
+        return Constants.premiumMembershipTag;
     }
 }

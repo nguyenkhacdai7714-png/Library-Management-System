@@ -1,0 +1,4 @@
+M000,Nguyen Khac Dai,01234,dai@gmail.com,B000/B001,REGULAR
+M003,Vu Hung,090909,hung@gmail.com,@@,REGULAR
+M002,Gia Khanh,010101,khanh@gmail.com,@@,REGULAR
+M001,Pham Ngoc Minh,45678,minh@gmail.com,B002,REGULAR

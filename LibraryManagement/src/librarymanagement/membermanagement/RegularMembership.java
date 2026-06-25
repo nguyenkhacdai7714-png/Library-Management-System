@@ -7,11 +7,16 @@ public class RegularMembership implements MembershipType{
     
     @Override
     public String MembershipTypeName(){
-        return "Regular Membership";
+        return "Regular";
     }
     
     @Override
     public float getOverdueFine(long overdueDays){
         return overdueDays*Constants.REGULAR_MEMBERSHIP_OVERDUE_FINE;
+    }
+    
+    @Override
+    public String getMembershipTag(){
+        return Constants.regularMembershipTag;
     }
 }
