@@ -3,10 +3,8 @@ package librarymanagement.bookmanagement;
 import java.util.*;
 import librarymanagement.utils.*;
 
-// -------
 // chuyen hoa Interface ObjectManagement tu package abstractions
 public class BookManagement implements abstractions.ObjectManagement {
-// -------
     
     // singleton
     private static final BookManagement instance = new BookManagement();
@@ -18,7 +16,7 @@ public class BookManagement implements abstractions.ObjectManagement {
     
     // --- Cac ham thanh phan chinh cua BookManagement
     
-    // Ham menu tach biet voi ham Run
+    // -- Ham menu tach biet voi ham Run
     @Override
     public void Menu() {
         Functions.Clear();
@@ -87,10 +85,9 @@ public class BookManagement implements abstractions.ObjectManagement {
         Book newBook = new Book(id, title, author, genre, year, quantity);
         
         // 4. Luu vao HashMap cua BookManager thay vi dung bien static tai day
-        // -------
         // Nạp trực tiếp qua Map bằng cách thông qua add(id, newbook) (tránh lỗi logic hàm Add của lớp cha)
         manager.Add(id, newBook);
-        // -------
+        
         Functions.Alert("Book added successfully!");
         
     }
@@ -105,14 +102,13 @@ public class BookManagement implements abstractions.ObjectManagement {
         System.out.println("[3]. Genre : " + oldBook.getGenre() + (oldBook.getGenre().equals(nGenre) ? "" : " -> " + nGenre));
         System.out.println("[4]. Year  : " + oldBook.getPublicationYear() + (oldBook.getPublicationYear() == nYear ? "" : " -> " + nYear));
         System.out.println("[5]. Quant : " + oldBook.getQuantity() + (oldBook.getQuantity() == nQuantity ? "" : " -> " + nQuantity));
-        System.out.println();
+        System.out.println("----------------------------------------");
         System.out.println("[6]. Update Changed Data");
         System.out.println("[0]. Back");
 
         System.out.println("----------------------------------------");
     }
 
-    
     // -- Ham menu cap nhat thong tin sach 
     @Override
     public void Updating() {
@@ -253,7 +249,6 @@ public class BookManagement implements abstractions.ObjectManagement {
     public void Viewing() {
         Functions.Clear();
         BookManager.getInstance().View(); // Lấy instance trước rồi mới .View()
-        Functions.Pause();
     }
     
     // -- Ham menu tim kiem sach 
