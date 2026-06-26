@@ -31,24 +31,6 @@ public class DataManagement {
         BookManager.getInstance().Add("B001",new Book("B001", "Ngu Van 12", "NXB Kim Dong", "SGK", 2000, 2));
         BookManager.getInstance().Add("B002",new Book("B002", "English B2", "NXB Ha Noi", "SGK", 2005, 8));
         BookManager.getInstance().Add("B003",new Book("B003", "Truyen Kieu", "Nguyen Du", "Truyen", 1801, 1));
-        
-        // Tao giao dich ao?
-        Book borrowedBook;
-        BorrowingManager.getInstance().Add("T000", new BorrowingTransaction("T000", "M001", "B003", LocalDate.of(2026, 5,5), LocalDate.of(2026, 6,5)));
-        borrowedBook = BookManager.getInstance().SearchById("B003");
-        BorrowingManager.getInstance().TakeBookOut(borrowedBook);
-        
-        BorrowingManager.getInstance().Add("T000", new BorrowingTransaction("T000", "M001", "B004", LocalDate.of(2026, 5,5), Functions.Today()));
-        borrowedBook = BookManager.getInstance().SearchById("B004");
-        BorrowingManager.getInstance().TakeBookOut(borrowedBook);
-              
-              
-        // Tao reading history ao?
-        MemberManager.getInstance().SearchById("M000").AddReadingHistory("B000");
-        MemberManager.getInstance().SearchById("M000").AddReadingHistory("B001");
-            // M000 da doc B000 va B001
-        MemberManager.getInstance().SearchById("M001").AddReadingHistory("B002");
-            // M001 da doc B002
     }
     
     public static HashMap<String, Book> LoadBook(){
