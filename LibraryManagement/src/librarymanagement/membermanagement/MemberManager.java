@@ -23,6 +23,7 @@ public class MemberManager extends ObjectManager<Member> {
         BoardDrawer.PrintTitle(title, emptyAlert, itemList.isEmpty());
         if(!itemList.isEmpty()){
             BoardDrawer.PrintRow("No#","Member ID","Fullname", "Phone","Email", "Readings", "Membership");
+            BoardDrawer.PrintWall();
             int count = 1;
             for (Member member : itemList){
                 BoardDrawer.PrintRow(count, member.getId(), member.getName(), member.getPhone(), member.getEmail(), member.getReadingHistoryLength(), member.getMembership().MembershipTypeName());

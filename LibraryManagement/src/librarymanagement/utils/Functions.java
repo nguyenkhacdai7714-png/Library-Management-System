@@ -109,14 +109,13 @@ public class Functions {
         return s!=null && !s.trim().isEmpty();
     }
     public static boolean IsDateValid(LocalDate date){
-        if(date==null) {
-            return false;
-        }
+        if(date==null) return false;
+        if(DayBetween(Today(), date) < 0) return false;
         return true;
     }
     
     public static long DayBetween(LocalDate startDate, LocalDate endDate){
-        if(!IsDateValid(endDate) || !IsDateValid(startDate)) return 0;
+        if(startDate==null || endDate==null) return 0;
         return ChronoUnit.DAYS.between(startDate, endDate);
     }
     

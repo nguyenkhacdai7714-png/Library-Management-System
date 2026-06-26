@@ -119,13 +119,7 @@ public class Member {
         System.out.printf("Phone number     : %s\n", getPhone());
         System.out.printf("Email            : %s\n", getEmail());
         System.out.printf("Membership type  : %s\n", getMembership().MembershipTypeName());
-    }
-    public void ViewReadingHistory(){
-        for (Iterator<String> iterator = readingHistory.iterator(); iterator.hasNext();) {
-            String next = iterator.next();
-            BookManager.getInstance().SearchById(next).View();
-            System.out.println("-----------------------------------------");
-        }
-        System.out.println("Total readings : "+readingHistory.size());
+        System.out.printf("Readings         : %s\n", getReadingHistoryLength());
+        System.out.println();
     }
 }

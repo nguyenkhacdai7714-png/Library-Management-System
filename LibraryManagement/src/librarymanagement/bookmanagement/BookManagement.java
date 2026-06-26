@@ -44,14 +44,15 @@ public class BookManagement implements abstractions.ObjectManagement {
         System.out.println("--------------- ADD BOOK ---------------");
         System.out.println("========================================");
         
-        String id = Functions.InputString("Enter book ID: ");
+        String id = manager.IdGenerator("B");
         
         // 1. Kiem tra trung ma ID thong qua BookManager
         if (manager.IsIdExist(id)) {
             Functions.Alert("Error: Book ID already exists!");
-            
             return;
         }
+        
+        System.out.println("New book ID : " + id);
         
         // 2. Trien khai nhap thong tin sach
         String title = Functions.InputString("Enter book title: ");    

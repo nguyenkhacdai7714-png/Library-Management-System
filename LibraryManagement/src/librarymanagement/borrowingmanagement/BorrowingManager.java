@@ -36,7 +36,7 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
         BoardDrawer.PrintTitle(title, emptyAlert, itemList.isEmpty());
         if(!itemList.isEmpty()){
             BoardDrawer.PrintRow("No#","Trans. ID","Member ID", "Book ID","Borrow Date", "Overdue Date", "Return Date", "Is Returned", "Is Overdue");
-            
+            BoardDrawer.PrintWall();
             int count = 1;
             for (BorrowingTransaction transaction : itemList){
                 BoardDrawer.PrintRow(count, 
@@ -56,7 +56,20 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
         BoardDrawer.PrintWall();
     }
     
-    public void Borrow(String transactionId,String memberId, String bookId, LocalDate borrowDate, LocalDate overdueDate){
+    public void ViewHistoryReading(String memberId){
+        Member member = MemberManager.getInstance().SearchById(memberId);
+        ArrayList<String> bookIDList = member.getReadingHistory();
+        ArrayList<Book> bookList = new ArrayList<Book>();
+        
+        for(String id : bookIDList){
+            Book book = BookManager.getInstance().SearchById(id);
+            bookList.add(book);
+        }
+        
+        BookManager.getInstance().ViewList(bookList, "Reading history of " + member.getName(), "This member has no reading history!");
+    }
+    
+    public void Borrow(String transactionId,String memberId, String bookId, LocalDate borrowDate, LocalDate overdueDate){     
         if(MemberManager.getInstance().IsIdExist(memberId) &&                  // check if memberID exist
            BookManager.getInstance().IsIdExist(bookId)    &&                  // check if bookID exist
            BookManager.getInstance().SearchById(bookId).getQuantity()>0   &&   // check if quantity is enough
@@ -67,7 +80,7 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
         }
     }
     
-    public boolean IsStillBorrowing(String memberId){
+    public boolean IsMemberOnTransaction(String memberId){
         for (Map.Entry<String, BorrowingTransaction> entry : list.entrySet()) {
             String id = entry.getKey();
             BorrowingTransaction transaction = entry.getValue();
@@ -90,6 +103,7 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
     public void TakeBookOut(Book borrowedBook){
         if(borrowedBook.getQuantity() > 0){
             borrowedBook.setQuantity(borrowedBook.getQuantity() - 1);
+            borrowedBook.addBorrowing();
         }
     }
     public void TakeBookIn(Book returnedBook){

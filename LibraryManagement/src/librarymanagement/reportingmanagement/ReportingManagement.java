@@ -48,24 +48,16 @@ public class ReportingManagement {
             switch(choice)
             {      
                 case "1":
-                    Functions.Clear();
                     PrintBorrowedBookList();
-                    Functions.Pause();
                     break;
                 case "2":
-                    Functions.Clear();
                     PrintOverdueBookList();
-                    Functions.Pause();
                     break;
                 case "3":
-                    Functions.Clear();
                     PrintMostPopularBookList();
-                    Functions.Pause();
                     break;
                 case "4":
-                    Functions.Clear();
                     PrintMostActiveMemberList();
-                    Functions.Pause();
                     break;
                     
                 case "0":

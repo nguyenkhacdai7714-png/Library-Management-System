@@ -57,6 +57,23 @@ public abstract class ObjectManager<T> {
         }
         return null;
     }
+    
+    public String IdGenerator(String preflix){
+        if(IsListFull()) return null;
+        
+        String newId;
+        int i =0;
+        do{
+            newId = String.format(preflix+"%03d", i);
+            i++;
+        }while(list.containsKey(newId) && i<Constants.MAX_IDS);
+
+        if(i>=Constants.MAX_IDS){
+            return null;
+        }
+        
+        return newId;
+    }
    
     
     // EDITED

@@ -312,6 +312,7 @@ public class BorrowingManagement implements ObjectManagement{
         String memberId;
         Member member;
         MemberManager memberManager = MemberManager.getInstance();
+        BorrowingManager borrowingManager = BorrowingManager.getInstance();
         
         Functions.Print("---------- VIEW READING HISTORY -----------\n");
         memberId = Functions.InputString("Enter member ID: ");
@@ -326,10 +327,7 @@ public class BorrowingManagement implements ObjectManagement{
         }
         
         Functions.Clear();
-        Functions.Print("------------ MEMBER INFO -------------\n");
-        member.View();
-        Functions.Print("---------- READING HISTORY -----------\n");
-        member.ViewReadingHistory();
+        borrowingManager.ViewHistoryReading(memberId);
         Functions.Pause();
         
     }

@@ -4,6 +4,8 @@ import java.util.*;
 import librarymanagement.utils.Functions;
 import abstractions.ObjectManagement;
 
+import librarymanagement.borrowingmanagement.BorrowingManager;
+
 public class MemberManagement implements ObjectManagement {
     
     private static final MemberManagement instance = new MemberManagement();
@@ -88,7 +90,12 @@ public class MemberManagement implements ObjectManagement {
         Functions.Clear();
         System.out.println("------------ REMOVE MEMBER -------------");
         String id = Functions.InputString("Enter Member ID to delete: ");
-
+        
+        if(BorrowingManager.getInstance().IsMemberOnTransaction(id)){
+            Functions.Alert("Can not remove because this member is on a transaction!");
+            return;
+        }
+        
         if (Functions.IsStringValid(id) && MemberManager.getInstance().IsIdExist(id)) {
             MemberManager.getInstance().Remove(id);
             Functions.Alert("Member removed successfully.");

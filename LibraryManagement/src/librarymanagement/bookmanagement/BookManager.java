@@ -47,14 +47,14 @@ public class BookManager extends abstractions.ObjectManager<Book> {
     @Override
     public void ViewList(Collection<Book> itemList, String title, String emptyAlert){
         // Khoi tao thong so cho bang : chieu rong (width), format
-        BoardDrawer.SetBoard(5+10+25+20+15+12+8 + 7*3, "| %-5s | %-10s | %-25s | %-20s | %-15s | %-12s | %-8s |");
+        BoardDrawer.SetBoard(5+10+25+20+15+12+8+10 + 8*3, "| %-5s | %-10s | %-25s | %-20s | %-15s | %-12s | %-8s | %-10s |");
         // In title (va thong bao empty neu list empty)
         BoardDrawer.PrintTitle(title, emptyAlert, itemList.isEmpty());
         
         // Neu list khong empty
         if(!itemList.isEmpty()){
             // In ra dong dau tien la cac cot STT, ID, TITLE, ....
-            BoardDrawer.PrintRow("No#","Book ID","Title", "Author","Genre", "Pub. Year", "Quantity");
+            BoardDrawer.PrintRow("No#","Book ID","Title", "Author","Genre", "Pub. Year", "Quantity", "Borrowings");
             // Ve tuong`
             BoardDrawer.PrintWall();
             
@@ -62,13 +62,20 @@ public class BookManager extends abstractions.ObjectManager<Book> {
             int count = 1;
             for (Book book : itemList){
                 // Moi vong lap in ra 1 row cua bang. Tu dong theo format da thiet lap.
-                BoardDrawer.PrintRow(count, book.getId(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getPublicationYear(), book.getQuantity());
+                BoardDrawer.PrintRow(count, 
+                                    book.getId(), 
+                                        book.getTitle(), 
+                                            book.getAuthor(), 
+                                                book.getGenre(), 
+                                                    book.getPublicationYear(), 
+                                                        book.getQuantity(),
+                                                            book.getBorrowings());
                 count++;
             }
             // In ra tuong` nhung mong hon
             BoardDrawer.PrintSoftWall();
             // In ra total
-            BoardDrawer.PrintTotal(getList().size(), "book");
+            BoardDrawer.PrintTotal(itemList.size(), "book");
         }
         // In ra tuong`
         BoardDrawer.PrintWall();

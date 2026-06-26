@@ -33,10 +33,14 @@ public class DataManagement {
         BookManager.getInstance().Add("B003",new Book("B003", "Truyen Kieu", "Nguyen Du", "Truyen", 1801, 1));
         
         // Tao giao dich ao?
+        Book borrowedBook;
         BorrowingManager.getInstance().Add("T000", new BorrowingTransaction("T000", "M001", "B003", LocalDate.of(2026, 5,5), LocalDate.of(2026, 6,5)));
-              // M001 muon B003
-        BorrowingManager.getInstance().Add("T001", new BorrowingTransaction("T001", "M001", "B000", LocalDate.of(2026, 6,5), LocalDate.now()));
-              // M001 muon B000
+        borrowedBook = BookManager.getInstance().SearchById("B003");
+        BorrowingManager.getInstance().TakeBookOut(borrowedBook);
+        
+        BorrowingManager.getInstance().Add("T000", new BorrowingTransaction("T000", "M001", "B004", LocalDate.of(2026, 5,5), Functions.Today()));
+        borrowedBook = BookManager.getInstance().SearchById("B004");
+        BorrowingManager.getInstance().TakeBookOut(borrowedBook);
               
               
         // Tao reading history ao?
@@ -68,7 +72,8 @@ public class DataManagement {
                         parts[2],
                         parts[3],
                         Integer.parseInt(parts[4]),
-                        Integer.parseInt(parts[5])
+                        Integer.parseInt(parts[5]),
+                        Integer.parseInt(parts[6])
                 );
                 list.put(parts[0], book);
             }
@@ -158,13 +163,14 @@ public class DataManagement {
             
             for (Book book : list.values()) {
                 
-                String line = String.format("%s,%s,%s,%s,%d,%d\n",
+                String line = String.format("%s,%s,%s,%s,%d,%d,%d\n",
                         book.getId(),          
                         book.getTitle(),       
                         book.getAuthor(),      
                         book.getGenre(),    
                         book.getPublicationYear(), 
-                        book.getQuantity()     
+                        book.getQuantity(),
+                        book.getBorrowings()
                 );
                 
                 writer.write(line);

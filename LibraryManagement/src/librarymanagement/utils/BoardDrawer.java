@@ -12,8 +12,8 @@ public class BoardDrawer {
     public static void SetBoard(int width, String format){
         BoardDrawer.width    = width;
         BoardDrawer.format   = format;
-        BoardDrawer.wall     = Functions.CreateWall(BoardDrawer.width  , "=");
-        BoardDrawer.softWall = Functions.CreateWall(BoardDrawer.width  , "-");
+        BoardDrawer.wall     = Functions.CreateWall(BoardDrawer.width+1  , "=");
+        BoardDrawer.softWall = Functions.CreateWall(BoardDrawer.width+1  , "-");
     }
     public static void PrintTitle(String title, String emptyAlert, boolean isEmpty){
         BoardDrawer.sideWall = Functions.CreateWall((BoardDrawer.width-title.length())/2, "=");

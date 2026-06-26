@@ -75,14 +75,24 @@ public class ReportingManager {
                 String key = entry.getKey();
                 Member value = entry.getValue();
                 
-                mostActiveMemberList.add(value);
+                if(!value.IsReadingHistoryEmpty()){
+                    mostActiveMemberList.add(value);
+                }
             }
-            mostActiveMemberList.sort(Comparator.comparingInt(Member::getReadingHistoryLength));
+            mostActiveMemberList.sort(Comparator.comparingInt(Member::getReadingHistoryLength).reversed());
         }
     }
     public static void GenerateMostPopularBookList(){
         if(IsArrayListExist(mostPopularBookList)){
-            
+            for (Map.Entry<String, Book> entry: BookManager.getInstance().getList().entrySet()) {
+                String key = entry.getKey();
+                Book value = entry.getValue();
+                
+                if(value.getBorrowings()>0){
+                    mostPopularBookList.add(value);
+                }
+            }
+            mostPopularBookList.sort(Comparator.comparingInt(Book::getBorrowings).reversed());
         }
     }
     public static void GenerateOverdueBookList(){
