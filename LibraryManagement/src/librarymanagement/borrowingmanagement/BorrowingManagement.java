@@ -53,11 +53,12 @@ public class BorrowingManagement implements ObjectManagement{
         
         Functions.Print("---------- BORROWING BOOK -----------\n");
         
-        transactionId = Functions.InputString("Enter new transaction ID :");
+        transactionId = BorrowingManager.getInstance().IdGenerator("T");
         if(borrowingManager.IsIdExist(transactionId)){
            Functions.Alert("ID is existed!");
            return;
         }
+        System.out.println("New transaction ID : " + transactionId);
         
         bookId = Functions.InputString("Enter book ID :");
         if(!Functions.IsStringValid(bookId) || !bookManager.IsIdExist(bookId)){

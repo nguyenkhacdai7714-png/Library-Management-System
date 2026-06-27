@@ -4,6 +4,8 @@ import java.util.*;
 import librarymanagement.utils.Functions;
 import abstractions.ObjectManagement;
 
+import abstractions.MembershipType;
+
 import librarymanagement.borrowingmanagement.BorrowingManager;
 
 public class MemberManagement implements ObjectManagement {
@@ -56,12 +58,14 @@ public class MemberManagement implements ObjectManagement {
         Functions.Clear();
         System.out.println("------------ ADD NEW MEMBER ------------");
         
-        String id = Functions.InputString("Enter Member ID: ");
+        String id = MemberManager.getInstance().IdGenerator("M");
 
         if (!Functions.IsStringValid(id)) {
             Functions.Alert("Invalid ID string input format.");
             return;
         }
+        
+        System.out.println("New member ID : " + id);
 
         if (MemberManager.getInstance().IsIdExist(id)) {
             Functions.Alert("Error: This Member ID already exists!");
@@ -104,15 +108,16 @@ public class MemberManagement implements ObjectManagement {
         }
     }
 
-    private void UpdatingMenu(Member oldMember, String nName, String nEmail, String nPhone) {
+    private void UpdatingMenu(Member oldMember, String newName, String newEmai, String newPhone, MembershipType newMembership) {
         System.out.println("------- UPDATING MEMBER INFO MENU ------");
         
-        System.out.println("[1]. Name : " + oldMember.getName() + (oldMember.getName().equals(nName) ? "" : " -> " + nName));
-        System.out.println("[2]. Email: " + oldMember.getEmail() + (oldMember.getEmail().equals(nEmail) ? "" : " -> " + nEmail));
-        System.out.println("[3]. Phone: " + oldMember.getPhone() + (oldMember.getPhone().equals(nPhone) ? "" : " -> " + nPhone));
+        System.out.println("[1] Name        : " + oldMember.getName() + (oldMember.getName().equals(newName) ? "" : " -> " + newName));
+        System.out.println("[2] Email       : " + oldMember.getEmail() + (oldMember.getEmail().equals(newEmai) ? "" : " -> " + newEmai));
+        System.out.println("[3] Phone       : " + oldMember.getPhone() + (oldMember.getPhone().equals(newPhone) ? "" : " -> " + newPhone));
+        System.out.println("[4] Membership  : " + oldMember.getMembership().MembershipTypeName() + (oldMember.getMembership()==newMembership?"":("->" + newMembership.MembershipTypeName())));
         System.out.println();
-        System.out.println("[4]. Update Changed Data");
-        System.out.println("[0]. Back");
+        System.out.println("[5] Update Changed Data");
+        System.out.println("[0] Back");
         
         System.out.println("----------------------------------------");
     }
@@ -132,10 +137,11 @@ public class MemberManagement implements ObjectManagement {
         String newName = target.getName();
         String newEmail = target.getEmail();
         String newPhone = target.getPhone();
+        MembershipType newMembership = target.getMembership();
 
         while (true) {
             Functions.Clear();
-            UpdatingMenu(target, newName, newEmail, newPhone);
+            UpdatingMenu(target, newName, newEmail, newPhone, newMembership);
             String choice = Functions.InputMenuChoice();
             if (choice.equals("0")) return;
             
@@ -143,20 +149,42 @@ public class MemberManagement implements ObjectManagement {
                 case "1" : {
                     String temp = Functions.InputString("Enter New Name: ");
                     if (Functions.IsStringValid(temp)) newName = temp;
+                    else{
+                        Functions.Alert("Do not leave blank!");
+                    }
                     break;
                 }
                 case "2" : {
                     String temp = Functions.InputString("Enter New Email: ");
                     if (Functions.IsStringValid(temp)) newEmail = temp;
+                    else{
+                        Functions.Alert("Do not leave blank!");
+                    }
                     break;
                 }
                 case "3" : {
                     String temp = Functions.InputString("Enter New Phone: ");
                     if (Functions.IsStringValid(temp)) newPhone = temp;
+                    else{
+                        Functions.Alert("Do not leave blank!");
+                    }
                     break;
                 }
-                case "4" : {
-                    MemberManager.getInstance().Update(id, newName, newEmail, newPhone);
+                case"4":{
+                    int temp = Functions.InputInt("Enter membership - [1] Regular, [2] Premium : ");
+                    if(temp==1){
+                        newMembership = new RegularMembership();
+                    }
+                    else if(temp==2){
+                        newMembership = new PremiumMembership();
+                    }
+                    else{
+                        Functions.Alert("Invalid choice!");
+                    }
+                    break;
+                }
+                case "5" : {
+                    MemberManager.getInstance().Update(id, newName, newEmail, newPhone, newMembership);
                     Functions.Alert("Database updated successfully.");
                     return;
                 }

@@ -158,11 +158,11 @@ public class DataManagement {
                 writer.write(line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Không tìm thấy file lưu sách: " + e);
+            System.out.println("File not found: " + e);
         } catch (EOFException e) {
-            System.out.println("Lỗi kết thúc file đột ngột: " + e);
+            System.out.println("End of file: " + e);
         } catch (Exception e) {
-            System.out.println("Lỗi hệ thống khi ghi file sách: " + e);
+            System.out.println("Error: " + e);
         }   
     }
     
@@ -172,10 +172,6 @@ public class DataManagement {
         memberDataFile = new File(Constants.memberFile);
         
         try {
-            if (memberDataFile.getParentFile() != null && !memberDataFile.getParentFile().exists()) {
-                memberDataFile.getParentFile().mkdirs();
-            }
-            
             if (!memberDataFile.exists()) {
                 memberDataFile.createNewFile();
             }
@@ -194,12 +190,13 @@ public class DataManagement {
                 }
             }
             
+            
         } catch (FileNotFoundException e) {
-            System.out.println("Không tìm thấy file lưu thành viên: " + e);
+            System.out.println("File not found: " + e);
         } catch (EOFException e) {
-            System.out.println("Lỗi kết thúc file đột ngột: " + e);
+            System.out.println("End of file: " + e);
         } catch (Exception e) {
-            System.out.println("Lỗi hệ thống khi ghi file thành viên: " + e);
+            System.out.println("Error: " + e);
         }
     }
     
@@ -237,11 +234,11 @@ public class DataManagement {
             }
             
         } catch (FileNotFoundException e) {
-            System.out.println("Không tìm thấy file lưu giao dịch: " + e);
+            System.out.println("File not found: " + e);
         } catch (EOFException e) {
-            System.out.println("Lỗi kết thúc file đột ngột: " + e);
+            System.out.println("End of file: " + e);
         } catch (Exception e) {
-            System.out.println("Lỗi hệ thống khi ghi file giao dịch: " + e);
+            System.out.println("Error : " + e);
         }
     }
 

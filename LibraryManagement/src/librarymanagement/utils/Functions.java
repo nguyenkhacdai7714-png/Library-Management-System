@@ -239,7 +239,7 @@ public class Functions {
     }
     
     public static MembershipType TagToMembership(String tag){
-        if(tag == Constants.premiumMembershipTag){
+        if(tag.equals(Constants.premiumMembershipTag)){
             return new PremiumMembership();
         }
         else{

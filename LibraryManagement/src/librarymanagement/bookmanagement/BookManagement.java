@@ -38,6 +38,9 @@ public class BookManagement implements abstractions.ObjectManagement {
     public void Adding()  
     {
         BookManager manager = BookManager.getInstance(); 
+        String title;
+        String author;
+        String genre;
         
         Functions.Clear();
         System.out.println("========================================");
@@ -55,19 +58,36 @@ public class BookManagement implements abstractions.ObjectManagement {
         System.out.println("New book ID : " + id);
         
         // 2. Trien khai nhap thong tin sach
-        String title = Functions.InputString("Enter book title: ");    
-        String author = Functions.InputString("Enter book author: ");    
-        String genre = Functions.InputString("Enter book genre: ");    
+        do{
+            title = Functions.InputString("Enter book title: ");    
+            if(!Functions.IsStringValid(title)){
+                System.out.println("Do not leave blank this information !");
+            }
+        }while(!Functions.IsStringValid(title));
+
+        do{
+            author = Functions.InputString("Enter book author: ");    
+            if(!Functions.IsStringValid(author)){
+                System.out.println("Do not leave blank this information !");
+            }
+        }while(!Functions.IsStringValid(author));
+        
+        do{
+            genre = Functions.InputString("Enter book genre: ");    
+            if(!Functions.IsStringValid(genre)){
+                System.out.println("Do not leave blank this information !");
+            }
+        }while(!Functions.IsStringValid(genre));
         
         // 2.4 Nhap nam xuat ban 
         int year;
         do{
             year = Functions.InputInt("Enter book's publication year: ");
-            if(year >=0){
+            if(year > 0){
                 break;
             }
             else{
-                Functions.Print("Year must be an integer and larger or equals 0");
+                Functions.Print("Year must be a positive number!");
             }
         }
         while(true);
@@ -76,11 +96,11 @@ public class BookManagement implements abstractions.ObjectManagement {
         int quantity;
         do{
             quantity = Functions.InputInt("Enter book's quantity: ");
-            if(quantity >=0){
+            if(quantity > 0){
                 break;
             }
             else{
-                Functions.Print("Quantity must be an integer and larger or equals 0");
+                Functions.Print("Quantity must be a positive number!");
             }
         }
         while(true);

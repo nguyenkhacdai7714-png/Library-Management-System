@@ -92,9 +92,9 @@ public class BorrowingTransaction extends LibraryObject{
 
     public boolean IsOverdue(){
         if(Functions.IsDateValid(returnDate)){
-            return Functions.DayBetween(Functions.Today(), overdueDate) > 0;
+            return Functions.DayBetween(returnDate, overdueDate) < 0;
         }
-        return Functions.DayBetween(returnDate, overdueDate) > 0;
+        return Functions.DayBetween(Functions.Today(), overdueDate) < 0;
     }
     
     @Override

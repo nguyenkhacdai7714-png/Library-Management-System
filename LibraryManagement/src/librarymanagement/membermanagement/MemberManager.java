@@ -4,6 +4,8 @@ import java.util.*;
 import abstractions.ObjectManager;
 import librarymanagement.utils.BoardDrawer;
 
+import abstractions.MembershipType;
+
 public class MemberManager extends ObjectManager<Member> {
     
     private static final MemberManager instance = new MemberManager();
@@ -44,12 +46,13 @@ public class MemberManager extends ObjectManager<Member> {
         return false;
     }
 
-    public void Update(String memberID, String name, String email, String phone) {
+    public void Update(String memberID, String name, String email, String phone, MembershipType membershipType) {
         if (IsIdExist(memberID)) {
             Member member = list.get(memberID);
             member.setName(name);
             member.setEmail(email);
             member.setPhone(phone);
+            member.setMembership(membershipType);
         }
     }
 }
