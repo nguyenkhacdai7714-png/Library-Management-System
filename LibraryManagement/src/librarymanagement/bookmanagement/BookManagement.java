@@ -77,7 +77,10 @@ public class BookManagement implements abstractions.ObjectManagement {
             if(!Functions.IsStringValid(genre)){
                 System.out.println("Do not leave blank this information !");
             }
-        }while(!Functions.IsStringValid(genre));
+            if(!Functions.IsStringNoDigit(genre)){
+                System.out.println("Genre does not have numbers!");
+            }
+        }while(!Functions.IsStringValid(genre) || !Functions.IsStringNoDigit(genre));
         
         // 2.4 Nhap nam xuat ban 
         int year;
@@ -87,7 +90,7 @@ public class BookManagement implements abstractions.ObjectManagement {
                 break;
             }
             else{
-                Functions.Print("Year must be a positive number!");
+                Functions.Print("Year must be a positive number!\n");
             }
         }
         while(true);
@@ -100,7 +103,7 @@ public class BookManagement implements abstractions.ObjectManagement {
                 break;
             }
             else{
-                Functions.Print("Quantity must be a positive number!");
+                Functions.Print("Quantity must be a positive number!\n");
             }
         }
         while(true);

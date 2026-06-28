@@ -108,6 +108,9 @@ public class Functions {
     public static boolean IsStringValid(String s){
         return s!=null && !s.trim().isEmpty();
     }
+    public static boolean IsStringNoDigit(String s){ 
+        return s != null && s.matches("\\D*"); 
+    }
     public static boolean IsDateValid(LocalDate date){
         if(date==null) return false;
         if(DayBetween(Today(), date) < 0) return false;

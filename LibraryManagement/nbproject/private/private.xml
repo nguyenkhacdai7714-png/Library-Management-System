@@ -8,18 +8,23 @@
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/utils/BoardDrawer.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/borrowingmanagement/BorrowingManagement.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/bookmanagement/BookManagement.java</file>
+            <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/utils/Constants.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/borrowingmanagement/BorrowingTransaction.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/abstractions/MembershipType.java</file>
+            <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/abstractions/LibraryObject.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/borrowingmanagement/BorrowingManager.java</file>
+            <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/abstractions/ObjectManagement.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/membermanagement/MemberManager.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/utils/DataManagement.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/membermanagement/MemberManagement.java</file>
+            <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/utils/SystemCode.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/reportingmanagement/ReportingManagement.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/membermanagement/PremiumMembership.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/abstractions/ObjectManager.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/bookmanagement/BookManager.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/utils/Functions.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/bookmanagement/Book.java</file>
+            <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/membermanagement/RegularMembership.java</file>
             <file>file:/C:/Users/Study/Downloads/PRO192/ProjectVersions/LibraryManagement/src/librarymanagement/membermanagement/Member.java</file>
         </group>
     </open-files>
