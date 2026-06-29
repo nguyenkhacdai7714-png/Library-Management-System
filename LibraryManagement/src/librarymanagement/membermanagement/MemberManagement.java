@@ -1,8 +1,12 @@
 package librarymanagement.membermanagement;
 
 import java.util.*;
-import librarymanagement.utils.*;
+import librarymanagement.utils.Functions;
 import abstractions.ObjectManagement;
+
+import abstractions.MembershipType;
+
+import librarymanagement.borrowingmanagement.BorrowingManager;
 
 public class MemberManagement implements ObjectManagement {
     
@@ -11,11 +15,11 @@ public class MemberManagement implements ObjectManagement {
     public static MemberManagement getInstance(){
         return instance;
     }
-    
+    @Override
     public void Run() {
         Menu();
     }
-
+    @Override
     public void Menu() {
         while (true) {
             Functions.Clear();
@@ -24,8 +28,8 @@ public class MemberManagement implements ObjectManagement {
                     "Add Member",
                     "Update Member",
                     "Remove Member",
-                    "Search Member",
-                    "View Member List");
+                    "View Member List",
+                    "Search Member");
             
             String choice = Functions.InputMenuChoice();
             switch (choice) {
@@ -41,27 +45,29 @@ public class MemberManagement implements ObjectManagement {
                     Removing();
                     break;
                 case "4" :
-                    Searching();
+                    Viewing();
                     break;
                 case "5" :
-                    Viewing();
+                    Searching();
                     break;
             }
         }
     }
-
+    @Override
     public void Adding() {
         Functions.Clear();
         System.out.println("------------ ADD NEW MEMBER ------------");
         
-        String id = Functions.InputString("Enter Member ID: ");
+        String id = MemberManager.getInstance().IdGenerator("M");
 
         if (!Functions.IsStringValid(id)) {
             Functions.Alert("Invalid ID string input format.");
             return;
         }
+        
+        System.out.println("New member ID : " + id);
 
-        if (MemberManager.getInstance().IsMemberIDExist(id)) {
+        if (MemberManager.getInstance().IsIdExist(id)) {
             Functions.Alert("Error: This Member ID already exists!");
             return;
         }
@@ -77,19 +83,24 @@ public class MemberManagement implements ObjectManagement {
             }
             
             Member newMember = new Member(id, name, phone, email);
-            MemberManager.getInstance().Add(newMember);
+            MemberManager.getInstance().Add(id,newMember);
             Functions.Alert("Member registered successfully.");
         } else {
             Functions.Alert("Invalid text detected across entry fields.");
         }
     }
-
+    @Override
     public void Removing() {
         Functions.Clear();
         System.out.println("------------ REMOVE MEMBER -------------");
         String id = Functions.InputString("Enter Member ID to delete: ");
-
-        if (Functions.IsStringValid(id) && MemberManager.getInstance().IsMemberIDExist(id)) {
+        
+        if(BorrowingManager.getInstance().IsMemberOnTransaction(id)){
+            Functions.Alert("Can not remove because this member is on a transaction!");
+            return;
+        }
+        
+        if (Functions.IsStringValid(id) && MemberManager.getInstance().IsIdExist(id)) {
             MemberManager.getInstance().Remove(id);
             Functions.Alert("Member removed successfully.");
         } else {
@@ -97,58 +108,83 @@ public class MemberManagement implements ObjectManagement {
         }
     }
 
-    private void UpdatingMenu(Member oldMember, String nName, String nEmail, String nPhone) {
+    private void UpdatingMenu(Member oldMember, String newName, String newEmai, String newPhone, MembershipType newMembership) {
         System.out.println("------- UPDATING MEMBER INFO MENU ------");
         
-        System.out.println("[1]. Name : " + oldMember.getName() + (oldMember.getName().equals(nName) ? "" : " -> " + nName));
-        System.out.println("[2]. Email: " + oldMember.getEmail() + (oldMember.getEmail().equals(nEmail) ? "" : " -> " + nEmail));
-        System.out.println("[3]. Phone: " + oldMember.getPhone() + (oldMember.getPhone().equals(nPhone) ? "" : " -> " + nPhone));
+        System.out.println("[1] Name        : " + oldMember.getName() + (oldMember.getName().equals(newName) ? "" : " -> " + newName));
+        System.out.println("[2] Email       : " + oldMember.getEmail() + (oldMember.getEmail().equals(newEmai) ? "" : " -> " + newEmai));
+        System.out.println("[3] Phone       : " + oldMember.getPhone() + (oldMember.getPhone().equals(newPhone) ? "" : " -> " + newPhone));
+        System.out.println("[4] Membership  : " + oldMember.getMembership().MembershipTypeName() + (oldMember.getMembership()==newMembership?"":("->" + newMembership.MembershipTypeName())));
         System.out.println();
-        System.out.println("[4]. Update Changed Data");
-        System.out.println("[0]. Back");
+        System.out.println("[5] Update Changed Data");
+        System.out.println("[0] Back");
         
         System.out.println("----------------------------------------");
     }
-
+    
+    @Override
     public void Updating() {
         Functions.Clear();
         System.out.println("------------ UPDATE MEMBER -------------");
         String id = Functions.InputString("Enter Member ID to modify: ");
 
-        if (!Functions.IsStringValid(id) || !MemberManager.getInstance().IsMemberIDExist(id)) {
+        if (!Functions.IsStringValid(id) || !MemberManager.getInstance().IsIdExist(id)) {
             Functions.Alert("Error: Member ID not found or invalid reference!");
             return;
         }
 
-        Member target = MemberManager.getInstance().Search(id);
+        Member target = MemberManager.getInstance().SearchById(id);
         String newName = target.getName();
         String newEmail = target.getEmail();
         String newPhone = target.getPhone();
+        MembershipType newMembership = target.getMembership();
 
         while (true) {
             Functions.Clear();
-            UpdatingMenu(target, newName, newEmail, newPhone);
+            UpdatingMenu(target, newName, newEmail, newPhone, newMembership);
             String choice = Functions.InputMenuChoice();
-            if (choice == "0") return;
+            if (choice.equals("0")) return;
             
             switch (choice) {
                 case "1" : {
                     String temp = Functions.InputString("Enter New Name: ");
                     if (Functions.IsStringValid(temp)) newName = temp;
+                    else{
+                        Functions.Alert("Do not leave blank!");
+                    }
                     break;
                 }
                 case "2" : {
                     String temp = Functions.InputString("Enter New Email: ");
                     if (Functions.IsStringValid(temp)) newEmail = temp;
+                    else{
+                        Functions.Alert("Do not leave blank!");
+                    }
                     break;
                 }
                 case "3" : {
                     String temp = Functions.InputString("Enter New Phone: ");
                     if (Functions.IsStringValid(temp)) newPhone = temp;
+                    else{
+                        Functions.Alert("Do not leave blank!");
+                    }
                     break;
                 }
-                case "4" : {
-                    MemberManager.getInstance().Update(id, newName, newEmail, newPhone);
+                case"4":{
+                    int temp = Functions.InputInt("Enter membership - [1] Regular, [2] Premium : ");
+                    if(temp==1){
+                        newMembership = new RegularMembership();
+                    }
+                    else if(temp==2){
+                        newMembership = new PremiumMembership();
+                    }
+                    else{
+                        Functions.Alert("Invalid choice!");
+                    }
+                    break;
+                }
+                case "5" : {
+                    MemberManager.getInstance().Update(id, newName, newEmail, newPhone, newMembership);
                     Functions.Alert("Database updated successfully.");
                     return;
                 }
@@ -158,21 +194,20 @@ public class MemberManagement implements ObjectManagement {
             }
         }
     }
-
+    @Override
     public void Viewing() {
         Functions.Clear();
-        System.out.println("-------------- MEMBER LIST ------------------");
         MemberManager.getInstance().View();
         Functions.Pause();
     }
-
+    @Override
     public void Searching() {
         Functions.Clear();
         System.out.println("------------ SEARCH MEMBER -------------");
         String id = Functions.InputString("Enter Target Search ID: ");
 
         if (Functions.IsStringValid(id)) {
-            Member match = MemberManager.getInstance().Search(id);
+            Member match = MemberManager.getInstance().SearchById(id);
             if (match != null) {
                 System.out.println("\nMatching Profile Found:");
                 match.View(); 

@@ -1,7 +1,8 @@
 package librarymanagement.reportingmanagement;
 
 import java.util.*;
-import librarymanagement.utils.*;
+import librarymanagement.utils.Functions;
+import librarymanagement.utils.SystemCode;
 
 import librarymanagement.bookmanagement.Book;
 import librarymanagement.membermanagement.Member;
@@ -16,6 +17,8 @@ public class ReportingManagement {
     }
     // end singleton
     
+    private static ReportingManager reportingManager = ReportingManager.getInstance();
+    
     public void Menu(){
         Functions.MenuGenerator(
                 "REPORTING MANAGEMENT", // title
@@ -29,7 +32,7 @@ public class ReportingManagement {
     
     public void Run()
     {
-        Functions.Print("Generating reports\n");
+        Functions.Print("Generating reports...\n");
         ReportingManager.GenerateOverdueBookList();
         ReportingManager.GenerateBorrowedBookList();
         ReportingManager.GenerateMostActiveMemberList();
@@ -45,24 +48,16 @@ public class ReportingManagement {
             switch(choice)
             {      
                 case "1":
-                    Functions.Clear();
                     PrintBorrowedBookList();
-                    Functions.Pause();
                     break;
                 case "2":
-                    Functions.Clear();
                     PrintOverdueBookList();
-                    Functions.Pause();
                     break;
                 case "3":
-                    Functions.Clear();
                     PrintMostPopularBookList();
-                    Functions.Pause();
                     break;
                 case "4":
-                    Functions.Clear();
-                    PrintMostBorrowingMemberList();
-                    Functions.Pause();
+                    PrintMostActiveMemberList();
                     break;
                     
                 case "0":
@@ -74,19 +69,34 @@ public class ReportingManagement {
         
         
         }while(!choice.equals("0"));
+        
+        ReportingManager.getInstance().ClearReports();
     }
 
     void PrintBorrowedBookList(){
-    
+        Functions.Clear();
+        reportingManager.PrintBookList(reportingManager.getBorrowedBookList(), "ALL BORROWED BOOKS", "There is no borrowed book");
+        Functions.Pause();
     }
+
     void PrintOverdueBookList(){
-    
+        Functions.Clear();
+        reportingManager.PrintBookList(reportingManager.getOverdueBookList(), "ALL OVERDUE BOOKS LIST", "There is no overdue book");
+        Functions.Pause();
     }
+
     void PrintMostPopularBookList(){
-    
+        Functions.Clear();
+        reportingManager.PrintBookList(reportingManager.getMostPopularBookList(), "ALL MOST POPULAR BOOKS", "There is no popular books");
+        Functions.Pause();
     }
-    void PrintMostBorrowingMemberList(){
-    
+
+    void PrintMostActiveMemberList(){
+        Functions.Clear();
+        reportingManager.PrintMemberList(reportingManager.getMostActiveMemberList(), "ALL MOST ACTIVE MEMBERS", "There is no active members");
+        Functions.Pause();
     }
+
+
 
 }

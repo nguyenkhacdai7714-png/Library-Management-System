@@ -2,6 +2,9 @@ package librarymanagement.utils;
 
 public class Constants {
     
+    // so luong member/book/transaction ID toi da
+    public static final int MAX_IDS        =1000;
+    
     // so luong sach toi da ma 1 member co the muon
     public static final int REGULAR_MEMBERSHIP_MAX_BORROWED_BOOKS = 3; 
     public static final int PREMIUM_MEMBERSHIP_MAX_BORROWED_BOOKS = 5; 
@@ -22,5 +25,14 @@ public class Constants {
     
     // kich thuoc menu
     public static final int MENU_WIDTH =40;
+    
+    // data files
+    public static final String bookFile = "bookDataFile.txt";
+    public static final String memberFile = "memberDataFile.txt";;
+    public static final String transactionFile = "transactionDataFile.txt";
+    
+    // membership tag
+    public static final String regularMembershipTag = "REGULAR";
+    public static final String premiumMembershipTag = "PREMIUM";
     
 }

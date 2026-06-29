@@ -1,8 +1,11 @@
 package librarymanagement.reportingmanagement;
 
-import java.util.ArrayList;
-import librarymanagement.bookmanagement.Book;
-import librarymanagement.membermanagement.Member;
+import java.util.*;
+import librarymanagement.bookmanagement.*;
+import librarymanagement.membermanagement.*;
+import librarymanagement.borrowingmanagement.*;
+
+import java.util.Comparator;
 
 public class ReportingManager {
     
@@ -18,26 +21,90 @@ public class ReportingManager {
     private static ArrayList<Book> overdueBookList = new ArrayList<Book>();
     private static ArrayList<Member> mostActiveMemberList = new ArrayList<Member>();
     private static ArrayList<Book> mostPopularBookList = new ArrayList<Book>();
+
+    public static ArrayList<Book> getBorrowedBookList() {
+        return borrowedBookList;
+    }
+
+    public static void setBorrowedBookList(ArrayList<Book> borrowedBookList) {
+        ReportingManager.borrowedBookList = borrowedBookList;
+    }
+
+    public static ArrayList<Book> getOverdueBookList() {
+        return overdueBookList;
+    }
+
+    public static void setOverdueBookList(ArrayList<Book> overdueBookList) {
+        ReportingManager.overdueBookList = overdueBookList;
+    }
+
+    public static ArrayList<Member> getMostActiveMemberList() {
+        return mostActiveMemberList;
+    }
+
+    public static void setMostActiveMemberList(ArrayList<Member> mostActiveMemberList) {
+        ReportingManager.mostActiveMemberList = mostActiveMemberList;
+    }
+
+    public static ArrayList<Book> getMostPopularBookList() {
+        return mostPopularBookList;
+    }
+
+    public static void setMostPopularBookList(ArrayList<Book> mostPopularBookList) {
+        ReportingManager.mostPopularBookList = mostPopularBookList;
+    }
+    
+    
     
     public static void GenerateBorrowedBookList(){
         if(IsArrayListExist(borrowedBookList))
         {
-            
+            for (Map.Entry<String, BorrowingTransaction> entry: BorrowingManager.getInstance().getList().entrySet()) {
+                String key = entry.getKey();
+                BorrowingTransaction value = entry.getValue();
+                
+                if(!value.IsReturned()){
+                    borrowedBookList.add( BookManager.getInstance().SearchById(value.getBookID()));
+                }
+            }
         }
     }
     public static void GenerateMostActiveMemberList(){
-        if(IsArrayListExist(overdueBookList)){
-            
+        if(IsArrayListExist(mostActiveMemberList)){
+            for (Map.Entry<String, Member> entry: MemberManager.getInstance().getList().entrySet()) {
+                String key = entry.getKey();
+                Member value = entry.getValue();
+                
+                if(!value.IsReadingHistoryEmpty()){
+                    mostActiveMemberList.add(value);
+                }
+            }
+            mostActiveMemberList.sort(Comparator.comparingInt(Member::getReadingHistoryLength).reversed());
         }
     }
     public static void GenerateMostPopularBookList(){
-        if(IsArrayListExist(mostActiveMemberList)){
-            
+        if(IsArrayListExist(mostPopularBookList)){
+            for (Map.Entry<String, Book> entry: BookManager.getInstance().getList().entrySet()) {
+                String key = entry.getKey();
+                Book value = entry.getValue();
+                
+                if(value.getBorrowings()>0){
+                    mostPopularBookList.add(value);
+                }
+            }
+            mostPopularBookList.sort(Comparator.comparingInt(Book::getBorrowings).reversed());
         }
     }
     public static void GenerateOverdueBookList(){
-        if(IsArrayListExist(mostPopularBookList)){
-            
+        if(IsArrayListExist(overdueBookList)){
+            for (Map.Entry<String, BorrowingTransaction> entry: BorrowingManager.getInstance().getList().entrySet()) {
+                String key = entry.getKey();
+                BorrowingTransaction value = entry.getValue();
+                
+                if(value.IsOverdue() && !value.IsReturned()){
+                    overdueBookList.add(BookManager.getInstance().SearchById(value.getBookID()));
+                }
+            }
         }
     }
     
@@ -46,6 +113,16 @@ public class ReportingManager {
     }
     
     // cac ham prints
+    public static void PrintMemberList(List<Member> memberList, String title, String emptyAlert) {
+        MemberManager.getInstance().ViewList(memberList, title, emptyAlert);
+    }
+
+    public static void PrintBookList(List<Book> bookList, String title, String emptyAlert) {
+        BookManager.getInstance().ViewList(bookList, title, emptyAlert);
+    }
+
+    
+    // clears
     
     public static void ClearReports(){
         ClearBorrowedBookList();

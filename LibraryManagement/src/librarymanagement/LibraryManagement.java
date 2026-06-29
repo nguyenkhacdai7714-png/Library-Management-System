@@ -1,6 +1,5 @@
 package librarymanagement;
 
-import java.util.*;
 import librarymanagement.utils.*;
 
 import librarymanagement.bookmanagement.*;
@@ -9,8 +8,6 @@ import librarymanagement.borrowingmanagement.BorrowingManagement;
 import librarymanagement.reportingmanagement.ReportingManagement;
 
 public class LibraryManagement {
-    
-    static Scanner input = new Scanner(System.in);
     
     static void Menu()
     {
@@ -27,6 +24,8 @@ public class LibraryManagement {
     public static void main(String[] args) {
         
         Functions.StartFunctions();
+        
+//        DataManagement.LoadVirtualData();
         DataManagement.LoadAllData();
         
         String choice;
