@@ -1,1 +1,5 @@
-M000,Nguyen Khac Dai,01234,dai@gmail.com,B000,PREMIUM
+M000,Nguyen Khac Dai,0123456789,dai@gmail.com,B000,PREMIUM
+M004,Nguyen Thi D,0456789123,nguyenthid@gmail.com,B004,REGULAR
+M003,Nguyen Thi C,0789456123,nguyenthic@gmail.com,B003,PREMIUM
+M002,Nguyen Van B,0142345678,nguyenvanb@gmail.com,@@,REGULAR
+M001,Nguyen Van A,0917894510,nguyenvana@gmail.com,@@,REGULAR

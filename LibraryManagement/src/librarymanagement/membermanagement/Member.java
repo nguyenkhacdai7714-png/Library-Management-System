@@ -2,8 +2,6 @@ package librarymanagement.membermanagement;
 
 import java.util.ArrayList;
 import abstractions.MembershipType;
-import java.util.Iterator;
-import librarymanagement.bookmanagement.BookManager;
 
 public class Member {
 

@@ -175,7 +175,7 @@ public class Functions {
         int[] arr;
         LocalDate today = Today();
         
-        inp = InputString(content + "[dd/mm/yyyy] or [today]: ");
+        inp = InputString(content + "[dd/mm/yyyy] or [today]: ").toLowerCase();
         if(inp.equals("today")){
             return today;
         }
@@ -252,5 +252,17 @@ public class Functions {
     public static String MembershipToTag(MembershipType membership){
         return membership.getMembershipTag();
     }
-    
+
+    public static boolean IsStringNoLetter(String content){
+        if(content==null || content.equals("")){
+            return false;
+        }
+        return content.matches("[0-9]+");
+    }
+    public static boolean IsYearValid(int year){
+        return Today().getYear() >= year;
+    }
+    public static boolean IsPhoneValid(String phone){
+        return IsStringNoLetter(phone) && IsStringValid(phone) && (phone.length()>=Constants.MIN_PHONE_LENGTH && phone.length() <= Constants.MAX_PHONE_LENGTH);
+    }
 }

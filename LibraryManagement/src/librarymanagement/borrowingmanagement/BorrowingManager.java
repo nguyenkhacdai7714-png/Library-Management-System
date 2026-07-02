@@ -85,7 +85,8 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
             String id = entry.getKey();
             BorrowingTransaction transaction = entry.getValue();
             
-            if(transaction.getMemberID().equals(memberId)){
+            if(transaction.getMemberID().equals(memberId)
+                    && !transaction.IsReturned()){
                 return true;
             }
         }
@@ -118,8 +119,13 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
             Member member = MemberManager.getInstance().SearchById(memberId);   
             
             long daysBetween = Functions.DayBetween(transaction.getOverdueDate(),Functions.Today());
+            if(daysBetween  > 0){
+                return member.getMembership().getOverdueFine(daysBetween);
+            }
+            else{
+                return 0f;
+            }
             
-            return member.getMembership().getOverdueFine(daysBetween);
         }
         else{
             return 0f;

@@ -6,6 +6,7 @@ import librarymanagement.membermanagement.*;
 import librarymanagement.borrowingmanagement.*;
 
 import java.util.Comparator;
+import librarymanagement.utils.Functions;
 
 public class ReportingManager {
     
@@ -60,7 +61,6 @@ public class ReportingManager {
         if(IsArrayListExist(borrowedBookList))
         {
             for (Map.Entry<String, BorrowingTransaction> entry: BorrowingManager.getInstance().getList().entrySet()) {
-                String key = entry.getKey();
                 BorrowingTransaction value = entry.getValue();
                 
                 if(!value.IsReturned()){
@@ -72,7 +72,6 @@ public class ReportingManager {
     public static void GenerateMostActiveMemberList(){
         if(IsArrayListExist(mostActiveMemberList)){
             for (Map.Entry<String, Member> entry: MemberManager.getInstance().getList().entrySet()) {
-                String key = entry.getKey();
                 Member value = entry.getValue();
                 
                 if(!value.IsReadingHistoryEmpty()){
@@ -85,7 +84,6 @@ public class ReportingManager {
     public static void GenerateMostPopularBookList(){
         if(IsArrayListExist(mostPopularBookList)){
             for (Map.Entry<String, Book> entry: BookManager.getInstance().getList().entrySet()) {
-                String key = entry.getKey();
                 Book value = entry.getValue();
                 
                 if(value.getBorrowings()>0){
@@ -98,7 +96,6 @@ public class ReportingManager {
     public static void GenerateOverdueBookList(){
         if(IsArrayListExist(overdueBookList)){
             for (Map.Entry<String, BorrowingTransaction> entry: BorrowingManager.getInstance().getList().entrySet()) {
-                String key = entry.getKey();
                 BorrowingTransaction value = entry.getValue();
                 
                 if(value.IsOverdue() && !value.IsReturned()){

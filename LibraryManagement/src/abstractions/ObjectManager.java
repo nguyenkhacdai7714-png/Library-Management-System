@@ -2,15 +2,9 @@ package abstractions;
 import java.util.HashMap;
 
 // thêm 3 cái import 
-    // import cau arraylist 
-import java.util.ArrayList;
-import java.util.Collection;
-// them vi tri cua ham function de co the su dung 
-import librarymanagement.utils.Functions;
-// bao loi systemcode nen them import cua no 
-import librarymanagement.utils.SystemCode;
+    // import cau arraylist
+import java.util.Collection; 
 import librarymanagement.utils.Constants;
-import librarymanagement.utils.BoardDrawer;
 
 public abstract class ObjectManager<T> {
     

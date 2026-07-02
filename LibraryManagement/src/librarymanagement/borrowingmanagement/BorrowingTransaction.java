@@ -85,6 +85,8 @@ public class BorrowingTransaction extends LibraryObject{
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
+    
+    // Boolean status
 
     public boolean IsReturned() {
         return returnDate!=null;

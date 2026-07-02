@@ -24,7 +24,7 @@ public class Constants {
     public static final int ERROR_VALUE = -9999;
     
     // kich thuoc menu
-    public static final int MENU_WIDTH =40;
+    public static final int MENU_WIDTH =60;
     
     // data files
     public static final String bookFile = "bookDataFile.txt";
@@ -35,4 +35,8 @@ public class Constants {
     public static final String regularMembershipTag = "REGULAR";
     public static final String premiumMembershipTag = "PREMIUM";
     
+    
+    // phone
+    public static final int MAX_PHONE_LENGTH=15;
+    public static final int MIN_PHONE_LENGTH=7;
 }

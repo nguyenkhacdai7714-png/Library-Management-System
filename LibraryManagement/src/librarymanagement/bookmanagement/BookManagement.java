@@ -1,6 +1,5 @@
 package librarymanagement.bookmanagement;
 
-import java.util.*;
 import librarymanagement.utils.Functions;
 import librarymanagement.utils.SystemCode;
 
@@ -86,8 +85,11 @@ public class BookManagement implements abstractions.ObjectManagement {
         int year;
         do{
             year = Functions.InputInt("Enter book's publication year: ");
-            if(year > 0){
+            if(year > 0 && Functions.IsYearValid(year)){
                 break;
+            }
+            else if(!Functions.IsYearValid(year)){
+                Functions.Print("Year is not valid!\n");
             }
             else{
                 Functions.Print("Year must be a positive number!\n");
@@ -186,34 +188,54 @@ public class BookManagement implements abstractions.ObjectManagement {
                 case "1" : {
                     String temp = Functions.InputString("Enter NEW Title: ");
                     if (Functions.IsStringValid(temp)) newTitle = temp;
+                    else{
+                        Functions.Alert("Empty input!");
+                    }
                     break;
                 }
                 case "2" : {
                     String temp = Functions.InputString("Enter NEW Author: ");
                     if (Functions.IsStringValid(temp)) newAuthor = temp;
+                    else{
+                        Functions.Alert("Empty input!");
+                    }
                     break;
                 }
                 case "3" : {
                     String temp = Functions.InputString("Enter NEW Genre: ");
-                    if (Functions.IsStringValid(temp)) newGenre = temp;
+                    if (!Functions.IsStringValid(temp)){
+                        Functions.Alert("Empty input!");
+                    }
+                    else if(!Functions.IsStringNoDigit(temp)){
+                        Functions.Alert("Genre do not have numbers!");
+                    }
+                    else
+                    {
+                        newGenre = temp;
+                    }
                     break;
                 }
                 case "4" : {
                     // Giả định lớp Functions của bạn đã có hàm ép kiểu int an toàn tương tự InputString
                     int temp = Functions.InputInt("Enter NEW Publication Year: "); 
-                    if (temp > 0) newYear = temp;
+                    if (temp > 0 && Functions.IsYearValid(temp)) newYear = temp;
+                    else{
+                        Functions.Alert("Invalid pub.year !");
+                    }
                     break;
                 }
                 case "5" : {
                     int temp = Functions.InputInt("Enter NEW Quantity: ");
                     if (temp >= 0) newQuantity = temp;
+                    else{
+                        Functions.Alert("Invalid quantity !");
+                    }
                     break;
                 }
                 case "6" : {
                     // Gọi Manager thực hiện cập nhật toàn bộ vào Database/HashMap một lần duy nhất
                     manager.Update(id, newTitle, newAuthor, newGenre, newYear, newQuantity);
                     Functions.Alert("Database updated successfully.");
-                    
                     return;
                 }
             }

@@ -60,28 +60,39 @@ public class BorrowingManagement implements ObjectManagement{
         }
         System.out.println("New transaction ID : " + transactionId);
         
-        bookId = Functions.InputString("Enter book ID :");
-        if(!Functions.IsStringValid(bookId) || !bookManager.IsIdExist(bookId)){
-            Functions.Alert("The book ID is incorrect or it is not exist!");
-            return;
-        }
+        do{
+            bookId = Functions.InputString("Enter book ID ('0' to quit):");
+            if(bookId.equals("0")){
+                return;
+            }
+            if(!Functions.IsStringValid(bookId) || !bookManager.IsIdExist(bookId)){
+                Functions.Print("The book ID is incorrect or it is not exist!\n");
+            }
+        }while(!Functions.IsStringValid(bookId) || !bookManager.IsIdExist(bookId));
         
-        memberId = Functions.InputString("Enter member ID :");
-        if(!Functions.IsStringValid(memberId) || !memberManager.IsIdExist(memberId)){
-            Functions.Alert("The member ID is incorrect or it is not exist!");
-            return;
-        }
+        do{
+            memberId = Functions.InputString("Enter member ID ('0' to quit):");
+            if(memberId.equals("0")){
+                return;
+            }
+            if(!Functions.IsStringValid(memberId) || !memberManager.IsIdExist(memberId)){
+                Functions.Print("The member ID is incorrect or it is not exist!\n");
+            }
+        }while(!Functions.IsStringValid(memberId) || !memberManager.IsIdExist(memberId));
         
-        borrowDate = Functions.InputDate("Enter Borrow Day");
-        if(!Functions.IsDateValid(borrowDate)){
-            Functions.Alert("The 'borrow day' you entered is incorrect!");
-            return;
+        do{
+            borrowDate = Functions.InputDate("Enter Borrow Day");
+            if(!Functions.IsDateValid(borrowDate)){
+            Functions.Print("The 'borrow day' you entered is incorrect!\n");
         }
-        overdueDate = Functions.InputDate("Enter Overdue Day");
-        if(!Functions.IsDateValid(overdueDate)){
-            Functions.Alert("The 'overdue day' you entered is incorrect!");
-            return;
+        }while(!Functions.IsDateValid(borrowDate));
+     
+        do{
+            overdueDate = Functions.InputDate("Enter overdue Day");
+            if(!Functions.IsDateValid(overdueDate)){
+            Functions.Print("The 'overdue day' you entered is incorrect!\n");
         }
+        }while(!Functions.IsDateValid(overdueDate));
         
         borrowingManager.Borrow(transactionId, memberId, bookId, borrowDate, overdueDate);
         borrowingManager.TakeBookOut(bookManager.SearchById(bookId)); // update for book

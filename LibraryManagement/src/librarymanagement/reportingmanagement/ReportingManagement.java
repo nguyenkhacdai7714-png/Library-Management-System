@@ -1,11 +1,7 @@
 package librarymanagement.reportingmanagement;
 
-import java.util.*;
 import librarymanagement.utils.Functions;
 import librarymanagement.utils.SystemCode;
-
-import librarymanagement.bookmanagement.Book;
-import librarymanagement.membermanagement.Member;
 
 public class ReportingManagement {
     
@@ -22,22 +18,25 @@ public class ReportingManagement {
     public void Menu(){
         Functions.MenuGenerator(
                 "REPORTING MANAGEMENT", // title
-                "Back", // end
+                "Back (the reports will be regenerated)", // end
                 
-                "Show Borrowed Books", // functions...
-                "Show Overdue Books",
-                "Show Most Popular Books",
-                "Show Most Borrowings Members");
+                "Generate and Show Borrowed Books", // functions...
+                "Generate and Show Overdue Books",
+                "Generate and Show Most Popular Books",
+                "Generate and Show Most Borrowings Members");
     }
     
     public void Run()
-    {
-        Functions.Print("Generating reports...\n");
-        ReportingManager.GenerateOverdueBookList();
+    {   
+        System.out.println("Generating reports...");
         ReportingManager.GenerateBorrowedBookList();
-        ReportingManager.GenerateMostActiveMemberList();
+        System.out.print("25%");
+        ReportingManager.GenerateOverdueBookList();
+        System.out.print(" 50%");
         ReportingManager.GenerateMostPopularBookList();
-        Functions.Print("-> Successfully!\n");
+        System.out.print(" 75%");
+        ReportingManager.GenerateMostActiveMemberList();
+        System.out.print(" 100%");
         
         String choice;
         do{
@@ -59,7 +58,6 @@ public class ReportingManagement {
                 case "4":
                     PrintMostActiveMemberList();
                     break;
-                    
                 case "0":
                     break;
                 default:

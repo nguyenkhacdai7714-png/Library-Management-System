@@ -18,7 +18,8 @@ public class LibraryManagement {
                 "Book Management", // functions... or WALL
                 "Member Management", 
                 "Borrowing Management", 
-                "Reporting Management");
+                "Reporting Management",
+                "Save");
     }
     
     public static void main(String[] args) {
@@ -49,7 +50,9 @@ public class LibraryManagement {
                     break;
                 case "4":
                     ReportingManagement.getInstance().Run();
-                    
+                case"5":
+                    DataManagement.SaveAllData();
+                    Functions.Alert("Saved successfully!");
                     break;
                 case "0":
                     break;

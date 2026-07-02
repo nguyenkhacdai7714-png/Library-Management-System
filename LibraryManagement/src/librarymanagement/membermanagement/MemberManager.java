@@ -36,10 +36,19 @@ public class MemberManager extends ObjectManager<Member> {
         }
         BoardDrawer.PrintWall();
     }
-
-    public boolean IsDuplicateEmailOrPhone(String email, String phone) {
+    
+    public boolean IsDuplicatePhone(String phone){
         for (Member m : list.values()) {
-            if (m.getEmail().equalsIgnoreCase(email) || m.getPhone().equals(phone)) {
+            if (m.getPhone().equals(phone)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean IsDuplicateEmail(String email){
+        for (Member m : list.values()) {
+            if (m.getEmail().equals(email)) {
                 return true;
             }
         }
