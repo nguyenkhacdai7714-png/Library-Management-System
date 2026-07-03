@@ -58,15 +58,11 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
     
     public void ViewHistoryReading(String memberId){
         Member member = MemberManager.getInstance().SearchById(memberId);
-        ArrayList<String> bookIDList = member.getReadingHistory();
-        ArrayList<Book> bookList = new ArrayList<Book>();
         
-        for(String id : bookIDList){
-            Book book = BookManager.getInstance().SearchById(id);
-            bookList.add(book);
-        }
-        
-        BookManager.getInstance().ViewList(bookList, "Reading history of " + member.getName(), "This member has no reading history!");
+        System.out.println("======================== READING HISTORY OF '" + member.getName() + "' ("+memberId+") " + "========================");
+        member.ViewReadingHistory();
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Total : " + member.getReadingHistoryLength() + " readings");
     }
     
     public void Borrow(String transactionId,String memberId, String bookId, LocalDate borrowDate, LocalDate overdueDate){     
@@ -92,9 +88,33 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
         }
         return false;
     }
+    public boolean IsBookOnATransaction(String bookId){
+        for (Map.Entry<String, BorrowingTransaction> entry : list.entrySet()) {
+            String id = entry.getKey();
+            BorrowingTransaction transaction = entry.getValue();
+            
+            if(transaction.getBookID().equals(bookId)
+                    && !transaction.IsReturned()){
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void AddReadingHistory(String memberId, String bookId){
-        MemberManager.getInstance().SearchById(memberId).AddReadingHistory(bookId);
+        Member member = MemberManager.getInstance().SearchById(memberId);
+        Book book = BookManager.getInstance().SearchById(bookId);
+        
+        String log = String.format(
+                "[%s] '%s' (%s) has read '%s' (%s) by '%s' - pub.year %s (log version 1.0)", 
+                Functions.DateToString(Functions.Today()),
+                member.getName(),
+                memberId,
+                book.getTitle(),
+                bookId,
+                book.getAuthor(),
+                book.getPublicationYear());
+        member.AddReadingHistory(log);
     }
     
     public void Return(String transactionId, LocalDate returnDate){

@@ -13,10 +13,6 @@ public class Constants {
     public static final float REGULAR_MEMBERSHIP_OVERDUE_FINE = 5000;
     public static final float PREMIUM_MEMBERSHIP_OVERDUE_FINE = 2000;
     
-    // so lan doc sach va tra dung hen can thiet de len hang PREMIUM
-    public static final int READINGS_TO_REACH_PREMIUM_MEMBERSHIP = 10;
-    // so lan tre hen can thiet de xuong hang REGULAR
-    public static final int OVERDUES_TO_REACH_REGULAR_MEMBERSHIP = 2;
     // neu tra tre hen -> +1 vao overdues
     // neu tra dung hen -> +1 vao readings
     
@@ -39,4 +35,8 @@ public class Constants {
     // phone
     public static final int MAX_PHONE_LENGTH=15;
     public static final int MIN_PHONE_LENGTH=7;
+    
+    // reading history codes
+    public static final String READING_HISTORY_SPLIT_CODE = "|";
+    public static final String READING_HISTORY_EMPTY_CODE = "@@";
 }

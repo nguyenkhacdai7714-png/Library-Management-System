@@ -1,5 +1,7 @@
 package librarymanagement.bookmanagement;
 
+import librarymanagement.borrowingmanagement.BorrowingManager;
+
 import librarymanagement.utils.Functions;
 import librarymanagement.utils.SystemCode;
 
@@ -266,6 +268,11 @@ public class BookManagement implements abstractions.ObjectManagement {
         if (!manager.IsIdExist(id)) {
             Functions.SystemAlert(SystemCode.BookNotFound);
             
+            return;
+        }
+        
+        if(BorrowingManager.getInstance().IsBookOnATransaction(id)){
+            Functions.Alert("Can not remove the book because it's on a transaction!");
             return;
         }
         

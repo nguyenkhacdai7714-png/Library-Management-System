@@ -21,14 +21,21 @@ public class MemberManager extends ObjectManager<Member> {
     
     @Override
     public void ViewList(Collection<Member> itemList, String title, String emptyAlert){
-        BoardDrawer.SetBoard(5+10+20+15+23+9+11 + 7*3, "| %-5s | %-10s | %-20s | %-15s | %-23s | %-9s | %-11s |");
+        BoardDrawer.SetBoard(5+10+20+15+23+9+11+17 + 7*3, "| %-5s | %-10s | %-20s | %-15s | %-23s | %-9s | %-11s | %-17 |");
         BoardDrawer.PrintTitle(title, emptyAlert, itemList.isEmpty());
         if(!itemList.isEmpty()){
-            BoardDrawer.PrintRow("No#","Member ID","Fullname", "Phone","Email", "Readings", "Membership");
+            BoardDrawer.PrintRow("No#","Member ID","Fullname", "Phone","Email", "Readings", "Membership", "Curr. Borrowings");
             BoardDrawer.PrintWall();
             int count = 1;
             for (Member member : itemList){
-                BoardDrawer.PrintRow(count, member.getId(), member.getName(), member.getPhone(), member.getEmail(), member.getReadingHistoryLength(), member.getMembership().MembershipTypeName());
+                BoardDrawer.PrintRow(count, 
+                        member.getId(), 
+                        member.getName(), 
+                        member.getPhone(), 
+                        member.getEmail(), 
+                        member.getReadingHistoryLength(), 
+                        member.getMembership().MembershipTypeName(), 
+                        member.getCurrentBorrowingCount()+"/"+member.getBorrowingLimit());
                 count++;
             }
             BoardDrawer.PrintSoftWall();
@@ -63,5 +70,37 @@ public class MemberManager extends ObjectManager<Member> {
             member.setPhone(phone);
             member.setMembership(membershipType);
         }
+    }
+    
+    public void AddCurrentBorrowing(String memberId){
+        Member member = SearchById(memberId);
+        if(member!=null){
+            member.addCurrentBorrowing();
+        }
+    }
+    public void RemoveCurrentBorrowing(String memberId){
+        Member member = SearchById(memberId);
+        if(member!=null){
+            member.removeCurrentBorrowing();
+        }
+    }
+    
+    public void ViewMembershipBenefits(){
+        
+        MembershipType regular = new RegularMembership();
+        MembershipType premium = new PremiumMembership();
+        
+        System.out.println("REGULAR MEMBERSHIP");
+        System.out.println("+ Borrowing Limit : "  + regular.getBorrowingLimit() + " books");
+        System.out.printf("+ Overdue fine    : %.0f vnd/day", regular.getOverdueFine(1));
+        
+        System.out.println("\n");
+        
+        System.out.println("PREMIUM MEMBERSHIP");
+        System.out.println("+ Borrowing Limit : "  + premium.getBorrowingLimit() + " books");
+        System.out.printf("+ Overdue fine    : %.0f vnd/day", premium.getOverdueFine(1));
+        
+        
+        System.out.println("\n");
     }
 }

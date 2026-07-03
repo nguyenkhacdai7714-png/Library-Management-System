@@ -28,7 +28,8 @@ public class MemberManagement implements ObjectManagement {
                     "Update Member",
                     "Remove Member",
                     "View Member List",
-                    "Search Member");
+                    "Search Member",
+                    "Membership Benefits");
             
             String choice = Functions.InputMenuChoice();
             switch (choice) {
@@ -49,9 +50,18 @@ public class MemberManagement implements ObjectManagement {
                 case "5" :
                     Searching();
                     break;
+                case"6":
+                    ViewMembershipBenefits();
+                    break;
             }
         }
     }
+    public void ViewMembershipBenefits(){
+        Functions.Clear();
+        MemberManager.getInstance().ViewMembershipBenefits();
+        Functions.Pause();
+    }
+    
     @Override
     public void Adding() {
         

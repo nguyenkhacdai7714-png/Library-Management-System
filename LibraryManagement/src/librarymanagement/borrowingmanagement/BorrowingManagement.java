@@ -31,6 +31,8 @@ public class BorrowingManagement implements ObjectManagement{
         LocalDate borrowDate;
         LocalDate overdueDate;
         
+        Member member=null;
+        
         BorrowingManager borrowingManager = BorrowingManager.getInstance();
         BookManager bookManager = BookManager.getInstance();
         MemberManager memberManager = MemberManager.getInstance();
@@ -86,7 +88,16 @@ public class BorrowingManagement implements ObjectManagement{
             if(!Functions.IsStringValid(memberId) || !memberManager.IsIdExist(memberId)){
                 Functions.Print("The member ID is incorrect or it is not exist!\n");
             }
-        }while(!Functions.IsStringValid(memberId) || !memberManager.IsIdExist(memberId));
+            else{
+                member = memberManager.SearchById(memberId);
+                if(!member.IsUnderBorrowingLimit()){
+                    Functions.Print("This member has reached borrowing limit (" + member.getBorrowingLimit() + " books) \n");
+                }
+                else{
+                    break;
+                }
+            }
+        }while(true);
         
         do{
             borrowDate = Functions.InputDate("Enter Borrow Day");
@@ -153,7 +164,7 @@ public class BorrowingManagement implements ObjectManagement{
             }
             
             matchedTransaction.View();
-            answer = Functions.YNQuestion("Return the book? You have to pay "+ String.format("%.2f", fine) + " vnd");
+            answer = Functions.YNQuestion("Return the book? You have to pay "+ String.format("%.0f", fine) + " vnd");
             
             if(answer.equals("y")){
                 borrowingManager.Return(transactionId, returnDate);
