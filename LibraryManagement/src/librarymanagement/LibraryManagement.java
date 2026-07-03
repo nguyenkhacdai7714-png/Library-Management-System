@@ -50,6 +50,7 @@ public class LibraryManagement {
                     break;
                 case "4":
                     ReportingManagement.getInstance().Run();
+                    break;
                 case"5":
                     DataManagement.SaveAllData();
                     Functions.Alert("Saved successfully!");
@@ -62,8 +63,9 @@ public class LibraryManagement {
             }
             
         }while(!choice.equals("0"));
-        
+        Functions.Print("Saving...\n");
         DataManagement.SaveAllData();
+        Functions.Print("Done!\n");
     }
     
 }

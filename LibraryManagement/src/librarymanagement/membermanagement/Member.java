@@ -1,11 +1,12 @@
 package librarymanagement.membermanagement;
 
 import java.util.ArrayList;
+
 import abstractions.MembershipType;
+import abstractions.LibraryObject;
 
-public class Member {
+public class Member extends LibraryObject{
 
-    private String id;
     private String name;
     private String phone;
     private String email;
@@ -14,7 +15,7 @@ public class Member {
     private MembershipType membershipType;
 
     public Member() {
-        this.id = "";
+        super("");
         this.name = "";
         this.phone = "";
         this.email = "";
@@ -24,7 +25,7 @@ public class Member {
     }
 
     public Member(String id, String name, String phone, String email) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -33,7 +34,7 @@ public class Member {
         membershipType = new RegularMembership();
     }
     public Member(String id, String name, String phone, String email, ArrayList<String> readingHistory) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -43,21 +44,13 @@ public class Member {
     }
     
     public Member(String id, String name, String phone, String email, ArrayList<String> readingHistory, MembershipType membership) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.readingHistory = readingHistory;
         
         membershipType = membership;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

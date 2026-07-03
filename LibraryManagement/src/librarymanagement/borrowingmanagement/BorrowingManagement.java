@@ -66,9 +66,17 @@ public class BorrowingManagement implements ObjectManagement{
                 return;
             }
             if(!Functions.IsStringValid(bookId) || !bookManager.IsIdExist(bookId)){
-                Functions.Print("The book ID is incorrect or it is not exist!\n");
+                Functions.Print("The book ID is not exist!\n");
             }
-        }while(!Functions.IsStringValid(bookId) || !bookManager.IsIdExist(bookId));
+            else{
+                if(bookManager.SearchById(bookId).getQuantity()>0){
+                    break;
+                }
+                else{
+                    Functions.Print("Book is out of stock!\n");
+                }
+            }
+        }while(true);
         
         do{
             memberId = Functions.InputString("Enter member ID ('0' to quit):");

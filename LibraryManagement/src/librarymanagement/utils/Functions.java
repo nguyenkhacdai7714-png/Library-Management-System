@@ -175,7 +175,7 @@ public class Functions {
         int[] arr;
         LocalDate today = Today();
         
-        inp = InputString(content + "[dd/mm/yyyy] or [today]: ").toLowerCase();
+        inp = InputString(content + "[dd/mm/yyyy] or [today]: ").toLowerCase().replaceAll("\\s","");
         if(inp.equals("today")){
             return today;
         }

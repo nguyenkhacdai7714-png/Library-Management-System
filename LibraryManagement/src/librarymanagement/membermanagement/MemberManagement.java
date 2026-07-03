@@ -215,7 +215,11 @@ public class MemberManagement implements ObjectManagement {
                 }
                 case "2" : {
                     String temp = Functions.InputString("Enter New Email: ");
-                    if (Functions.IsStringValid(temp)) newEmail = temp;
+                    if (Functions.IsStringValid(temp)
+                            && !MemberManager.getInstance().IsDuplicatePhone(temp)) newEmail = temp;
+                    else if(MemberManager.getInstance().IsDuplicatePhone(temp)){
+                        Functions.Alert("This email has already used!");
+                    }
                     else{
                         Functions.Alert("Do not leave blank!");
                     }
@@ -223,9 +227,14 @@ public class MemberManagement implements ObjectManagement {
                 }
                 case "3" : {
                     String temp = Functions.InputString("Enter New Phone: ");
-                    if (Functions.IsStringValid(temp)) newPhone = temp;
+                    if (Functions.IsStringValid(temp) 
+                            && Functions.IsPhoneValid(temp)
+                            && !MemberManager.getInstance().IsDuplicatePhone(temp)) newPhone = temp;
                     else if(!Functions.IsPhoneValid(temp)){
                         Functions.Alert("Invalid phone!");
+                    }
+                    else if(MemberManager.getInstance().IsDuplicatePhone(temp)){
+                        Functions.Alert("This phone number has already used!");
                     }
                     else{
                         Functions.Alert("Do not leave blank!");

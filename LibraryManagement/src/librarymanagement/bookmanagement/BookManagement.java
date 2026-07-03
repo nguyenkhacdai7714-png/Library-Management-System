@@ -218,7 +218,7 @@ public class BookManagement implements abstractions.ObjectManagement {
                 case "4" : {
                     // Giả định lớp Functions của bạn đã có hàm ép kiểu int an toàn tương tự InputString
                     int temp = Functions.InputInt("Enter NEW Publication Year: "); 
-                    if (temp > 0 && Functions.IsYearValid(temp)) newYear = temp;
+                    if (temp >= 0 && Functions.IsYearValid(temp)) newYear = temp;
                     else{
                         Functions.Alert("Invalid pub.year !");
                     }

@@ -13,8 +13,6 @@ public class BookManager extends abstractions.ObjectManager<Book> {
         return instance;
     }
     // end singleton
-   
-    // lenh view 
     
     
     // lenh update
