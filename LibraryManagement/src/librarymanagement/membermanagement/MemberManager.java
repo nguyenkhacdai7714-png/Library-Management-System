@@ -49,6 +49,15 @@ public class MemberManager extends ObjectManager<Member> {
         phoneChecker.Remove(member.getPhone());
     }
     
+    public ArrayList<Member> SearchByAll(String inp){
+        
+        return super.SearchByAll(inp, member -> String.format("name:%s email:%s phone:%s membership:%s",
+                member.getName(),
+                member.getEmail(),
+                member.getPhone(),
+                member.getMembership().MembershipTypeName()));
+    }
+    
     @Override
     public void View(){
         ViewList(getList().values(), "member list", "Member list is empty");

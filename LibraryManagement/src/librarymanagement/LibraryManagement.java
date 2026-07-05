@@ -19,7 +19,18 @@ public class LibraryManagement {
                 "Member Management", 
                 "Borrowing Management", 
                 "Reporting Management",
+                "Filter Codes",
                 "Save");
+    }
+    
+    public static void ShowFilterCode(){
+        System.out.println("BOOK MANAGEMENT");
+        System.out.println("[+] title:X author:X genre:X pubyear:X");
+        System.out.println("\nMEMBER MANAGEMENT");
+        System.out.println("[+] name:X email:X phone:X membership:X");
+        System.out.println("\nBORROWING MANAGEMENT");
+        System.out.println("[+] bookid:X memberid:X borrowdate:X overduedate:X returndate:X returned:X overdue:X\n");
+        
     }
     
     public static void main(String[] args) {
@@ -30,13 +41,16 @@ public class LibraryManagement {
         System.out.println("LOADING...");
         
         //DataManagement.LoadVirtualData();
+        System.out.println("0%");
         DataManagement.LoadAllData();
         
         // Data always load first
         
-        System.out.print("50%");
+        System.out.print("-50%");
         BorrowingManagement.getInstance().InitLoading();
-        System.out.print("-75%");
+        System.out.print("-65%");
+        BookManagement.getInstance().InitLoading();
+        System.out.print("-85%");
         MemberManagement.getInstance().InitLoading();
         System.out.println("-100%");
         
@@ -63,6 +77,11 @@ public class LibraryManagement {
                     ReportingManagement.getInstance().Run();
                     break;
                 case"5":
+                    Functions.Clear();
+                    ShowFilterCode();
+                    Functions.Pause();
+                    break;
+                case"6":
                     DataManagement.SaveAllData();
                     Functions.Alert("Saved successfully!");
                     break;

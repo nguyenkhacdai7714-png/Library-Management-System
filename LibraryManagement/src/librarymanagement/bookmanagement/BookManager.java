@@ -2,6 +2,7 @@ package librarymanagement.bookmanagement;
 
 import java.util.*;
 import librarymanagement.utils.BoardDrawer;
+import librarymanagement.utils.DuplicateChecker;
 
 // Kế thừa ObjectManager<Book> từ package abstractions theo đúng lớp cha 
 public class BookManager extends abstractions.ObjectManager<Book> {
@@ -13,6 +14,56 @@ public class BookManager extends abstractions.ObjectManager<Book> {
         return instance;
     }
     // end singleton
+    
+    // Duplicate Checker : BookManager
+    private DuplicateChecker titleChecker = new DuplicateChecker();
+    private DuplicateChecker authorChecker = new DuplicateChecker();
+    
+    // Load 1 lan duy nhat khi bat app
+    public void LoadTitleChecker(){
+        for(Book book : getList().values()){
+            titleChecker.Add(book.getTitle());
+        }
+    }
+    public void LoadAuthorChecker(){
+        for(Book book : getList().values()){
+            authorChecker.Add(book.getAuthor());
+        }
+    }
+    
+    // check nhanh
+    public boolean IsDuplicateAuthor(String author){
+        return authorChecker.Check(author);
+    }
+    
+    public boolean IsDuplicateTitle(String title){
+        return titleChecker.Check(title);
+    }
+    
+    // them
+    public void AddDuplicateChecker(String memberId){
+        Book book = SearchById(memberId);
+        titleChecker.Add(book.getTitle());
+        authorChecker.Add(book.getAuthor());
+    }
+    // xoa
+    public void RemoveDuplicateChecker(String memberId){
+        Book book = SearchById(memberId);
+        titleChecker.Remove(book.getTitle());
+        authorChecker.Remove(book.getAuthor());
+    }
+    // End
+    
+    
+    // search by all
+    public ArrayList<Book> SearchByAll(String inp){
+        
+        return super.SearchByAll(inp, book -> String.format("title:%s author:%s genre:%s pubyear:%d",
+                book.getTitle(),
+                book.getAuthor(),
+                book.getGenre(),
+                book.getPublicationYear()));
+    }
     
     
     // lenh update

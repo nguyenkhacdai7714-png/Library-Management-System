@@ -5,6 +5,8 @@ import librarymanagement.borrowingmanagement.BorrowingManager;
 import librarymanagement.utils.Functions;
 import librarymanagement.utils.SystemCode;
 
+import java.util.ArrayList;
+
 // -------
 // chuyen hoa Interface ObjectManagement tu package abstractions
 public class BookManagement implements abstractions.ObjectManagement {
@@ -18,7 +20,13 @@ public class BookManagement implements abstractions.ObjectManagement {
     }
     // end singleton
     
+    
     // --- Cac ham thanh phan chinh cua BookManagement
+    
+    public void InitLoading(){
+        BookManager.getInstance().LoadTitleChecker();
+        BookManager.getInstance().LoadAuthorChecker();
+    }
     
     // Ham menu tach biet voi ham Run
     @Override
@@ -30,7 +38,7 @@ public class BookManagement implements abstractions.ObjectManagement {
                 "Update book information",
                 "Remove book",
                 "View book",
-                "Search book by ID"
+                "Search book"
         );
     }
     
@@ -72,6 +80,17 @@ public class BookManagement implements abstractions.ObjectManagement {
                 System.out.println("Do not leave blank this information !");
             }
         }while(!Functions.IsStringValid(author));
+        
+        // BookManagement/Adding()
+        // neu trung author & title -> hoi "Co muon tiep tuc khong"
+        if(manager.IsDuplicateAuthor(author) && manager.IsDuplicateTitle(title)){
+            System.out.println("This book already inside the storage!");
+            String ans = Functions.YNQuestion("Do you still want to create new?");
+            if(ans.equals("n")){
+                Functions.Alert("Cancelled");
+                return;
+            }
+        }
         
         do{
             genre = Functions.InputString("Enter book genre: ");    
@@ -235,6 +254,18 @@ public class BookManagement implements abstractions.ObjectManagement {
                     break;
                 }
                 case "6" : {
+                    
+                    // BookManagement/Update()
+                    // y chang code o add
+                    if(manager.IsDuplicateAuthor(newAuthor) && manager.IsDuplicateTitle(newTitle)){
+                        System.out.println("Your updated information matches one or more existing books in the storage.");
+                        String ans = Functions.YNQuestion("Do you still want to update?");
+                        if(ans.equals("n")){
+                            Functions.Alert("Cancelled!");
+                            return;
+                        }
+                    }
+                    
                     // Gọi Manager thực hiện cập nhật toàn bộ vào Database/HashMap một lần duy nhất
                     manager.Update(id, newTitle, newAuthor, newGenre, newYear, newQuantity);
                     Functions.Alert("Database updated successfully.");
@@ -328,31 +359,39 @@ public class BookManagement implements abstractions.ObjectManagement {
 
         // 2. nhap id book de tim 
         while (true) {
-            String id = Functions.InputString("Enter Book ID to search (or type '0' to Back): ");
+            String any = Functions.InputString("Enter any information to search (or type '0' to Back): ");
 
-            if (id.equals("0")) {
+            if (any.equals("0")) {
                 System.out.println("Returning to main menu...");
                 break;
             }
 
             // 2.1 tim dc book
             // Cập nhật đồng bộ hàm SearchById(id) kế thừa từ lớp cha nghiệp vụ
-            Book foundBook = manager.SearchById(id);
+            ArrayList<Book> foundBook = manager.SearchByAll(any);
             
             // 2.2 khong tim dc book
-            if (foundBook == null) {
+            if (foundBook == null || foundBook.isEmpty()) {
                 Functions.SystemAlert(SystemCode.BookNotFound);
-                
             // 3. hien thi thong tin book can tim
             } else {
-                Functions.Clear();
-                System.out.println("===========================================");
-                System.out.println("----------- BOOK SEARCH RESULT ------------");
-                System.out.println("===========================================");
-                foundBook.View();
-                System.out.println("===========================================");
-                Functions.Pause();
-                break; 
+                int foundBookLength = foundBook.size();
+                if(foundBookLength==1){
+                    Functions.Clear();
+                    System.out.println("===========================================");
+                    System.out.println("----------- BOOK SEARCH RESULT ------------");
+                    System.out.println("===========================================");
+                    foundBook.get(0).View();
+                    System.out.println("===========================================");
+                    Functions.Pause();
+                    break; 
+                }
+                else{
+                    Functions.Clear();
+                    manager.ViewList(foundBook, "ALL BOOK FOUNDS", "Did not found any book matches!");
+                    Functions.Pause();
+                    break;
+                }
             }
         }
     }

@@ -20,8 +20,10 @@ public class BorrowingManagement implements ObjectManagement{
     }
     // end singleton
     
+    private BorrowingManager manager = BorrowingManager.getInstance();
+    
     public void InitLoading(){
-        BorrowingManager.getInstance().LoadCurrentBorrowingAll();
+        manager.LoadCurrentBorrowingAll();
     }
     
     @Override
@@ -35,7 +37,7 @@ public class BorrowingManagement implements ObjectManagement{
         
         Member member=null;
         
-        BorrowingManager borrowingManager = BorrowingManager.getInstance();
+        BorrowingManager borrowingManager = manager;
         BookManager bookManager = BookManager.getInstance();
         MemberManager memberManager = MemberManager.getInstance();
         
@@ -57,7 +59,7 @@ public class BorrowingManagement implements ObjectManagement{
         
         Functions.Print("---------- BORROWING BOOK -----------\n");
         
-        transactionId = BorrowingManager.getInstance().IdGenerator("T");
+        transactionId = manager.IdGenerator("T");
         if(borrowingManager.IsIdExist(transactionId)){
            Functions.Alert("ID is existed!");
            return;
@@ -132,7 +134,7 @@ public class BorrowingManagement implements ObjectManagement{
         String memberId;
         LocalDate returnDate;
         
-        BorrowingManager borrowingManager = BorrowingManager.getInstance();
+        BorrowingManager borrowingManager = manager;
         
         if(borrowingManager.IsListEmpty()){
             Functions.Alert("The transaction storage is empty!");
@@ -155,7 +157,6 @@ public class BorrowingManagement implements ObjectManagement{
         }
         else{
             
-            fine = borrowingManager.GetOverdueFine(transactionId);
             bookId = matchedTransaction.getBookID();
             memberId = matchedTransaction.getMemberID();
             
@@ -165,6 +166,7 @@ public class BorrowingManagement implements ObjectManagement{
                 return;
             }
             
+            fine = borrowingManager.GetOverdueFine(transactionId, returnDate);
             matchedTransaction.View();
             answer = Functions.YNQuestion("Return the book? You have to pay "+ String.format("%.0f", fine) + " vnd");
             
@@ -183,14 +185,14 @@ public class BorrowingManagement implements ObjectManagement{
     @Override
     public void Viewing(){
         Functions.Clear();
-        BorrowingManager.getInstance().View();
+        manager.View();
         Functions.Pause();
     }
     @Override
     public void Searching(){
-        String transactionId;
-        BorrowingTransaction transaction;
-        BorrowingManager borrowingManager = BorrowingManager.getInstance();
+        String inp;
+        ArrayList<BorrowingTransaction> transaction;
+        BorrowingManager borrowingManager = manager;
         
         if(borrowingManager.IsListEmpty()){
             Functions.Alert("Transaction list is empty!");
@@ -199,16 +201,25 @@ public class BorrowingManagement implements ObjectManagement{
         
         Functions.Print("---------- SEARCH TRANSACTION -----------\n");
         
-        transactionId = Functions.InputString("Enter transaction ID :");
+        inp = Functions.InputString("Enter any transaction information :");
         
-        transaction = borrowingManager.SearchById(transactionId);
-        if(transaction==null){
+        transaction = borrowingManager.SearchByAll(inp);
+        if(transaction==null || transaction.isEmpty()){
             Functions.Alert("Transaction not found!");
             return;
         }
         
-        transaction.View();
-        Functions.Pause();
+        int length = transaction.size();
+        if(length==1){
+            transaction.get(0).View();
+            Functions.Pause();
+        }
+        else{
+            Functions.Clear();
+            manager.ViewList(transaction, "ALL TRANSACTION FOUNDS", "Nothing here!");
+            Functions.Pause();
+        }
+        
     }
     
     void UpdatingMenu(BorrowingTransaction currentTrans, String newMemberId, String newBookId, LocalDate newOverdueDate){
@@ -243,7 +254,7 @@ public class BorrowingManagement implements ObjectManagement{
         LocalDate borrowDate;
         
         BorrowingTransaction transaction;
-        BorrowingManager borrowingManager = BorrowingManager.getInstance();
+        BorrowingManager borrowingManager = manager;
         MemberManager memberManager = MemberManager.getInstance();
         BookManager bookManager = BookManager.getInstance();
         
@@ -345,7 +356,7 @@ public class BorrowingManagement implements ObjectManagement{
         String memberId;
         Member member;
         MemberManager memberManager = MemberManager.getInstance();
-        BorrowingManager borrowingManager = BorrowingManager.getInstance();
+        BorrowingManager borrowingManager = manager;
         
         Functions.Print("---------- VIEW READING HISTORY -----------\n");
         memberId = Functions.InputString("Enter member ID: ");
@@ -365,6 +376,7 @@ public class BorrowingManagement implements ObjectManagement{
         
     }
     
+    @Override
     public void Menu(){
         Functions.MenuGenerator(
                 "BORROWING MANAGEMENT",
@@ -373,7 +385,8 @@ public class BorrowingManagement implements ObjectManagement{
                 "Return",
                 "Update Transaction",
                 "View All Transaction",
-                "View Reading History of a Member");
+                "View Reading History of a Member",
+                "Search Transaction");
     }
     
     public void Run()
@@ -400,6 +413,9 @@ public class BorrowingManagement implements ObjectManagement{
                     break;
                 case"5":
                     ViewReadingHistory();
+                    break;
+                case"6":
+                    Searching();
                     break;
                 case"0":
                     break;

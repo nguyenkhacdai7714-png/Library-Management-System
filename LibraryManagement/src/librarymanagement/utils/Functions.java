@@ -46,7 +46,7 @@ public class Functions {
                 alert = "Member not Found";
                 break;
         }
-        Alert("[STATUS] " + alert);
+        Alert("[SYSTEM] " + alert);
     }
     public static void MenuGenerator(String title, String end, String... functions){
         

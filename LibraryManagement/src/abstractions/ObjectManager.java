@@ -4,7 +4,9 @@ import java.util.HashMap;
 // thêm 3 cái import 
     // import cau arraylist
 import java.util.Collection; 
+import java.util.ArrayList;
 import librarymanagement.utils.Constants;
+import java.util.function.Function;
 
 public abstract class ObjectManager<T> {
     
@@ -67,6 +69,39 @@ public abstract class ObjectManager<T> {
         }
         
         return newId;
+    }
+    
+    public ArrayList<T> SearchByAll(String inp, Function<T, String> formatter){
+        ArrayList<T> arrayList = new ArrayList<T>();
+        
+        if(inp==null || inp.trim().isEmpty()) return arrayList;
+        
+//        String lowerInp = inp.toLowerCase();
+        String[] splitedInp = inp.split("\\|");
+        T found = SearchById(inp);
+        if(found!=null){
+            arrayList.add(found);
+            return arrayList;
+        }
+        
+        
+        for(T item : getList().values()){
+            boolean flag=true;
+            for(int i=0; i<splitedInp.length;i++){
+                String lowerFilter = splitedInp[i].toLowerCase();
+                String line = formatter.apply(item).toLowerCase();
+                
+                if(!line.contains(lowerFilter)){
+                    flag=false;
+                    break;
+                }
+            }
+            if(flag){
+                arrayList.add(item);
+            }
+        }
+
+        return arrayList;
     }
    
     
