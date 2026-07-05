@@ -8,12 +8,12 @@ public class Book extends LibraryObject {
     
     // Khai bao bien dung de luu tru du lieu thong tin cua moi cuoc sach
     // private String id;                   // Chu + so ---> dung String
-    private String title;                // Chu + so ---> dung String 
-    private String author;               // Chu + so ---> dung String
-    private String genre;                // Chu + so ---> dung String
-    private int publicationYear;         // so       ---> dung int
-    private int quantity;                // so       ---> dung int
-    private int borrowings;
+    private String title;                // Chu + so     ---> dung String 
+    private String author;               // Chu + so    ---> dung String
+    private String genre;                // Chu + so    ---> dung String
+    private int publicationYear;         // so          ---> dung int
+    private int quantity;                // so          ---> dung int
+    private int borrowings;              // so lan muon ---> dung int   // o muc book them bien "borrowings" de quan ly muc "muon" ben borrowingmanagement 
     
     // Methods
     // 1. Constructor ( phuong thuc thiet lap)
@@ -41,7 +41,7 @@ public class Book extends LibraryObject {
             this.publicationYear = publicationYear;
             this.quantity = quantity;
             
-            this.borrowings = 0;
+            this.borrowings = 0;    // // update them cho borrowingmanagement 
         }
         
          public Book(String id, String title, String author, String genre, int publicationYear, int quantity, int borrowedTime) {
@@ -54,7 +54,7 @@ public class Book extends LibraryObject {
             this.publicationYear = publicationYear;
             this.quantity = quantity;
             
-            this.borrowings = borrowedTime;
+            this.borrowings = borrowedTime;   // update them cho borrowingmanagement 
         }
         
     // 2. Getter / Setter (Dung de truy xuat va cap nhat du lieu tu ben ngoai)
@@ -106,14 +106,14 @@ public class Book extends LibraryObject {
             this.quantity = quantity; 
         }
 
+        // borrow 
         public int getBorrowings() {
             return borrowings;
         }
-
         public void setBorrowings(int borrowings) {
             this.borrowings = borrowings;
         }
-        
+        // set muc tang bien muc "muon" khi duoc muon 
         public void addBorrowing(){
             this.borrowings++;
         }

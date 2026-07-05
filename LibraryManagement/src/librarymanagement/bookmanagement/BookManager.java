@@ -56,6 +56,7 @@ public class BookManager extends abstractions.ObjectManager<Book> {
     
     
     // search by all
+    // chuyen data cua book ve chuy string de so sanh voi input 
     public ArrayList<Book> SearchByAll(String inp){
         
         return super.SearchByAll(inp, book -> String.format("title:%s author:%s genre:%s pubyear:%d",
