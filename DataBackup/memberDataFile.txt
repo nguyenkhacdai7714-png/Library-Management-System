@@ -1,5 +1,4 @@
-M000,Nguyen Khac Dai,0123456789,dai@gmail.com,B000,PREMIUM
-M004,Nguyen Thi D,0456789123,nguyenthid@gmail.com,B004,REGULAR
-M003,Nguyen Thi C,0789456123,nguyenthic@gmail.com,B003,PREMIUM
+M000,Nguyen Thi D,0456789123,nguyenthid@gmail.com,[4/7/2026] 'Nguyen Thi D' (M000) has read 'Sach1' (B000) by 'Author1' - pub.year 2000 (log version 1.0)|[4/7/2026] 'Nguyen Thi D' (M000) has read 'Sach2' (B001) by 'Author2' - pub.year 2001 (log version 1.0)|[4/7/2026] 'Nguyen Thi D' (M000) has read 'Sach3' (B002) by 'Author3' - pub.year 2003 (log version 1.0),REGULAR
+M003,Nguyen Van A,0917894510,nguyenvana@gmail.com,@@,PREMIUM
 M002,Nguyen Van B,0142345678,nguyenvanb@gmail.com,@@,REGULAR
-M001,Nguyen Van A,0917894510,nguyenvana@gmail.com,@@,REGULAR
+M001,Nguyen Thi C,0789456123,nguyenthic@gmail.com,@@,PREMIUM

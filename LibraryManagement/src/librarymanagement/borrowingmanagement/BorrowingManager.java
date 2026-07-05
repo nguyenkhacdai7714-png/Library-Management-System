@@ -25,6 +25,18 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
     }
     // end singleton
     
+    public void LoadCurrentBorrowingAll(){
+        for(String id : MemberManager.getInstance().getList().keySet()){
+            for(BorrowingTransaction transaction : getList().values()){
+                if(!transaction.IsReturned() && transaction.getMemberID().equals(id)){
+                    Member member = MemberManager.getInstance().getList().get(id);
+                    member.addCurrentBorrowing();
+                }
+            }
+            
+        }
+    }
+    
     @Override
     public void View(){
         ViewList(getList().values(), "transaction list", "Transaction list is empty");
@@ -73,6 +85,7 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
         {
             BorrowingTransaction newTransaction = new BorrowingTransaction(transactionId, memberId, bookId, borrowDate, overdueDate);
             Add(transactionId, newTransaction);
+            MemberManager.getInstance().SearchById(memberId).addCurrentBorrowing();
         }
     }
     
@@ -119,6 +132,7 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
     
     public void Return(String transactionId, LocalDate returnDate){
         SearchById(transactionId).setReturnDate(returnDate);
+        MemberManager.getInstance().SearchById(getList().get(transactionId).getMemberID()).removeCurrentBorrowing();
     }
     
     public void TakeBookOut(Book borrowedBook){

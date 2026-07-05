@@ -6,7 +6,6 @@ import librarymanagement.membermanagement.*;
 import librarymanagement.borrowingmanagement.*;
 
 import java.util.Comparator;
-import librarymanagement.utils.Functions;
 
 public class ReportingManager {
     
@@ -18,25 +17,25 @@ public class ReportingManager {
     }
     // end singleton
     
-    private static ArrayList<Book> borrowedBookList = new ArrayList<Book>();
-    private static ArrayList<Book> overdueBookList = new ArrayList<Book>();
+    private static ArrayList<BorrowingTransaction> activeTransactionList = new ArrayList<BorrowingTransaction>();
+    private static ArrayList<BorrowingTransaction> overdueTransactionList = new ArrayList<BorrowingTransaction>();
     private static ArrayList<Member> mostActiveMemberList = new ArrayList<Member>();
     private static ArrayList<Book> mostPopularBookList = new ArrayList<Book>();
 
-    public static ArrayList<Book> getBorrowedBookList() {
-        return borrowedBookList;
+    public static ArrayList<BorrowingTransaction> getActiveTransactionList() {
+        return activeTransactionList;
     }
 
-    public static void setBorrowedBookList(ArrayList<Book> borrowedBookList) {
-        ReportingManager.borrowedBookList = borrowedBookList;
+    public static void setActiveTransactionList(ArrayList<BorrowingTransaction> activeTransactionList) {
+        ReportingManager.activeTransactionList = activeTransactionList;
     }
 
-    public static ArrayList<Book> getOverdueBookList() {
-        return overdueBookList;
+    public static ArrayList<BorrowingTransaction> getOverdueTransactionList() {
+        return overdueTransactionList;
     }
 
-    public static void setOverdueBookList(ArrayList<Book> overdueBookList) {
-        ReportingManager.overdueBookList = overdueBookList;
+    public static void setOverdueTransaction(ArrayList<BorrowingTransaction> overdueTransactionList) {
+        ReportingManager.overdueTransactionList = overdueTransactionList;
     }
 
     public static ArrayList<Member> getMostActiveMemberList() {
@@ -57,14 +56,14 @@ public class ReportingManager {
     
     
     
-    public static void GenerateBorrowedBookList(){
-        if(IsArrayListExist(borrowedBookList))
+    public static void GenerateActiveTransactionList(){
+        if(IsArrayListExist(activeTransactionList))
         {
             for (Map.Entry<String, BorrowingTransaction> entry: BorrowingManager.getInstance().getList().entrySet()) {
                 BorrowingTransaction value = entry.getValue();
                 
                 if(!value.IsReturned()){
-                    borrowedBookList.add( BookManager.getInstance().SearchById(value.getBookID()));
+                    activeTransactionList.add(value);
                 }
             }
         }
@@ -93,13 +92,13 @@ public class ReportingManager {
             mostPopularBookList.sort(Comparator.comparingInt(Book::getBorrowings).reversed());
         }
     }
-    public static void GenerateOverdueBookList(){
-        if(IsArrayListExist(overdueBookList)){
+    public static void GenerateOverdueTransactionList(){
+        if(IsArrayListExist(overdueTransactionList)){
             for (Map.Entry<String, BorrowingTransaction> entry: BorrowingManager.getInstance().getList().entrySet()) {
                 BorrowingTransaction value = entry.getValue();
                 
                 if(value.IsOverdue() && !value.IsReturned()){
-                    overdueBookList.add(BookManager.getInstance().SearchById(value.getBookID()));
+                    overdueTransactionList.add(value);
                 }
             }
         }
@@ -117,33 +116,36 @@ public class ReportingManager {
     public static void PrintBookList(List<Book> bookList, String title, String emptyAlert) {
         BookManager.getInstance().ViewList(bookList, title, emptyAlert);
     }
+    public static void PrintTransactionList(List<BorrowingTransaction> transactionList, String title, String emptyAlert){
+        BorrowingManager.getInstance().ViewList(transactionList, title, emptyAlert);
+    }
 
     
     // clears
     
     public static void ClearReports(){
-        ClearBorrowedBookList();
-        ClearOverdueBookList();
+        ClearactiveTransactionList();
+        ClearOverdueTransactionList();
         ClearMostActiveMemberList();
         ClearMostPopularBookList();
     }
     
-    public static void ClearBorrowedBookList(){
-        if(IsArrayListExist(borrowedBookList)){
-            borrowedBookList.clear();
+    public static void ClearactiveTransactionList(){
+        if(IsArrayListExist(activeTransactionList)){ 
+            activeTransactionList.clear(); 
         }
         else
         {
-            borrowedBookList = new ArrayList<Book>();
+            activeTransactionList = new ArrayList<BorrowingTransaction>(); 
         }
     }
-    public static void ClearOverdueBookList(){
-        if(IsArrayListExist(overdueBookList)){
-            overdueBookList.clear();
+    public static void ClearOverdueTransactionList(){
+        if(IsArrayListExist(overdueTransactionList)){
+            overdueTransactionList.clear();
         }
         else
         {
-            overdueBookList = new ArrayList<Book>();
+            overdueTransactionList = new ArrayList<BorrowingTransaction>();
         }
     }
     public static void ClearMostActiveMemberList(){
@@ -152,7 +154,7 @@ public class ReportingManager {
         }
         else
         {
-            mostActiveMemberList = new ArrayList<Member>();
+            mostActiveMemberList = new ArrayList<Member>(); 
         }
     }
     public static void ClearMostPopularBookList(){

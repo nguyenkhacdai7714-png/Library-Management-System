@@ -14,6 +14,12 @@ public class MemberManagement implements ObjectManagement {
     public static MemberManagement getInstance(){
         return instance;
     }
+    
+    public void InitLoading(){
+        MemberManager.getInstance().LoadEmailChecker();
+        MemberManager.getInstance().LoadPhoneChecker();
+    }
+    
     @Override
     public void Run() {
         Menu();
@@ -112,7 +118,7 @@ public class MemberManagement implements ObjectManagement {
                 System.out.println("Do not leave blank this information!");
             }
             else if(isDuplicateEmail){
-                System.out.println("This email number has already used!");
+                System.out.println("This email has already used!");
             }
             
         }while(!Functions.IsStringValid(email)|| isDuplicateEmail);
@@ -143,7 +149,10 @@ public class MemberManagement implements ObjectManagement {
 
         
         Member newMember = new Member(id, name, phone, email);
+        
         manager.Add(id,newMember);
+        manager.AddDuplicateChecker(id);
+        
         Functions.Alert("Member registered successfully.");
 
     }
@@ -166,6 +175,7 @@ public class MemberManagement implements ObjectManagement {
             String choice = Functions.YNQuestion("Remove this member?");
             if(choice.equals("y")){
                 MemberManager.getInstance().Remove(id);
+                MemberManager.getInstance().RemoveDuplicateChecker(id);
                 Functions.Alert("Member removed successfully.");
             }
             else{
@@ -226,8 +236,8 @@ public class MemberManagement implements ObjectManagement {
                 case "2" : {
                     String temp = Functions.InputString("Enter New Email: ");
                     if (Functions.IsStringValid(temp)
-                            && !MemberManager.getInstance().IsDuplicatePhone(temp)) newEmail = temp;
-                    else if(MemberManager.getInstance().IsDuplicatePhone(temp)){
+                            && !MemberManager.getInstance().IsDuplicateEmail(temp)) newEmail = temp;
+                    else if(MemberManager.getInstance().IsDuplicateEmail(temp)){
                         Functions.Alert("This email has already used!");
                     }
                     else{

@@ -20,7 +20,9 @@ public class BorrowingManagement implements ObjectManagement{
     }
     // end singleton
     
-    public HashMap<String, BorrowingTransaction> borrowingList = new HashMap<String, BorrowingTransaction>();
+    public void InitLoading(){
+        BorrowingManager.getInstance().LoadCurrentBorrowingAll();
+    }
     
     @Override
     public void Adding(){
@@ -113,7 +115,7 @@ public class BorrowingManagement implements ObjectManagement{
         }
         }while(!Functions.IsDateValid(overdueDate));
         
-        borrowingManager.Borrow(transactionId, memberId, bookId, borrowDate, overdueDate);
+        borrowingManager.Borrow(transactionId, memberId, bookId, borrowDate, overdueDate); // update for transaction, member
         borrowingManager.TakeBookOut(bookManager.SearchById(bookId)); // update for book
         borrowingManager.AddReadingHistory(memberId, bookId);         // update for member
         Functions.Alert("Transaction added successfully!");

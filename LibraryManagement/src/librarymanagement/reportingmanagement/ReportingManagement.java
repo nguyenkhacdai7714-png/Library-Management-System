@@ -20,18 +20,18 @@ public class ReportingManagement {
                 "REPORTING MANAGEMENT", // title
                 "Back (the reports will be regenerated)", // end
                 
-                "Generate and Show Borrowed Books", // functions...
-                "Generate and Show Overdue Books",
-                "Generate and Show Most Popular Books",
-                "Generate and Show Most Borrowings Members");
+                "Show Active Transaction", // functions...
+                "Show Overdue Transaction",
+                "Show Most Popular Books",
+                "Show Most Active Members");
     }
     
     public void Run()
     {   
         System.out.println("Generating reports...");
-        ReportingManager.GenerateBorrowedBookList();
+        ReportingManager.GenerateActiveTransactionList();
         System.out.print("25%");
-        ReportingManager.GenerateOverdueBookList();
+        ReportingManager.GenerateOverdueTransactionList();
         System.out.print(" 50%");
         ReportingManager.GenerateMostPopularBookList();
         System.out.print(" 75%");
@@ -73,13 +73,13 @@ public class ReportingManagement {
 
     void PrintBorrowedBookList(){
         Functions.Clear();
-        reportingManager.PrintBookList(reportingManager.getBorrowedBookList(), "ALL BORROWED BOOKS", "There is no borrowed book");
+        reportingManager.PrintTransactionList(reportingManager.getActiveTransactionList(), "ALL BORROWED BOOKS", "There is no borrowed book");
         Functions.Pause();
     }
 
     void PrintOverdueBookList(){
         Functions.Clear();
-        reportingManager.PrintBookList(reportingManager.getOverdueBookList(), "ALL OVERDUE BOOKS LIST", "There is no overdue book");
+        reportingManager.PrintTransactionList(reportingManager.getOverdueTransactionList(), "ALL OVERDUE BOOKS LIST", "There is no overdue book");
         Functions.Pause();
     }
 

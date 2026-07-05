@@ -33,6 +33,7 @@ public class Member extends LibraryObject{
         this.readingHistory = new ArrayList<>();
         
         membershipType = new RegularMembership();
+        setCurrentBorrowingCount(0);
     }
     public Member(String id, String name, String phone, String email, ArrayList<String> readingHistory) {
         super(id);
@@ -42,6 +43,7 @@ public class Member extends LibraryObject{
         this.readingHistory = readingHistory;
         
         membershipType = new RegularMembership();
+        setCurrentBorrowingCount(0);
     }
     
     public Member(String id, String name, String phone, String email, ArrayList<String> readingHistory, MembershipType membership) {
@@ -52,6 +54,8 @@ public class Member extends LibraryObject{
         this.readingHistory = readingHistory;
         
         membershipType = membership;
+        
+        setCurrentBorrowingCount(0);
     }
 
     public String getName() {

@@ -1,5 +1,4 @@
-B000,Toan 12,NXB Kim Dong,SGK,2000,4,1
-B001,Ngu Van 12,NXB Kim Dong,SGK,2000,2,0
-B004,Nha Gia Kim,Paulo Coelho,Novel,1988,49,1
-B002,English B2,NXB Ha Noi,SGK,2005,8,1
-B003,Truyen Kieu,Nguyen Du,Truyen,1801,0,1
+B000,Sach1,Author1,Genre1,2000,1,1
+B001,Sach2,Author2,Genre2,2001,1,1
+B002,Sach3,Author3,Genre3,2003,2,1
+B003,Sach4,Author4,Genre4,2004,4,0

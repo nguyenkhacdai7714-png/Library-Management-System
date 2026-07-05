@@ -26,8 +26,19 @@ public class LibraryManagement {
         
         Functions.StartFunctions();
         
-//        DataManagement.LoadVirtualData();
+
+        System.out.println("LOADING...");
+        
+        //DataManagement.LoadVirtualData();
         DataManagement.LoadAllData();
+        
+        // Data always load first
+        
+        System.out.print("50%");
+        BorrowingManagement.getInstance().InitLoading();
+        System.out.print("-75%");
+        MemberManagement.getInstance().InitLoading();
+        System.out.println("-100%");
         
         String choice;
         
