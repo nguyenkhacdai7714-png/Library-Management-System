@@ -46,7 +46,7 @@ public class Functions {
                 alert = "Member not Found";
                 break;
         }
-        Alert("[STATUS] " + alert);
+        Alert("[SYSTEM] " + alert);
     }
     public static void MenuGenerator(String title, String end, String... functions){
         
@@ -175,7 +175,7 @@ public class Functions {
         int[] arr;
         LocalDate today = Today();
         
-        inp = InputString(content + "[dd/mm/yyyy] or [today]: ");
+        inp = InputString(content + "[dd/mm/yyyy] or [today]: ").toLowerCase().replaceAll("\\s","");
         if(inp.equals("today")){
             return today;
         }
@@ -206,7 +206,7 @@ public class Functions {
     }
     
     public static boolean IsTwoDateValid(LocalDate borrowDate, LocalDate overdueDate){
-        return IsDateValid(borrowDate) && IsDateValid(overdueDate) && DayBetween(borrowDate, overdueDate) > 0;
+        return IsDateValid(borrowDate) && IsDateValid(overdueDate) && DayBetween(borrowDate, overdueDate) >= 0;
     }
   
     public static String CreateWall(int wallWidth, String wallChar){
@@ -215,26 +215,26 @@ public class Functions {
     
     public static String ReadingHistoryToString(ArrayList<String> history){
         if(history.size()==0){
-            return "@@";
+            return Constants.READING_HISTORY_EMPTY_CODE;
         }
         
         String line="";
         for(String act : history){
-            line += act + "/";
+            line += act + Constants.READING_HISTORY_SPLIT_CODE;
         }
         line += "@";
-        line = line.replace("/@", "");
+        line = line.replace(Constants.READING_HISTORY_SPLIT_CODE+"@", "");
         
         return line;
     }
     public static ArrayList<String> StringToReadingHistory(String content){
         
-        if(content.equals("@@")){
+        if(content.equals(Constants.READING_HISTORY_EMPTY_CODE)){
             return new ArrayList<String>();
         }
         
         ArrayList<String> newList = new ArrayList<String>();
-        String[] line = content.split("/");
+        String[] line = content.split("\\" + Constants.READING_HISTORY_SPLIT_CODE);
         for(int i=0; i<line.length; i++){
             newList.add(line[i]);
         }
@@ -252,5 +252,18 @@ public class Functions {
     public static String MembershipToTag(MembershipType membership){
         return membership.getMembershipTag();
     }
-    
+
+    public static boolean IsStringNoLetter(String content){
+        if(content==null || content.equals("")){
+            return false;
+        }
+        return content.matches("[0-9]+");
+    }
+    public static boolean IsYearValid(int year){
+        return Today().getYear() >= year;
+    }
+    public static boolean IsPhoneValid(String phone){
+        return IsStringNoLetter(phone) && IsStringValid(phone) && (phone.length()>=Constants.MIN_PHONE_LENGTH && phone.length() <= Constants.MAX_PHONE_LENGTH);
+    }
+   
 }

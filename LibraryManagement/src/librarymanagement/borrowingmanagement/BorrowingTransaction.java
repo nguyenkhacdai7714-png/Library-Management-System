@@ -15,7 +15,7 @@ public class BorrowingTransaction extends LibraryObject{
 
     // 2. Constructor mac din
     public BorrowingTransaction() {
-        super.setId("");
+        super("");
         this.memberID = "";
         this.bookID = "";
         this.borrowDate = null;
@@ -26,7 +26,7 @@ public class BorrowingTransaction extends LibraryObject{
 
     // 3. Constructor co tham so 
     public BorrowingTransaction(String transactionID, String memberID, String bookID, LocalDate borrowDate, LocalDate overdueDate) {
-        super.setId(transactionID);
+        super(transactionID);
         this.memberID = memberID;
         this.bookID = bookID;
         this.borrowDate = borrowDate;
@@ -36,7 +36,7 @@ public class BorrowingTransaction extends LibraryObject{
     }
     
     public BorrowingTransaction(String transactionID, String memberID, String bookID, LocalDate borrowDate, LocalDate overdueDate, LocalDate returnDate) {
-        super.setId(transactionID);
+        super(transactionID);
         this.memberID = memberID;
         this.bookID = bookID;
         this.borrowDate = borrowDate;
@@ -85,6 +85,8 @@ public class BorrowingTransaction extends LibraryObject{
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
+    
+    // Boolean status
 
     public boolean IsReturned() {
         return returnDate!=null;

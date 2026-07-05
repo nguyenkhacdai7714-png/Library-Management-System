@@ -25,6 +25,30 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
     }
     // end singleton
     
+    public void LoadCurrentBorrowingAll(){
+        for(String id : MemberManager.getInstance().getList().keySet()){
+            for(BorrowingTransaction transaction : getList().values()){
+                if(!transaction.IsReturned() && transaction.getMemberID().equals(id)){
+                    Member member = MemberManager.getInstance().getList().get(id);
+                    member.addCurrentBorrowing();
+                }
+            }
+            
+        }
+    }
+    
+    public ArrayList<BorrowingTransaction> SearchByAll(String inp){
+        
+        return super.SearchByAll(inp, transaction -> String.format("bookid:%s memberid:%s borrowdate:%s overduedate:%s returndate:%s returned:%s overdue:%s",
+                transaction.getBookID(),
+                transaction.getMemberID(),
+                Functions.DateToString(transaction.getBorrowDate()),
+                Functions.DateToString(transaction.getOverdueDate()),
+                Functions.DateToString(transaction.getReturnDate()),
+                transaction.IsReturned()?"Yes":"No",
+                transaction.IsOverdue()?"Yes":"No"));
+    }
+    
     @Override
     public void View(){
         ViewList(getList().values(), "transaction list", "Transaction list is empty");
@@ -58,15 +82,11 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
     
     public void ViewHistoryReading(String memberId){
         Member member = MemberManager.getInstance().SearchById(memberId);
-        ArrayList<String> bookIDList = member.getReadingHistory();
-        ArrayList<Book> bookList = new ArrayList<Book>();
         
-        for(String id : bookIDList){
-            Book book = BookManager.getInstance().SearchById(id);
-            bookList.add(book);
-        }
-        
-        BookManager.getInstance().ViewList(bookList, "Reading history of " + member.getName(), "This member has no reading history!");
+        System.out.println("======================== READING HISTORY OF '" + member.getName() + "' ("+memberId+") " + "========================");
+        member.ViewReadingHistory();
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Total : " + member.getReadingHistoryLength() + " readings");
     }
     
     public void Borrow(String transactionId,String memberId, String bookId, LocalDate borrowDate, LocalDate overdueDate){     
@@ -77,6 +97,7 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
         {
             BorrowingTransaction newTransaction = new BorrowingTransaction(transactionId, memberId, bookId, borrowDate, overdueDate);
             Add(transactionId, newTransaction);
+            MemberManager.getInstance().SearchById(memberId).addCurrentBorrowing();
         }
     }
     
@@ -85,7 +106,20 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
             String id = entry.getKey();
             BorrowingTransaction transaction = entry.getValue();
             
-            if(transaction.getMemberID().equals(memberId)){
+            if(transaction.getMemberID().equals(memberId)
+                    && !transaction.IsReturned()){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean IsBookOnATransaction(String bookId){
+        for (Map.Entry<String, BorrowingTransaction> entry : list.entrySet()) {
+            String id = entry.getKey();
+            BorrowingTransaction transaction = entry.getValue();
+            
+            if(transaction.getBookID().equals(bookId)
+                    && !transaction.IsReturned()){
                 return true;
             }
         }
@@ -93,11 +127,24 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
     }
     
     public void AddReadingHistory(String memberId, String bookId){
-        MemberManager.getInstance().SearchById(memberId).AddReadingHistory(bookId);
+        Member member = MemberManager.getInstance().SearchById(memberId);
+        Book book = BookManager.getInstance().SearchById(bookId);
+        
+        String log = String.format(
+                "[%s] '%s' (%s) has read '%s' (%s) by '%s' - pub.year %s (log version 1.0)", 
+                Functions.DateToString(Functions.Today()),
+                member.getName(),
+                memberId,
+                book.getTitle(),
+                bookId,
+                book.getAuthor(),
+                book.getPublicationYear());
+        member.AddReadingHistory(log);
     }
     
     public void Return(String transactionId, LocalDate returnDate){
         SearchById(transactionId).setReturnDate(returnDate);
+        MemberManager.getInstance().SearchById(getList().get(transactionId).getMemberID()).removeCurrentBorrowing();
     }
     
     public void TakeBookOut(Book borrowedBook){
@@ -110,16 +157,21 @@ public class BorrowingManager extends ObjectManager<BorrowingTransaction>{
         returnedBook.setQuantity(returnedBook.getQuantity() + 1);
     }
     
-    public float GetOverdueFine(String transactionId){
+    public float GetOverdueFine(String transactionId, LocalDate returnDate){
         BorrowingTransaction transaction = SearchById(transactionId);
         
         if(!transaction.IsReturned()){       
             String memberId = transaction.getMemberID();
             Member member = MemberManager.getInstance().SearchById(memberId);   
             
-            long daysBetween = Functions.DayBetween(transaction.getOverdueDate(),Functions.Today());
+            long daysBetween = Functions.DayBetween(transaction.getOverdueDate(),returnDate);
+            if(daysBetween  > 0){
+                return member.getMembership().getOverdueFine(daysBetween);
+            }
+            else{
+                return 0f;
+            }
             
-            return member.getMembership().getOverdueFine(daysBetween);
         }
         else{
             return 0f;

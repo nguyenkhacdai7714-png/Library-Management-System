@@ -1,22 +1,22 @@
 package librarymanagement.membermanagement;
 
 import java.util.ArrayList;
+
 import abstractions.MembershipType;
-import java.util.Iterator;
-import librarymanagement.bookmanagement.BookManager;
+import abstractions.LibraryObject;
 
-public class Member {
+public class Member extends LibraryObject{
 
-    private String id;
     private String name;
     private String phone;
     private String email;
     private ArrayList<String> readingHistory;
+    private int currentBorrowingCount;
     
     private MembershipType membershipType;
 
     public Member() {
-        this.id = "";
+        super("");
         this.name = "";
         this.phone = "";
         this.email = "";
@@ -26,40 +26,36 @@ public class Member {
     }
 
     public Member(String id, String name, String phone, String email) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.readingHistory = new ArrayList<>();
         
         membershipType = new RegularMembership();
+        setCurrentBorrowingCount(0);
     }
     public Member(String id, String name, String phone, String email, ArrayList<String> readingHistory) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.readingHistory = readingHistory;
         
         membershipType = new RegularMembership();
+        setCurrentBorrowingCount(0);
     }
     
     public Member(String id, String name, String phone, String email, ArrayList<String> readingHistory, MembershipType membership) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.readingHistory = readingHistory;
         
         membershipType = membership;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        
+        setCurrentBorrowingCount(0);
     }
 
     public String getName() {
@@ -98,8 +94,8 @@ public class Member {
         return this.readingHistory.size();
     }
     
-    public void AddReadingHistory(String bookId){
-        readingHistory.add(bookId);
+    public void AddReadingHistory(String log){
+        readingHistory.add(log);
     }
     
     public void setMembership(MembershipType newMembership){
@@ -112,14 +108,44 @@ public class Member {
     public boolean IsReadingHistoryEmpty(){
         return readingHistory.isEmpty();
     }
+
+    public int getCurrentBorrowingCount() {
+        return currentBorrowingCount;
+    }
+
+    public void setCurrentBorrowingCount(int currentBorrowingCount) {
+        this.currentBorrowingCount = currentBorrowingCount;
+    }
+    
+    public void addCurrentBorrowing(){
+        this.currentBorrowingCount++;
+    }
+    public void removeCurrentBorrowing(){
+        this.currentBorrowingCount--;
+    }
+    
+    public int getBorrowingLimit(){
+        return membershipType.getBorrowingLimit();
+    }
+    
+    public boolean IsUnderBorrowingLimit(){
+        return getCurrentBorrowingCount() < getBorrowingLimit();
+    }
+    
     
     public void View(){
-        System.out.printf("ID               : %s\n", getId());
-        System.out.printf("Full name        : %s\n", getName());
-        System.out.printf("Phone number     : %s\n", getPhone());
-        System.out.printf("Email            : %s\n", getEmail());
-        System.out.printf("Membership type  : %s\n", getMembership().MembershipTypeName());
-        System.out.printf("Readings         : %s\n", getReadingHistoryLength());
+        System.out.printf("ID                : %s\n", getId());
+        System.out.printf("Full name         : %s\n", getName());
+        System.out.printf("Phone number      : %s\n", getPhone());
+        System.out.printf("Email             : %s\n", getEmail());
+        System.out.printf("Membership type   : %s\n", getMembership().MembershipTypeName());
+        System.out.printf("Has read          : %s\n", getReadingHistoryLength() + " book(s)");
+        System.out.printf("Is borrowing      : %s\n", getCurrentBorrowingCount() + " book(s)");
         System.out.println();
+    }
+    public void ViewReadingHistory(){
+        for(String i:readingHistory){
+            System.out.println(i);
+        }
     }
 }

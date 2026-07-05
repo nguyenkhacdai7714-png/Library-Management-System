@@ -19,4 +19,9 @@ public class PremiumMembership implements MembershipType{
     public String getMembershipTag(){
         return Constants.premiumMembershipTag;
     }
+    
+    @Override
+    public int getBorrowingLimit(){
+        return Constants.PREMIUM_MEMBERSHIP_MAX_BORROWED_BOOKS;
+    }
 }

@@ -19,4 +19,9 @@ public class RegularMembership implements MembershipType{
     public String getMembershipTag(){
         return Constants.regularMembershipTag;
     }
+    
+    @Override
+    public int getBorrowingLimit(){
+        return Constants.REGULAR_MEMBERSHIP_MAX_BORROWED_BOOKS;
+    }
 }

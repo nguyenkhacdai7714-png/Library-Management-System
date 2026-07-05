@@ -3,21 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/bookmanagement/Book.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/utils/Functions.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/abstractions/ObjectManager.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/bookmanagement/BookManagement.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/borrowingmanagement/BorrowingManager.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/membermanagement/PremiumMembership.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/membermanagement/MemberManager.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/abstractions/ObjectManagement.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/bookmanagement/BookManager.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/utils/BoardDrawer.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/membermanagement/RegularMembership.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/membermanagement/Member.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/librarymanagement/LibraryManagement.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/abstractions/LibraryObject.java</file>
-            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver4)/Library-Management-System-main/LibraryManagement/src/abstractions/MembershipType.java</file>
+            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver7)/Library-Management-System-main/LibraryManagement/src/librarymanagement/bookmanagement/Book.java</file>
+            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver7)/Library-Management-System-main/LibraryManagement/src/librarymanagement/membermanagement/MemberManager.java</file>
+            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver7)/Library-Management-System-main/LibraryManagement/src/librarymanagement/bookmanagement/BookManager.java</file>
+            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver7)/Library-Management-System-main/LibraryManagement/src/abstractions/ObjectManager.java</file>
+            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver7)/Library-Management-System-main/LibraryManagement/src/librarymanagement/LibraryManagement.java</file>
+            <file>file:/C:/Users/Admin/Desktop/minh/FPTU/SUMMER26/PRO192/PROJECT/Library-Management-System-main(ver7)/Library-Management-System-main/LibraryManagement/src/librarymanagement/bookmanagement/BookManagement.java</file>
         </group>
     </open-files>
 </project-private>

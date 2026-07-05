@@ -1,11 +1,7 @@
 package librarymanagement.reportingmanagement;
 
-import java.util.*;
 import librarymanagement.utils.Functions;
 import librarymanagement.utils.SystemCode;
-
-import librarymanagement.bookmanagement.Book;
-import librarymanagement.membermanagement.Member;
 
 public class ReportingManagement {
     
@@ -22,22 +18,25 @@ public class ReportingManagement {
     public void Menu(){
         Functions.MenuGenerator(
                 "REPORTING MANAGEMENT", // title
-                "Back", // end
+                "Back (the reports will be regenerated)", // end
                 
-                "Show Borrowed Books", // functions...
-                "Show Overdue Books",
+                "Show Active Transaction", // functions...
+                "Show Overdue Transaction",
                 "Show Most Popular Books",
-                "Show Most Borrowings Members");
+                "Show Most Active Members");
     }
     
     public void Run()
-    {
-        Functions.Print("Generating reports...\n");
-        ReportingManager.GenerateOverdueBookList();
-        ReportingManager.GenerateBorrowedBookList();
-        ReportingManager.GenerateMostActiveMemberList();
+    {   
+        System.out.println("Generating reports...");
+        ReportingManager.GenerateActiveTransactionList();
+        System.out.print("25%");
+        ReportingManager.GenerateOverdueTransactionList();
+        System.out.print(" 50%");
         ReportingManager.GenerateMostPopularBookList();
-        Functions.Print("-> Successfully!\n");
+        System.out.print(" 75%");
+        ReportingManager.GenerateMostActiveMemberList();
+        System.out.print(" 100%");
         
         String choice;
         do{
@@ -59,7 +58,6 @@ public class ReportingManagement {
                 case "4":
                     PrintMostActiveMemberList();
                     break;
-                    
                 case "0":
                     break;
                 default:
@@ -75,13 +73,13 @@ public class ReportingManagement {
 
     void PrintBorrowedBookList(){
         Functions.Clear();
-        reportingManager.PrintBookList(reportingManager.getBorrowedBookList(), "ALL BORROWED BOOKS", "There is no borrowed book");
+        reportingManager.PrintTransactionList(reportingManager.getActiveTransactionList(), "ALL BORROWED BOOKS", "There is no borrowed book");
         Functions.Pause();
     }
 
     void PrintOverdueBookList(){
         Functions.Clear();
-        reportingManager.PrintBookList(reportingManager.getOverdueBookList(), "ALL OVERDUE BOOKS LIST", "There is no overdue book");
+        reportingManager.PrintTransactionList(reportingManager.getOverdueTransactionList(), "ALL OVERDUE BOOKS LIST", "There is no overdue book");
         Functions.Pause();
     }
 

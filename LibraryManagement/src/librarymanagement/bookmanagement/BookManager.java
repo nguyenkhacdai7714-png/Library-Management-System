@@ -1,8 +1,8 @@
 package librarymanagement.bookmanagement;
 
 import java.util.*;
-import librarymanagement.utils.Functions;
 import librarymanagement.utils.BoardDrawer;
+import librarymanagement.utils.DuplicateChecker;
 
 // Kế thừa ObjectManager<Book> từ package abstractions theo đúng lớp cha 
 public class BookManager extends abstractions.ObjectManager<Book> {
@@ -15,11 +15,63 @@ public class BookManager extends abstractions.ObjectManager<Book> {
     }
     // end singleton
     
-    // lenh update khi trong updatingmenu 
+    // Duplicate Checker : BookManager
+    private DuplicateChecker titleChecker = new DuplicateChecker();
+    private DuplicateChecker authorChecker = new DuplicateChecker();
+    
+    // Load 1 lan duy nhat khi bat app
+    public void LoadTitleChecker(){
+        for(Book book : getList().values()){
+            titleChecker.Add(book.getTitle());
+        }
+    }
+    public void LoadAuthorChecker(){
+        for(Book book : getList().values()){
+            authorChecker.Add(book.getAuthor());
+        }
+    }
+    
+    // check nhanh
+    public boolean IsDuplicateAuthor(String author){
+        return authorChecker.Check(author);
+    }
+    
+    public boolean IsDuplicateTitle(String title){
+        return titleChecker.Check(title);
+    }
+    
+    // them
+    public void AddDuplicateChecker(String memberId){
+        Book book = SearchById(memberId);
+        titleChecker.Add(book.getTitle());
+        authorChecker.Add(book.getAuthor());
+    }
+    // xoa
+    public void RemoveDuplicateChecker(String memberId){
+        Book book = SearchById(memberId);
+        titleChecker.Remove(book.getTitle());
+        authorChecker.Remove(book.getAuthor());
+    }
+    // End
+    
+    
+    // search by all
+    // chuyen data cua book ve chuy string de so sanh voi input 
+    public ArrayList<Book> SearchByAll(String inp){
+        
+        return super.SearchByAll(inp, book -> String.format("title:%s author:%s genre:%s pubyear:%d",
+                book.getTitle(),
+                book.getAuthor(),
+                book.getGenre(),
+                book.getPublicationYear()));
+    }
+    
+    
+    // lenh update
     public void Update(String bookId, String newTitle, String newAuthor, String newGenre, int newYear, int newQuantity){
         // Sử dụng hàm IsIdExist(bookId) kế thừa từ lớp cha để kiểm tra tính hợp lệ
         if(this.IsIdExist(bookId)){
-            // Xoa: Truy cập trực tiếp vào biến list protected của lớp cha thay vì gọi thông qua getList()
+            // CLEAN: Truy cập trực tiếp vào biến list protected của lớp cha thay vì gọi thông qua getList()
             Book currentBook = list.get(bookId);
             currentBook.setTitle(newTitle);
             currentBook.setAuthor(newAuthor);
@@ -28,6 +80,7 @@ public class BookManager extends abstractions.ObjectManager<Book> {
             currentBook.setQuantity(newQuantity);
         }
     }
+    
     
     // EDITED ----
     @Override
@@ -42,23 +95,20 @@ public class BookManager extends abstractions.ObjectManager<Book> {
     
     @Override
     public void ViewList(Collection<Book> itemList, String title, String emptyAlert){
-        
-        // mo hinh tuong tu nhu format cu la PrintData/PrintTitle 
-        
-        // 1. Khoi tao thong so cho bang : chieu rong (width), format
+        // Khoi tao thong so cho bang : chieu rong (width), format
         BoardDrawer.SetBoard(5+10+25+20+15+12+8+10 + 8*3, "| %-5s | %-10s | %-25s | %-20s | %-15s | %-12s | %-8s | %-10s |");
-        // 2. In title (va thong bao empty neu list empty)
+        // In title (va thong bao empty neu list empty)
         BoardDrawer.PrintTitle(title, emptyAlert, itemList.isEmpty());
         
-        // 3. Neu list khong empty ( trong ko co gi ca)
+        // Neu list khong empty
         if(!itemList.isEmpty()){
-            // 3.1 in ra giong tieu de cua moi du lieu 
+            // In ra dong dau tien la cac cot STT, ID, TITLE, ....
             BoardDrawer.PrintRow("No#","Book ID","Title", "Author","Genre", "Pub. Year", "Quantity", "Borrowings");
-            // 3.2 Ve tuong chanh 2 ben 
+            // Ve tuong`
             BoardDrawer.PrintWall();
             
-            // 3.3  Bat dau vong lap lay tung Book ra tu itemList
-            int count = 1; // stt
+            // Bat dau vong lap lay tung Book ra tu itemList
+            int count = 1;
             for (Book book : itemList){
                 // Moi vong lap in ra 1 row cua bang. Tu dong theo format da thiet lap.
                 BoardDrawer.PrintRow(count, 
@@ -69,14 +119,14 @@ public class BookManager extends abstractions.ObjectManager<Book> {
                                                     book.getPublicationYear(), 
                                                         book.getQuantity(),
                                                             book.getBorrowings());
-                count++; // tang bien stt 
+                count++;
             }
-            // 3.4 In ra tuong` nhung mong hon
+            // In ra tuong` nhung mong hon
             BoardDrawer.PrintSoftWall();
-            // 3.5 In ra dong thong bao total cua nhung book yeu cau theo input 
+            // In ra total
             BoardDrawer.PrintTotal(itemList.size(), "book");
         }
-        // 4. In ra tuong (nhiem vu tuong tu 3.2)
+        // In ra tuong`
         BoardDrawer.PrintWall();
     }
     

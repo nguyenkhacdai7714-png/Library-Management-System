@@ -1,8 +1,11 @@
 package librarymanagement.bookmanagement;
 
-import java.util.*;
+import librarymanagement.borrowingmanagement.BorrowingManager;
+
 import librarymanagement.utils.Functions;
 import librarymanagement.utils.SystemCode;
+
+import java.util.ArrayList;
 
 // -------
 // chuyen hoa Interface ObjectManagement tu package abstractions
@@ -17,9 +20,16 @@ public class BookManagement implements abstractions.ObjectManagement {
     }
     // end singleton
     
+    
     // --- Cac ham thanh phan chinh cua BookManagement
     
-    // Ham menu tach biet voi ham Run
+    // - Ham dung de check title - author khi trung lap voi du lieu da co san 
+    public void InitLoading(){
+        BookManager.getInstance().LoadTitleChecker();
+        BookManager.getInstance().LoadAuthorChecker();
+    }
+    
+    // - Ham menu tach biet voi ham Run
     @Override
     public void Menu() {
         Functions.Clear();
@@ -29,7 +39,7 @@ public class BookManagement implements abstractions.ObjectManagement {
                 "Update book information",
                 "Remove book",
                 "View book",
-                "Search book by ID"
+                "Search book"
         );
     }
     
@@ -38,6 +48,9 @@ public class BookManagement implements abstractions.ObjectManagement {
     public void Adding()  
     {
         BookManager manager = BookManager.getInstance(); 
+        
+        // 0. khai bao bien kieu du lieu chi ap dung cho ham Adding 
+        // khac voi khai bao bien cua "Book.java" toan cuc 
         String title;
         String author;
         String genre;
@@ -47,6 +60,7 @@ public class BookManagement implements abstractions.ObjectManagement {
         System.out.println("--------------- ADD BOOK ---------------");
         System.out.println("========================================");
         
+        // set ID theo genarator de them format B000
         String id = manager.IdGenerator("B");
         
         // 1. Kiem tra trung ma ID thong qua BookManager
@@ -57,40 +71,58 @@ public class BookManagement implements abstractions.ObjectManagement {
         
         System.out.println("New book ID : " + id);
         
-        // 2. Trien khai nhap thong tin sach ---> se bao loi khi de trong ( cu the la toi muc maf bam enter se bao loi )
-        // 2.1 nhap ID
+        // 2. Trien khai nhap thong tin sach
+        // 2.1 nhap id 
+        // da nhan ID tu IdGenerator nen bo qua buoc nhap
+        
+        //2.2 nhap tieu de cuon sach  
         do{
             title = Functions.InputString("Enter book title: ");    
             if(!Functions.IsStringValid(title)){
-                System.out.println("Do not leave blank this information !");
+                System.out.println("Do not leave blank this information !");     // bao loi khi de trong ( nhan enter ) 
             }
         }while(!Functions.IsStringValid(title));
-        
-        // 2.2 nhap ten tác gia
+
+        // 2.3 nhap ten tac gia 
         do{
             author = Functions.InputString("Enter book author: ");    
             if(!Functions.IsStringValid(author)){
-                System.out.println("Do not leave blank this information !");
+                System.out.println("Do not leave blank this information !");     // bao loi khi de trong ( nhan enter ) 
             }
         }while(!Functions.IsStringValid(author));
         
-        // 2.3 nhap the loai cau book
+        // check BookManagement/Adding()
+        // neu trung author & title -> hoi "Co muon tiep tuc khong"
+        if(manager.IsDuplicateAuthor(author) && manager.IsDuplicateTitle(title)){
+            System.out.println("This book already inside the storage!");
+            String ans = Functions.YNQuestion("Do you still want to create new?");
+            if(ans.equals("n")){
+                Functions.Alert("Cancelled");
+                return;
+            }
+        }
+        
+        // 2.4 nhap the loai 
         do{
             genre = Functions.InputString("Enter book genre: ");    
             if(!Functions.IsStringValid(genre)){
-                System.out.println("Do not leave blank this information !");
+                System.out.println("Do not leave blank this information !");     // bao loi khi de trong ( nhan enter ) 
             }
+            // the loai ko co "chu so"
             if(!Functions.IsStringNoDigit(genre)){
                 System.out.println("Genre does not have numbers!");
             }
         }while(!Functions.IsStringValid(genre) || !Functions.IsStringNoDigit(genre));
         
-        // 2.4 Nhap nam xuat ban 
+        // 2.5 Nhap nam xuat ban 
         int year;
         do{
             year = Functions.InputInt("Enter book's publication year: ");
-            if(year > 0){
+            if(year > 0 && Functions.IsYearValid(year)){
                 break;
+            }
+            else if(!Functions.IsYearValid(year)){
+                Functions.Print("Year is not valid!\n");
             }
             else{
                 Functions.Print("Year must be a positive number!\n");
@@ -98,7 +130,7 @@ public class BookManagement implements abstractions.ObjectManagement {
         }
         while(true);
         
-        // 2.5 Nhap so luong cua cuon sach do 
+        // 2.6 Nhap so luong cua cuon sach do 
         int quantity;
         do{
             quantity = Functions.InputInt("Enter book's quantity: ");
@@ -116,14 +148,14 @@ public class BookManagement implements abstractions.ObjectManagement {
         
         // 4. Luu vao HashMap cua BookManager thay vi dung bien static tai day
         // -------
-        // Nạp trực tiếp qua Map bang cach thong qua Add(id, newbook) (tránh lỗi logic hàm Add của lớp cha)
+        // Nạp trực tiếp qua Map bằng cách thông qua add(id, newbook) (tránh lỗi logic hàm Add của lớp cha)
         manager.Add(id, newBook);
         // -------
         Functions.Alert("Book added successfully!");
         
     }
     
-    // -- Vi tri hien thi cua ham updating se duoc ap dung hien thi cua UpdatingMenu
+    // - Bang hien thi update ( hien thi gia tri cu --> gia tri moi )
     private void UpdatingMenu(Book oldBook, String nTitle, String nAuthor, String nGenre, int nYear, int nQuantity) {
         System.out.println("------- UPDATING BOOK INFO MENU --------");
         System.out.println("Book ID: " + oldBook.getId());
@@ -170,7 +202,7 @@ public class BookManagement implements abstractions.ObjectManagement {
 
         // 3. Khởi tạo các biến tạm lưu thông tin hiện tại 
         // Cập nhật gọi hàm SearchById có sẵn từ lớp cha nghiệp vụ để bốc đối tượng
-        Book target = manager.SearchById(id);      // su dung bien target de goi book dang duoc de cap toi 
+        Book target = manager.SearchById(id);
         
         String newTitle = target.getTitle();
         String newAuthor = target.getAuthor();
@@ -184,40 +216,72 @@ public class BookManagement implements abstractions.ObjectManagement {
             UpdatingMenu(target, newTitle, newAuthor, newGenre, newYear, newQuantity);
 
             String choice = Functions.InputMenuChoice();
-            if (choice.equals("0")) return; // Thoát ngay du da hien thi du lieu tren man hinh 
+            if (choice.equals("0")) return; // Thoát ngay không lưu
 
             switch (choice) {
                 case "1" : {
                     String temp = Functions.InputString("Enter NEW Title: ");
                     if (Functions.IsStringValid(temp)) newTitle = temp;
+                    else{
+                        Functions.Alert("Empty input!");
+                    }
                     break;
                 }
                 case "2" : {
                     String temp = Functions.InputString("Enter NEW Author: ");
                     if (Functions.IsStringValid(temp)) newAuthor = temp;
+                    else{
+                        Functions.Alert("Empty input!");
+                    }
                     break;
                 }
                 case "3" : {
                     String temp = Functions.InputString("Enter NEW Genre: ");
-                    if (Functions.IsStringValid(temp)) newGenre = temp;
+                    if (!Functions.IsStringValid(temp)){
+                        Functions.Alert("Empty input!");
+                    }
+                    else if(!Functions.IsStringNoDigit(temp)){
+                        Functions.Alert("Genre do not have numbers!");
+                    }
+                    else
+                    {
+                        newGenre = temp;
+                    }
                     break;
                 }
                 case "4" : {
-                    // lop Function da co the ep kieu int tuong tu nhu inputint 
+                    // Giả định lớp Functions của bạn đã có hàm ép kiểu int an toàn tương tự InputString
                     int temp = Functions.InputInt("Enter NEW Publication Year: "); 
-                    if (temp > 0) newYear = temp;
+                    if (temp >= 0 && Functions.IsYearValid(temp)) newYear = temp;
+                    else{
+                        Functions.Alert("Invalid pub.year !");
+                    }
                     break;
                 }
                 case "5" : {
                     int temp = Functions.InputInt("Enter NEW Quantity: ");
                     if (temp >= 0) newQuantity = temp;
+                    else{
+                        Functions.Alert("Invalid quantity !");
+                    }
                     break;
                 }
                 case "6" : {
-                    // chon "6" de "that su" cap nhat du lieu hashmap 
+                    
+                    // BookManagement/Update()
+                    // y chang code o add
+                    if(manager.IsDuplicateAuthor(newAuthor) && manager.IsDuplicateTitle(newTitle)){
+                        System.out.println("Your updated information matches one or more existing books in the storage.");
+                        String ans = Functions.YNQuestion("Do you still want to update?");
+                        if(ans.equals("n")){
+                            Functions.Alert("Cancelled!");
+                            return;
+                        }
+                    }
+                    
+                    // Gọi Manager thực hiện cập nhật toàn bộ vào Database/HashMap một lần duy nhất
                     manager.Update(id, newTitle, newAuthor, newGenre, newYear, newQuantity);
                     Functions.Alert("Database updated successfully.");
-                    
                     return;
                 }
             }
@@ -248,6 +312,11 @@ public class BookManagement implements abstractions.ObjectManagement {
         if (!manager.IsIdExist(id)) {
             Functions.SystemAlert(SystemCode.BookNotFound);
             
+            return;
+        }
+        
+        if(BorrowingManager.getInstance().IsBookOnATransaction(id)){
+            Functions.Alert("Can not remove the book because it's on a transaction!");
             return;
         }
         
@@ -303,31 +372,44 @@ public class BookManagement implements abstractions.ObjectManagement {
 
         // 2. nhap id book de tim 
         while (true) {
-            String id = Functions.InputString("Enter Book ID to search (or type '0' to Back): ");
+            String any = Functions.InputString("Enter any information to search (or type '0' to Back): ");
 
-            if (id.equals("0")) {
+            if (any.equals("0")) {
                 System.out.println("Returning to main menu...");
                 break;
             }
 
             // 2.1 tim dc book
             // Cập nhật đồng bộ hàm SearchById(id) kế thừa từ lớp cha nghiệp vụ
-            Book foundBook = manager.SearchById(id);
+            ArrayList<Book> foundBook = manager.SearchByAll(any);
             
             // 2.2 khong tim dc book
-            if (foundBook == null) {
+            if (foundBook == null || foundBook.isEmpty()) {
                 Functions.SystemAlert(SystemCode.BookNotFound);
                 
             // 3. hien thi thong tin book can tim
             } else {
-                Functions.Clear();
-                System.out.println("===========================================");
-                System.out.println("----------- BOOK SEARCH RESULT ------------");
-                System.out.println("===========================================");
-                foundBook.View();
-                System.out.println("===========================================");
-                Functions.Pause();
-                break; 
+                int foundBookLength = foundBook.size();
+                
+                // 3.1 chi tim duoc 1 book co data tuong tu => hien thong tin co ban 
+                if(foundBookLength==1){
+                    Functions.Clear();
+                    System.out.println("===========================================");
+                    System.out.println("----------- BOOK SEARCH RESULT ------------");
+                    System.out.println("===========================================");
+                    foundBook.get(0).View();
+                    System.out.println("===========================================");
+                    Functions.Pause();
+                    break; 
+                }
+                
+                // 3.2 tim duoc >1 book co data tuong tu => hien thi bang thong tin 
+                else{
+                    Functions.Clear();
+                    manager.ViewList(foundBook, "ALL BOOK FOUNDS", "Did not found any book matches!");
+                    Functions.Pause();
+                    break;
+                }
             }
         }
     }

@@ -8,12 +8,12 @@ public class Book extends LibraryObject {
     
     // Khai bao bien dung de luu tru du lieu thong tin cua moi cuoc sach
     // private String id;                   // Chu + so ---> dung String
-    private String title;                // Chu + so ---> dung String 
-    private String author;               // Chu + so ---> dung String
-    private String genre;                // Chu + so ---> dung String
-    private int publicationYear;         // so       ---> dung int
-    private int quantity;                // so       ---> dung int
-    private int borrowings;
+    private String title;                // Chu + so     ---> dung String 
+    private String author;               // Chu + so    ---> dung String
+    private String genre;                // Chu + so    ---> dung String
+    private int publicationYear;         // so          ---> dung int
+    private int quantity;                // so          ---> dung int
+    private int borrowings;              // so lan muon ---> dung int   // o muc book them bien "borrowings" de quan ly muc "muon" ben borrowingmanagement 
     
     // Methods
     // 1. Constructor ( phuong thuc thiet lap)
@@ -41,11 +41,10 @@ public class Book extends LibraryObject {
             this.publicationYear = publicationYear;
             this.quantity = quantity;
             
-            this.borrowings = 0;
+            this.borrowings = 0;    // // update them cho borrowingmanagement 
         }
         
-        // 1.3 bo sung thêm borrowe dùng de muon book
-        public Book(String id, String title, String author, String genre, int publicationYear, int quantity, int borrowedTime) {
+         public Book(String id, String title, String author, String genre, int publicationYear, int quantity, int borrowedTime) {
             // Đẩy tham số id lên cho constructor của lớp cha xử lý nạp vùng nhớ
             super(id);
             //this.id = id;
@@ -54,7 +53,8 @@ public class Book extends LibraryObject {
             this.genre = genre;
             this.publicationYear = publicationYear;
             this.quantity = quantity;
-            this.borrowings = borrowedTime;
+            
+            this.borrowings = borrowedTime;   // update them cho borrowingmanagement 
         }
         
     // 2. Getter / Setter (Dung de truy xuat va cap nhat du lieu tu ben ngoai)
@@ -106,21 +106,22 @@ public class Book extends LibraryObject {
             this.quantity = quantity; 
         }
 
-        // borrow ( dung cho muon book cho ham borrowingmanagement)
+        // borrow 
         public int getBorrowings() {
             return borrowings;
         }
         public void setBorrowings(int borrowings) {
             this.borrowings = borrowings;
         }
+        // set muc tang bien muc "muon" khi duoc muon 
         public void addBorrowing(){
-            this.borrowings++;          // dung cho viec tag bien +1 de de dang kiem soat va check 
+            this.borrowings++;
         }
         
         
     
     // 3. output    
-        // Thực hiện @Override hàm View() trừu tượng từ lớp cha LibraryObject
+        // Thực hiện @Override hàm View() trừu tượng bắt buộc từ lớp cha LibraryObject
         @Override
         public void View(){
             System.out.println("Book's title               : " + title);

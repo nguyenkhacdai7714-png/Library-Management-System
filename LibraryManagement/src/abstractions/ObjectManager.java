@@ -2,16 +2,11 @@ package abstractions;
 import java.util.HashMap;
 
 // thêm 3 cái import 
-    // import cau arraylist 
+    // import cau arraylist
+import java.util.Collection; 
 import java.util.ArrayList;
-import java.util.Collection;
-// them vi tri cua ham function de co the su dung 
-import librarymanagement.utils.Functions;
-// bao loi systemcode nen them import cua no 
-import librarymanagement.utils.SystemCode;
 import librarymanagement.utils.Constants;
-// su dung ham "bang" chi dung de in ra output bang thong tin du lieu 
-import librarymanagement.utils.BoardDrawer;
+import java.util.function.Function;
 
 public abstract class ObjectManager<T> {
     
@@ -25,7 +20,7 @@ public abstract class ObjectManager<T> {
     }
     
     // abstract public void View();
-    // thay doi cách su dung view nen chuyen ve dang comment
+    // thay doi cách su dung view nen bo 
     
     // 1 hàm trừu tượng duy nhất: stt = 0 là in Header va báo NULL, stt > 0 là in dữ liệu
     
@@ -74,6 +69,39 @@ public abstract class ObjectManager<T> {
         }
         
         return newId;
+    }
+    
+    public ArrayList<T> SearchByAll(String inp, Function<T, String> formatter){
+        ArrayList<T> arrayList = new ArrayList<T>();
+        
+        if(inp==null || inp.trim().isEmpty()) return arrayList;
+        
+//        String lowerInp = inp.toLowerCase();
+        String[] splitedInp = inp.split("\\|");
+        T found = SearchById(inp);
+        if(found!=null){
+            arrayList.add(found);
+            return arrayList;
+        }
+        
+        
+        for(T item : getList().values()){
+            boolean flag=true;
+            for(int i=0; i<splitedInp.length;i++){
+                String lowerFilter = splitedInp[i].toLowerCase();
+                String line = formatter.apply(item).toLowerCase();
+                
+                if(!line.contains(lowerFilter)){
+                    flag=false;
+                    break;
+                }
+            }
+            if(flag){
+                arrayList.add(item);
+            }
+        }
+
+        return arrayList;
     }
    
     
